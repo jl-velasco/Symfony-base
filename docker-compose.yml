@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  base:
+    container_name: symfony_base
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-dev
+    volumes:
+      - ./:/var/www
+      - ./var/log:/var/log
+    ports:
+      - "8001:80"
+
+  db:
+    container_name: symfony_base_db
+    image: mariadb:10.7.4
+    restart: always
+    environment:
+      - MYSQL_DATABASE=symfony_base
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - data_base_local:/var/lib/mysql
+    ports:
+      - "3360:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "--user=root", "--password=", "--host=127.0.0.1", "ping", "--silent" ]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+    command: [ "--default-authentication-plugin=mysql_native_password" ]
+
+
+volumes:
+  data_base_local:

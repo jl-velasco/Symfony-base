@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Symfony\Base\App\Controller\:
+        resource: '../app/Controller'
+        tags: [ 'controller.service_arguments' ]
+
+    Symfony\Base\:
+        resource: '../src/'
