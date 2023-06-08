@@ -1,40 +1,42 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Aplication;
+namespace Symfony\Base\Video\Application;
 
 use Symfony\Base\Shared\ValueObject\CreatedAt;
-use Symfony\Base\Shared\ValueObject\Email;
+use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\UpdatedAt;
+use Symfony\Base\Shared\ValueObject\Url;
 use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\User\Dominio\Password;
-use Symfony\Base\User\Dominio\User;
-use Symfony\Base\User\Dominio\UserRepository;
+use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Domain\VideoRepository;
 
-class UpsertUserUseCase
+class UpsertVideoUseCase
 {
     public function __construct(
-        private readonly UserRepository $repository
+        private readonly VideoRepository $repository
     )
     {
     }
 
     public function __invoke(
         string $id,
-        string $email,
+        string $userId,
         string $name,
-        string $password,
+        string $description,
+        string $url,
         string $createdAt,
         string $updatedAt,
     ): void
     {
         $this->repository->save(
-            new User(
+            new Video(
                 new Uuid($id),
-                new Email($email),
+                new Uuid($userId),
                 new Name($name),
-                new Password($password),
+                new Description($description),
+                new Url($url),
                 new CreatedAt(new \DateTime($createdAt)),
                 new UpdatedAt(new \DateTime($updatedAt)),
             )

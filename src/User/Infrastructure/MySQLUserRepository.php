@@ -9,9 +9,6 @@ use Symfony\Base\User\Dominio\UserRepository;
 
 class MySQLUserRepository implements UserRepository
 {
-
-
-
     public function save(User $user): void
     {
 
@@ -19,7 +16,7 @@ class MySQLUserRepository implements UserRepository
 
     public function search(Uuid $id): User
     {
-        // TODO: Implement search() method.
+
     }
 
     public function delete(Uuid $id): void
