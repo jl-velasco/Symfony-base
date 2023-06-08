@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Shared\ValueObject;
 
-class Email extends StringValueObject
+class Url extends StringValueObject
 {
     public function __construct(protected string $value)
     {
@@ -13,7 +13,7 @@ class Email extends StringValueObject
 
     private function validate(): void
     {
-        if (!filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->value, FILTER_VALIDATE_URL)) {
 //            throw new InvalidValueException($this->value);
         }
     }
