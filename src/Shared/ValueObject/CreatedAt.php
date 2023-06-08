@@ -1,0 +1,8 @@
+<?php
+declare(strict_types=1);
+
+namespace Symfony\Base\Shared\ValueObject;
+
+class CreatedAt extends Date
+{
+}
