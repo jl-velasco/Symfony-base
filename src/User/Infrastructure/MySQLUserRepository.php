@@ -9,9 +9,6 @@ use Symfony\Base\User\Dominio\UserRepository;
 
 class MySQLUserRepository implements UserRepository
 {
-
-
-
     public function save(User $user): void
     {
 
