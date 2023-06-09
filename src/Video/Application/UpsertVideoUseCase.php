@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Application;
 
 use Symfony\Base\Shared\ValueObject\CreatedAt;
 use Symfony\Base\Shared\ValueObject\Name;
@@ -10,13 +10,11 @@ use Symfony\Base\Shared\ValueObject\Url;
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Video\Dominio\Description;
 use Symfony\Base\Video\Dominio\Video;
-use Symfony\Base\Video\Dominio\VideoRepository;
+use Symfony\Base\Video\Dominio\VideoRepositoryInterface;
 
 class UpsertVideoUseCase
 {
-    public function __construct(
-        private readonly VideoRepository $repository
-    )
+    public function __construct(private readonly VideoRepositoryInterface $repository)
     {
     }
 
