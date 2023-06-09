@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
+use Symfony\Base\Shared\Exception\InvalidValueException;
+use Symfony\Base\Shared\ValueObject\CreatedAt;
 use Symfony\Base\Shared\ValueObject\Email;
 use Symfony\Base\Shared\ValueObject\Name;
+use Symfony\Base\Shared\ValueObject\UpdatedAt;
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\User\Dominio\Password;
 use Symfony\Base\User\Dominio\User;
@@ -18,11 +21,16 @@ class UpsertUserUseCase
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(
         string $id,
         string $email,
         string $name,
-        string $password
+        string $password,
+        string $created_at,
+        string $updated_at,
     ): void
     {
         $this->repository->save(
@@ -31,6 +39,8 @@ class UpsertUserUseCase
                 new Email($email),
                 new Name($name),
                 new Password($password),
+                new CreatedAt($created_at),
+                new UpdatedAt($updated_at),
             )
         );
     }

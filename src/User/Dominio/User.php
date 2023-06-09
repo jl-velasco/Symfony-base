@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Dominio;
 
+use Symfony\Base\Shared\ValueObject\Date;
 use Symfony\Base\Shared\ValueObject\Email;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\Uuid;
@@ -13,7 +14,10 @@ final class User
         private readonly Uuid $id,
         private readonly Email $email,
         private readonly Name $name,
-        private readonly Password $password
+        private readonly Password $password,
+        private readonly Date $created_at,
+        private readonly Date $updated_at,
+
     )
     {
     }
@@ -37,4 +41,22 @@ final class User
     {
         return $this->password;
     }
+
+    /**
+     * @return Date
+     */
+    public function createdAt(): Date
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @return Date
+     */
+    public function updatedAt(): Date
+    {
+        return $this->updated_at;
+    }
+
+
 }
