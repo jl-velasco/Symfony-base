@@ -10,7 +10,7 @@ use Symfony\Base\User\Domain\Password;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
-class UpsertUserUseCase
+class DeleteUserUseCase
 {
     public function __construct(
         private readonly UserRepository $repository
@@ -18,22 +18,8 @@ class UpsertUserUseCase
     {
     }
 
-    public function __invoke(
-        string $id,
-        string $email,
-        string $name,
-        string $password
-    ): void
+    public function __invoke(string $id): void
     {
-        $this->repository->save(
-            new User(
-                new Uuid($id),
-                new Email($email),
-                new Name($name),
-                new Password($password),
-            )
-        );
+        $this->repository->delete(new Uuid($id));
     }
-
-
 }

@@ -9,7 +9,7 @@ interface UserRepository
 {
     public function save(User $user): void;
 
-    public function search(Uuid $id): User;
+    public function search(Uuid $id): ?User;
 
     public function delete(Uuid $id): void;
 }
