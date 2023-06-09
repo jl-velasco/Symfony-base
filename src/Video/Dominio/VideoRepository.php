@@ -11,5 +11,5 @@ interface VideoRepository
 
     public function search(Uuid $id): Video;
 
-    public function delete(Uuid $id): void;
+    public function delete(Uuid $id, bool $flush): void;
 }

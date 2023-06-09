@@ -6,22 +6,33 @@ namespace Symfony\Base\Video\Infrastructure;
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Video\Dominio\Video;
 use Symfony\Base\Video\Dominio\VideoRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class MySQLVideoRepository implements VideoRepository
 {
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
+
     public function save(Video $video): void
     {
+        $this->entityManager->persist($video);
+        $this->entityManager->flush();
 
     }
 
     public function search(Uuid $id): Video
     {
-        // TODO: Implement search() method.
+        return $this->entityManager->getRepository(Video::class)->findOneBy(['id' => $id]);
     }
 
-    public function delete(Uuid $id): void
+    public function delete(Uuid $id, $flush): void
     {
-        // TODO: Implement delete() method.
+        $this->entityManager->remove($this->entityManager->getRepository(Video::class)->findOneBy(['id' => $id]));
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 }

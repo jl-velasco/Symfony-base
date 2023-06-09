@@ -30,7 +30,7 @@ final class Video
 
     public function userId(): Uuid
     {
-        return $this->userId();
+        return $this->userId;
     }
 
     public function name(): Name
