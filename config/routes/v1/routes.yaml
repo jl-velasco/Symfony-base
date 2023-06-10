@@ -1,0 +1,4 @@
+upsert-video:
+  path: /video/{uuid}
+  controller: Symfony\Base\App\Controller\Videos\VideoController
+  methods: PUT
