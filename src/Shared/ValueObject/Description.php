@@ -16,7 +16,7 @@ class Description extends StringValueObject
 
     private function validate(): void
     {
-        if (strlen($this->value)>= self::LEN_DESCRIPTION) {
+        if (strlen($this->value)> self::LEN_DESCRIPTION) {
 //            throw new InvalidValueException($this->value);
         }
     }
