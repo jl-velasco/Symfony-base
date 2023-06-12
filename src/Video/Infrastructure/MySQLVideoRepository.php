@@ -4,22 +4,19 @@ namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Symfony\Base\Shared\Exception\InvalidValueException;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\Shared\ValueObject\Description;
-use Symfony\Base\Shared\ValueObject\Url;
-use Symfony\Base\Shared\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
-class MySqlVideoRepository implements VideoRepository
+class MySQLVideoRepository implements VideoRepository
 {
+    public const TABLE_VIDEO = 'video';
 
-
-    const TABLE_VIDEO = 'video';
-
-    public function __construct(private Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
     }
 
@@ -35,7 +32,7 @@ class MySqlVideoRepository implements VideoRepository
                     'name' => $video->name()->value(),
                     'description' => $video->description()->value(),
                     'url' => $video->url()->value(),
-                    'created_at' => $video->createdAt()->stringDateTime()
+                    'created_at' => $video->createdAt()?->stringDateTime()
                 ]
             );
         } catch (\PDOException $e) {
@@ -49,17 +46,13 @@ class MySqlVideoRepository implements VideoRepository
      */
     public function findByUuid(Uuid $uuid): ?Video
     {
-        $queryBuilder = $this->connection->createQueryBuilder();
-
-        $queryBuilder
+        $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
             ->where('id = :id')
-            ->setParameter('id', $uuid->value());
-
-        $statement = $queryBuilder->execute();
-
-        $result = $statement->fetchAssociative();
+            ->setParameter('id', $uuid->value())
+            ->executeQuery()
+            ->fetchAssociative();
 
         if (!$result) {
             return null;
@@ -82,17 +75,13 @@ class MySqlVideoRepository implements VideoRepository
      */
     public function findByUserUuid(Uuid $userUuid): array
     {
-        $queryBuilder = $this->connection->createQueryBuilder();
-
-        $queryBuilder
+        $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
             ->where('user_id = :user_id')
-            ->setParameter('user_id', $userUuid->value());
-
-        $statement = $queryBuilder->execute();
-
-        $result = $statement->fetchAllAssociative();
+            ->setParameter('user_id', $userUuid->value())
+            ->executeQuery()
+            ->fetchAssociative();
 
         if (!$result) {
             return [];
@@ -117,13 +106,9 @@ class MySqlVideoRepository implements VideoRepository
 
     public function deleteByUuid(Uuid $uuid): void
     {
-        $queryBuilder = $this->connection->createQueryBuilder();
-
-        $queryBuilder
-            ->delete(self::TABLE_VIDEO)
-            ->where('id = :id')
-            ->setParameter('id', $uuid->value());
-
-        $queryBuilder->execute();
+        $this->connection->delete(
+            self::TABLE_VIDEO,
+            ['id' => $uuid->value()]
+        );
     }
 }

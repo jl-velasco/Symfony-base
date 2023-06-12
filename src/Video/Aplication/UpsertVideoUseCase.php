@@ -2,16 +2,14 @@
 
 namespace Symfony\Base\Video\Aplication;
 
-use Symfony\Base\Shared\Exception\InvalidValueException;
-use Symfony\Base\Shared\ValueObject\Date;
-use Symfony\Base\Shared\ValueObject\Description;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Url;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
-class UpSertVideoUseCase
+class UpsertVideoUseCase
 {
     public function __construct(
         private readonly VideoRepository $mySqlVideoRepository
@@ -32,8 +30,8 @@ class UpSertVideoUseCase
     {
         $this->mySqlVideoRepository->save(
             new Video(
-                new Uuid($uuid),
                 new Uuid($userUuid),
+                new Uuid($uuid),
                 new Name($name),
                 new Description($description),
                 new Url($url)
