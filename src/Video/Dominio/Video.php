@@ -13,13 +13,13 @@ use Symfony\Base\Shared\ValueObject\Uuid;
 final class Video
 {
 
-    public function __construct(private readonly Uuid $video_id,
-                                private readonly Uuid $video_user_id,
-                                private readonly Name $name,
+    public function __construct(private readonly Uuid        $video_id,
+                                private readonly Uuid        $video_user_id,
+                                private readonly Name        $name,
                                 private readonly Description $description,
-                                private readonly Url $url,
-                                private readonly Date $created_at,
-                                private readonly Date $updated_at
+                                private readonly Url         $url,
+                                private readonly ?Date       $created_at= new Date(),
+                                private readonly ?Date       $updated_at= new  Date()
 
 
     ){

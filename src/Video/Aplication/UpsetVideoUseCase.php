@@ -2,7 +2,7 @@
 
 namespace Symfony\Base\Video\Aplication;
 
-use Symfony\Base\Shared\ValueObject\Date;
+
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\Url;
@@ -22,8 +22,6 @@ class UpsetVideoUseCase
                              string $name,
                              string $description,
                              string $url,
-                             string $created_at,
-                             string $updated_at
     ): void
     {
         $this->repository->save(
@@ -32,11 +30,7 @@ class UpsetVideoUseCase
                 new Uuid($video_user_id),
                 new Name($name),
                 new Description($description),
-                new Url($url),
-                new Date(),
-                new Date(),
-
-
+                new Url($url)
             )
         );
     }
