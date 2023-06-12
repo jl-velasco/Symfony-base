@@ -1,22 +1,19 @@
 <?php
-declare(strict_types=1);
 
 namespace Symfony\Base\Shared\ValueObject;
 
-use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
-
 class Url extends StringValueObject
 {
-    public function __construct(protected string $value)
+    public function __construct(string $value)
     {
-        parent::__construct($this->value());
-        $this->validate();
+        $this->validate($value);
+        parent::__construct($value);
     }
 
-    private function validate(): void
+    private function validate(string $url): void
     {
-        if (!filter_var($this->value, FILTER_VALIDATE_URL)) {
-//            throw new InvalidValueException($this->value);
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException('Invalid URL provided.');
         }
     }
 }

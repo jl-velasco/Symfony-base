@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Shared\ValueObject;
+namespace Symfony\Base\Shared\Domain\ValueObject;
 
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
-use Symfony\Base\Shared\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 class Date
 {
