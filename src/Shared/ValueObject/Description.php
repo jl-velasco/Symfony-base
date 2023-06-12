@@ -6,7 +6,7 @@ namespace Symfony\Base\Shared\ValueObject;
 
 class Description extends StringValueObject
 {
-    const LEN_DESCRIPTION = '1000';
+    const LEN_DESCRIPTION = 1000;
 
     public function __construct(protected string $value)
     {
