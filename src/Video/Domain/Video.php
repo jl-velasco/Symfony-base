@@ -14,7 +14,7 @@ final class Video
                                 private Description   $description,
                                 private Url           $url,
                                 private User          $user,
-                                private Date          $createdAt,
+                                private ?Date         $createdAt = new Date(),
                                 private ?Date         $updatedAt = null)
     {
     }
