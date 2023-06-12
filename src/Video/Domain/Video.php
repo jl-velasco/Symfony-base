@@ -10,6 +10,7 @@ use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Shared\ValueObject\VideoDescription;
 use Symfony\Base\Shared\ValueObject\VideoName;
 use Symfony\Base\Shared\ValueObject\VideoUrl;
+use Symfony\Base\Shared\ValueObject\Date;
 
 class Video
 {
@@ -21,8 +22,8 @@ class Video
         private readonly VideoName        $name,
         private readonly VideoDescription $description,
         private readonly VideoUrl         $url,
-        private readonly CreatedAt        $created_at,
-        private readonly UpdatedAt        $updated_at
+        private readonly ?Date $created_at = new Date(),
+        private readonly ?Date $updated_at = null
     )
     {
     }
