@@ -22,8 +22,8 @@ final class UserPutController
         $data = $this->dataFromRequest($request);
         $this->useCase->__invoke(
             $id,
-            $data['name'],
             $data['email'],
+            $data['name'],
             $data['password'],
         );
 

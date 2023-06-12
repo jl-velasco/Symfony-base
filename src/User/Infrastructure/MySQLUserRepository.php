@@ -5,8 +5,8 @@ namespace Symfony\Base\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Symfony\Base\Shared\ValueObject\Date;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -98,6 +98,7 @@ class MySQLUserRepository implements UserRepository
                 'email' => $user->email(),
                 'name' => $user->name(),
                 'password' => $user->password(),
+
             ]
         );
     }
