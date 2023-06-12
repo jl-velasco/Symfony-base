@@ -44,7 +44,7 @@ class MySQLVideoRepository implements VideoRepository
      * @throws InvalidValueException
      * @throws Exception
      */
-    public function findByUuid(Uuid $uuid): ?Video
+    public function find(Uuid $uuid): ?Video
     {
         $result = $this->connection->createQueryBuilder()
             ->select('*')
@@ -104,7 +104,7 @@ class MySQLVideoRepository implements VideoRepository
         return $videos;
     }
 
-    public function deleteByUuid(Uuid $uuid): void
+    public function delete(Uuid $uuid): void
     {
         $this->connection->delete(
             self::TABLE_VIDEO,
