@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Symfony\Base\App\Listener;
 
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
-use Symfony\Base\User\Aplication\Exceptions\UserNotExistException;
+use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Component\HttpFoundation\Response;
 use function Lambdish\Phunctional\get;
 

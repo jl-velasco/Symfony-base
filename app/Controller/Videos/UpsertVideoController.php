@@ -10,8 +10,7 @@ class UpsertVideoController
 {
     public function __construct(
         private readonly UpsertVideoUseCase $upSertVideoUseCase
-    )
-    {
+    ) {
     }
 
     public function __invoke(Request $request, string $uuid): Response
