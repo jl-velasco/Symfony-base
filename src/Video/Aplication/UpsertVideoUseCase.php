@@ -2,6 +2,7 @@
 
 namespace Symfony\Base\Video\Aplication;
 
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
@@ -30,8 +31,8 @@ class UpsertVideoUseCase
     {
         $this->mySqlVideoRepository->save(
             new Video(
-                new Uuid($userUuid),
                 new Uuid($uuid),
+                new Uuid($userUuid),
                 new Name($name),
                 new Description($description),
                 new Url($url)
