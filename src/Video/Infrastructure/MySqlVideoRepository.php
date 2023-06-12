@@ -1,9 +1,15 @@
 <?php
 
-namespace Symfony\Base\Video\Infraestructure;
+namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Exception\InvalidValueException;
+use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\ValueObject\Description;
+use Symfony\Base\Shared\ValueObject\Url;
+use Symfony\Base\Shared\ValueObject\Date;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
@@ -19,24 +25,17 @@ class MySqlVideoRepository implements VideoRepository
 
     public function save(Video $video): void
     {
-        $uuid = $video->uuid();
-        $userUuid = $video->userUuid();
-        $name = $video->name();
-        $description = $video->description();
-        $url = $video->url();
-        $createdAt = $video->createdAt();
-        $updatedAt = $video->updatedAt();
 
         try {
             $this->connection->insert(
                 self::TABLE_VIDEO,
                 [
-                    'id' => $uuid->value(),
-                    'user_id' => $userUuid->value(),
-                    'name' => $name->value(),
-                    'description' => $description->value(),
-                    'url' => $url->value(),
-                    'created_at' => $createdAt->stringDateTime()
+                    'id' => $video->uuid()->value(),
+                    'user_id' => $video->userUuid()->value(),
+                    'name' => $video->name()->value(),
+                    'description' => $video->description()->value(),
+                    'url' => $video->url()->value(),
+                    'created_at' => $video->createdAt()->stringDateTime()
                 ]
             );
         } catch (\PDOException $e) {
@@ -44,6 +43,10 @@ class MySqlVideoRepository implements VideoRepository
         }
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function findByUuid(Uuid $uuid): ?Video
     {
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -65,14 +68,18 @@ class MySqlVideoRepository implements VideoRepository
         return new Video(
             new Uuid($result['id']),
             new Uuid($result['user_id']),
-            $result['name'],
-            $result['description'],
-            $result['url'],
-            new \DateTime($result['created_at']),
-            new \DateTime($result['updated_at'])
+            new Name($result['name']),
+            new Description($result['description']),
+            new Url($result['url']),
+            new Date($result['created_at']),
+            new Date($result['updated_at'])
         );
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function findByUserUuid(Uuid $userUuid): array
     {
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -97,11 +104,11 @@ class MySqlVideoRepository implements VideoRepository
             $videos[] = new Video(
                 new Uuid($video['id']),
                 new Uuid($video['user_id']),
-                $video['name'],
-                $video['description'],
-                $video['url'],
-                new \DateTime($video['created_at']),
-                new \DateTime($video['updated_at'])
+                new Name($video['name']),
+                new Description($video['description']),
+                new Url($video['url']),
+                new Date($video['created_at']),
+                new Date($video['updated_at'])
             );
         }
 

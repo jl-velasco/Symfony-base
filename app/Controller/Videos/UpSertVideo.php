@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Base\Video\Aplication\UpSertVideoUseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class VideoController
+class UpSertVideo
 {
     public function __construct(
         private readonly UpSertVideoUseCase $upSertVideoUseCase
@@ -28,6 +28,6 @@ class VideoController
             $data['url']
         );
 
-        return new Response('Video created', Response::HTTP_CREATED);
+        return new Response(Response::HTTP_CREATED);
     }
 }
