@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Video\Aplication;
 
 use Symfony\Base\Shared\ValueObject\CreatedAt;
+use Symfony\Base\Shared\ValueObject\Date;
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\UpdatedAt;
@@ -37,8 +38,8 @@ class UpsertVideoUseCase
                 new Name($name),
                 new Description($description),
                 new Url($url),
-                new CreatedAt($createdAt),
-                $updatedAt ? new UpdatedAt($updatedAt) : null
+                new Date($createdAt),
+                $updatedAt ? new Date($updatedAt) : null
             )
         );
     }
