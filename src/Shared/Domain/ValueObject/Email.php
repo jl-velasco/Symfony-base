@@ -1,16 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Shared\ValueObject;
+namespace Symfony\Base\Shared\Domain\ValueObject;
 
-use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
 
-class Email extends StringValueObject
+final class Email extends StringValueObject
 {
     public function __construct(protected string $value)
     {
-        parent::__construct($this->value());
-        $this->validate();
+        parent::__construct($this->value);
+//        $this->validate();
+    }
+
+    public function isEquals(Email $other): bool
+    {
+        return $this->value === $other->value;
     }
 
     private function validate(): void
