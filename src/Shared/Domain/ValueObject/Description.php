@@ -1,12 +1,13 @@
 <?php
 
-namespace Symfony\Base\Shared\ValueObject;
+namespace Symfony\Base\Shared\Domain\ValueObject;
 
-use Symfony\Base\Shared\Exception\InvalidValueException;
+
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 class Description extends StringValueObject
 {
-    const MAX_LENGTH = 1000;
+    public const MAX_LENGTH = 1000;
 
     /**
      * @throws InvalidValueException

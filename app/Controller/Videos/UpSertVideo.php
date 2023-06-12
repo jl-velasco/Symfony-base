@@ -3,13 +3,13 @@
 namespace Symfony\Base\App\Controller\Videos;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Base\Video\Aplication\UpSertVideoUseCase;
+use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpSertVideo
 {
     public function __construct(
-        private readonly UpSertVideoUseCase $upSertVideoUseCase
+        private readonly UpsertVideoUseCase $upSertVideoUseCase
     )
     {
     }

@@ -1,58 +1,114 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Symfony\Base\Video\Infrastructure;
 
-use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\Video\Dominio\Video;
-use Symfony\Base\Video\Dominio\VideoRepository;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Domain\VideoRepository;
 
 class MySQLVideoRepository implements VideoRepository
 {
+    public const TABLE_VIDEO = 'video';
 
     public function __construct(private readonly Connection $connection)
     {
     }
 
-    public function save(Video $Video): void
+    public function save(Video $video): void
     {
-        $query = $this->connection->prepare(
-            'INSERT INTO videos VALUES (:id, :userid, :name, :description, :url, :created_at)
-            ON DUPLICATE KEY UPDATE userid = :userid, name = :name, description = :description, url = :url, updated_at = :updated_at'
-        );
-        $query->bindValue('id', $video->id());
-        $query->bindValue('userid', $video->userId());
-        $query->bindValue('name', $video->name());
-        $query->bindValue('description', $video->description());
-        $query->bindValue('url', $video->url());
-        $query->bindValue('created_at', $video->createdAt());
-        $query->bindValue('updated_at', $video->updatedAt() ?: 'NOW()');
-        $query->executeQuery();
+
+        try {
+            $this->connection->insert(
+                self::TABLE_VIDEO,
+                [
+                    'id' => $video->uuid()->value(),
+                    'user_id' => $video->userUuid()->value(),
+                    'name' => $video->name()->value(),
+                    'description' => $video->description()->value(),
+                    'url' => $video->url()->value(),
+                    'created_at' => $video->createdAt()?->stringDateTime()
+                ]
+            );
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
-    public function search(Uuid $id): Video
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
+    public function findByUuid(Uuid $uuid): ?Video
     {
-        $query = $this->connection->prepare('SELECT * FROM videos WHERE id = :id');
-        $query->bindValue('id', $id);
-        $result = $query->executeQuery();
-        $row = $result->fetchAssociative();
+        $result = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from(self::TABLE_VIDEO)
+            ->where('id = :id')
+            ->setParameter('id', $uuid->value())
+            ->executeQuery()
+            ->fetchAssociative();
+
+        if (!$result) {
+            return null;
+        }
 
         return new Video(
-            $row['id'],
-            $row['userid'],
-            $row['name'],
-            $row['description'],
-            $row['url'],
-            $row['created_at'],
-            $row['updated_at'],
+            new Uuid($result['id']),
+            new Uuid($result['user_id']),
+            new Name($result['name']),
+            new Description($result['description']),
+            new Url($result['url']),
+            new Date($result['created_at']),
+            new Date($result['updated_at'])
         );
     }
 
-    public function delete(Uuid $id): void
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
+    public function findByUserUuid(Uuid $userUuid): array
     {
-        $query = $this->connection->prepare('DELETE FROM videos WHERE id = :id');
-        $query->bindValue('id', $id);
-        $result = $query->executeQuery();
+        $result = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from(self::TABLE_VIDEO)
+            ->where('user_id = :user_id')
+            ->setParameter('user_id', $userUuid->value())
+            ->executeQuery()
+            ->fetchAssociative();
+
+        if (!$result) {
+            return [];
+        }
+
+        $videos = [];
+
+        foreach ($result as $video) {
+            $videos[] = new Video(
+                new Uuid($video['id']),
+                new Uuid($video['user_id']),
+                new Name($video['name']),
+                new Description($video['description']),
+                new Url($video['url']),
+                new Date($video['created_at']),
+                new Date($video['updated_at'])
+            );
+        }
+
+        return $videos;
+    }
+
+    public function deleteByUuid(Uuid $uuid): void
+    {
+        $this->connection->delete(
+            self::TABLE_VIDEO,
+            ['id' => $uuid->value()]
+        );
     }
 }
