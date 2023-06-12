@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace Symfony\Base\Video\Aplication;
 
-use Symfony\Base\Shared\ValueObject\Date;
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\URL;
