@@ -6,12 +6,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpSertVideo
+class UpsertVideoController
 {
     public function __construct(
         private readonly UpsertVideoUseCase $upSertVideoUseCase
-    )
-    {
+    ) {
     }
 
     public function __invoke(Request $request, string $uuid): Response

@@ -8,9 +8,9 @@ interface VideoRepository
 {
     public function save(Video $video): void;
 
-    public function findByUuid(Uuid $uuid): ?Video;
+    public function find(Uuid $uuid): ?Video;
 
     public function findByUserUuid(Uuid $userUuid): array;
 
-    public function deleteByUuid(Uuid $uuid): void;
+    public function delete(Uuid $uuid): void;
 }
