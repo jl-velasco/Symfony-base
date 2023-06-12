@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
-use Symfony\Base\Shared\ValueObject\Email;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Email;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Dominio\Password;
 use Symfony\Base\User\Dominio\User;
 use Symfony\Base\User\Dominio\UserRepository;
