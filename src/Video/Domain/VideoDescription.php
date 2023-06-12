@@ -16,7 +16,7 @@ class VideoDescription extends StringValueObject
 
     private function validate(): void
     {
-        if (!mb_strlen($this->value) > self::DEF_MAX_LENGTH) {
+        if (mb_strlen($this->value) > self::DEF_MAX_LENGTH) {
             //@todo exception
 //            throw new InvalidValueException($this->value);
         }
