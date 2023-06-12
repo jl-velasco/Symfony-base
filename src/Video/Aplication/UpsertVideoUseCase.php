@@ -23,9 +23,7 @@ class UpsertVideoUseCase
         string $video_user_id,
         string $name,
         string $description,
-        string $url,
-        string $created_at,
-        string $update_id
+        string $url
     ):void
     {
         $this->repository->save(
@@ -34,9 +32,7 @@ class UpsertVideoUseCase
                 new Uuid($video_user_id),
                 new Name($name),
                 new Description($description),
-                new URL($url),
-                new Date($created_at),
-                new Date($update_id)
+                new URL($url)
             )
         );
     }

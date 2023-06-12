@@ -9,8 +9,6 @@ use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\URL;
 use Symfony\Base\Shared\ValueObject\Uuid;
 
-
-
 final class Video
 {
     public function __construct(
@@ -19,46 +17,45 @@ final class Video
         private readonly Name $name,
         private readonly Description $description,
         private readonly URL $url,
-        private readonly Date $created_at,
-        private readonly Date $update_id
+        private readonly ?Date $created_at = new Date(),
+        private readonly ?Date $update_at = null
     )
     {
 
     }
-    public function id(): Uuid
+    public function Id(): Uuid
     {
         return $this->id;
     }
 
-    public function video_user_id(): Uuid
+    public function Video_User_Id(): Uuid
     {
         return $this->video_user_id;
     }
 
-    public function name(): Name
+    public function Name(): Name
     {
         return $this->name;
     }
 
-    public function description(): Description
+    public function Description(): Description
     {
         return $this->description;
     }
 
-    public function url(): URL
+    public function Url(): URL
     {
         return $this->url;
     }
 
-    public function created_at(): Date
+    public function Created_At(): ?Date
     {
         return $this->created_at;
     }
 
-    public function update_id(): Date
+    public function Update_At(): ?Date
     {
-        return $this->update_id;
+        return $this->update_at;
     }
-
 }
 ?>
