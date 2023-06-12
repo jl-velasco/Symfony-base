@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Symfony\Base\User\Dominio;
@@ -14,8 +15,7 @@ final class User
         private readonly Email $email,
         private readonly Name $name,
         private readonly Password $password
-    )
-    {
+    ) {
     }
 
     public function id(): Uuid
