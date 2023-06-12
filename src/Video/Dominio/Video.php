@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Video\Dominio;
 
 use Symfony\Base\Shared\ValueObject\CreatedAt;
+use Symfony\Base\Shared\ValueObject\Date;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\UpdatedAt;
 use Symfony\Base\Shared\ValueObject\Url;
@@ -17,8 +18,8 @@ final class Video
         private readonly Name        $name,
         private readonly Description $description,
         private readonly Url         $url,
-        private readonly UpdatedAt   $updatedAt,
-        private readonly CreatedAt   $createdAt,
+        private readonly ?Date $updatedAt = null,
+        private readonly ?Date $createdAt = new Date(),
     )
     {
     }

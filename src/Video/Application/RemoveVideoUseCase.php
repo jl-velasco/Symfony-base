@@ -5,11 +5,11 @@ namespace Symfony\Base\Video\Application;
 
 
 use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\Video\Dominio\VideoRepositoryInterface;
+use Symfony\Base\Video\Dominio\VideoRepository;
 
 class RemoveVideoUseCase
 {
-    public function __construct(private readonly VideoRepositoryInterface $repository)
+    public function __construct(private readonly VideoRepository $repository)
     {
     }
 

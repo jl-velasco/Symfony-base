@@ -5,7 +5,7 @@ namespace Symfony\Base\Comments\Dominio;
 
 use Symfony\Base\Shared\ValueObject\Uuid;
 
-interface CommentsRepositoryInterface
+interface CommentsRepository
 {
     public function save(Comments $comments): void;
 

@@ -5,11 +5,11 @@ namespace Symfony\Base\Comments\Infrastructure;
 
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Comments\Dominio\Comments;
-use Symfony\Base\Comments\Dominio\CommentsRepositoryInterface;
+use Symfony\Base\Comments\Dominio\CommentsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-class MySQLCommentsRepositoryInterface implements CommentsRepositoryInterface
+class MySQLCommentsRepository implements CommentsRepository
 {
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {

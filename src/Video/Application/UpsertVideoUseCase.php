@@ -10,11 +10,11 @@ use Symfony\Base\Shared\ValueObject\Url;
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Video\Dominio\Description;
 use Symfony\Base\Video\Dominio\Video;
-use Symfony\Base\Video\Dominio\VideoRepositoryInterface;
+use Symfony\Base\Video\Dominio\VideoRepository;
 
 class UpsertVideoUseCase
 {
-    public function __construct(private readonly VideoRepositoryInterface $repository)
+    public function __construct(private readonly VideoRepository $repository)
     {
     }
 
@@ -23,9 +23,7 @@ class UpsertVideoUseCase
         string $userId,
         string $name,
         string $description,
-        string $url,
-        string $updatedAt,
-        string $createdAt,
+        string $url
     ): void
     {
         $this->repository->save(
@@ -34,9 +32,7 @@ class UpsertVideoUseCase
                 new Uuid($userId),
                 new Name($name),
                 new Description($description),
-                new Url($url),
-                new UpdatedAt($updatedAt),
-                new CreatedAt($createdAt)
+                new Url($url)
             )
         );
     }

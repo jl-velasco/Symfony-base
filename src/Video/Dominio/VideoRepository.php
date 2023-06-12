@@ -5,7 +5,7 @@ namespace Symfony\Base\Video\Dominio;
 
 use Symfony\Base\Shared\ValueObject\Uuid;
 
-interface VideoRepositoryInterface
+interface VideoRepository
 {
     public function save(Video $video): void;
 

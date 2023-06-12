@@ -5,11 +5,11 @@ namespace Symfony\Base\Video\Infrastructure;
 
 use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Video\Dominio\Video;
-use Symfony\Base\Video\Dominio\VideoRepositoryInterface;
+use Symfony\Base\Video\Dominio\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-class MySQLVideoRepositoryInterface implements VideoRepositoryInterface
+class MySQLVideoRepository implements VideoRepository
 {
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
