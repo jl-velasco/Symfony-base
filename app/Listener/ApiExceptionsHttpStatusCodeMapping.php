@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\App\Listener;
 
+use InvalidArgumentException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ final class ApiExceptionsHttpStatusCodeMapping
         $statusCode = get($exceptionClass, $this->exceptions, self::DEFAULT_STATUS_CODE);
 
         if (null === $statusCode) {
-//            throw new InvalidArgumentException("There are no status code mapping for <{$exceptionClass}>");
+            throw new InvalidArgumentException("There are no status code mapping for <{$exceptionClass}>");
         }
 
         return $statusCode;
