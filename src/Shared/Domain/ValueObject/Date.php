@@ -40,6 +40,11 @@ class Date
             ->format(self::DATABASE_TIMESTAMP_FORMAT);
     }
 
+    protected function value(): string
+    {
+        return $this->stringDateTime();
+    }
+
     public function modify(string $modifier): self
     {
         $this->date = (new DateTimeImmutable())->modify($modifier);
