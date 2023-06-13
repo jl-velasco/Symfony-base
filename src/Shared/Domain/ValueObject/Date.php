@@ -76,7 +76,7 @@ class Date
     {
         $dateInterval = $this->date->diff($date->date());
 
-        return !($dateInterval->format('%R%a') >= 0);
+        return $dateInterval->format('%R%a') < 0;
     }
 
     public function __toString(): string
