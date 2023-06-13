@@ -40,7 +40,7 @@ class Date
             ->format(self::DATABASE_TIMESTAMP_FORMAT);
     }
 
-    protected function value(): string
+    public function value(): string
     {
         return $this->stringDateTime();
     }
