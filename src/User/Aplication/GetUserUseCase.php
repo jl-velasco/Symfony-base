@@ -14,10 +14,12 @@ class GetUserUseCase
         private readonly UserFinder $finder
     )
     {
+
     }
 
     public function __invoke(string $id): UserResponse
     {
+        // el servicio
         $user = $this->finder->__invoke(new Uuid($id));
 
         return new UserResponse(

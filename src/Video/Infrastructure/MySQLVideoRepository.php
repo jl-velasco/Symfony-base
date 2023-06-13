@@ -11,6 +11,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Infraestructure\Exception\VideoNotConnectDBException;
 
 class MySQLVideoRepository implements VideoRepository
 {
@@ -18,6 +19,13 @@ class MySQLVideoRepository implements VideoRepository
 
     public function __construct(private readonly Connection $connection)
     {
+       try {
+           // TODO: Aclarar si el nombre de la bdd se pone a pelo
+           $noConnectionDB = $this->connection->getDoctrine()->getManager('symfony_base_db');
+       }
+       catch (\Exception $e)  {
+            throw new VideoNotConnectDBException('symfony_base_db');
+       }
     }
 
     public function save(Video $video): void
@@ -43,6 +51,7 @@ class MySQLVideoRepository implements VideoRepository
     /**
      * @throws InvalidValueException
      * @throws Exception
+     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
      */
     public function find(Uuid $uuid): ?Video
     {

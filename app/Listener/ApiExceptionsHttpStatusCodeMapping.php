@@ -5,6 +5,8 @@ namespace Symfony\Base\App\Listener;
 
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Video\Domain\Exception\VideoNotExistException;
+use Symfony\Base\Video\Infraestructure\Exception\VideoNotConnectDBException;
 use Symfony\Component\HttpFoundation\Response;
 use function Lambdish\Phunctional\get;
 
@@ -15,7 +17,11 @@ final class ApiExceptionsHttpStatusCodeMapping
     /** @var array<string, int> */
     private array $exceptions = [
         InvalidValueException::class => Response::HTTP_BAD_REQUEST,
-        UserNotExistException::class => Response::HTTP_NOT_FOUND
+        UserNotExistException::class => Response::HTTP_NOT_FOUND,
+        VideoNotExistException::class => Response::HTTP_NOT_FOUND,
+        // TODO: aclarar esto
+        VideoNotConnectDBException::class => Response::HTTP_MISDIRECTED_REQUEST
+
     ];
 
     public function register(string $exceptionClass, int $statusCode): void

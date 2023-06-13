@@ -7,6 +7,10 @@ services:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
 
+    Symfony\Base\App\Controller\Videos\:
+        resource: '../app/Controller/Videos'
+        tags: [ 'controller.service_arguments' ]
+
     Symfony\Base\App\Listener\:
         resource: '../app/Listener'
 

@@ -7,3 +7,9 @@ home_get:
   controller: Symfony\Base\App\Controller\Home\HomeGetWebController
   defaults: { auth: false }
   methods:  [GET]
+
+home_getVideo:
+  path: /
+  controller: Symfony\Base\App\Controller\Home\HomeGetWebController
+  defaults: { auth: false }
+  methods:  [GET]
