@@ -4,11 +4,13 @@ namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
@@ -41,18 +43,22 @@ class MySQLVideoRepository implements VideoRepository
     }
 
     /**
-     * @throws InvalidValueException
-     * @throws Exception
+     * @throws PersistenceLayerException|InvalidValueException
      */
     public function find(Uuid $uuid): ?Video
     {
-        $result = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_VIDEO)
-            ->where('id = :id')
-            ->setParameter('id', $uuid->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_VIDEO)
+                ->where('id = :id')
+                ->setParameter('id', $uuid->value())
+                ->executeQuery()
+                ->fetchAssociative();
+        }
+        catch (Exception $e) {
+            throw new PersistenceLayerException('Query error: ' .  $e->getMessage());
+        }
 
         if (!$result) {
             return null;

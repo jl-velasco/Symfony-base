@@ -1,0 +1,19 @@
+### Find by uuid
+GET {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
+Accept: application/json
+
+###
+
+### Upsert video
+PUT GET {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
+Content-Type: application/json
+
+{
+    "user_uuid": "556502d7-c95f-444e-b690-1870a1d83b22",
+    "name": "Video 2",
+    "description": "Descvription video 2",
+    "url": "https://www.uuidgenerator.net"
+}
+
+###
+
