@@ -11,6 +11,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Shared\Infraestructure\Exceptions\DatabaseException;
 
 class MySQLVideoRepository implements VideoRepository
 {
@@ -45,7 +46,7 @@ class MySQLVideoRepository implements VideoRepository
      * @throws Exception
      */
     public function find(Uuid $uuid): ?Video
-    {
+    {        
         $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
@@ -55,7 +56,7 @@ class MySQLVideoRepository implements VideoRepository
             ->fetchAssociative();
 
         if (!$result) {
-            return null;
+            throw new DatabaseException();
         }
 
         return new Video(
