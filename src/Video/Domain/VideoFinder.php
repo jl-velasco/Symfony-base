@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Symfony\Base\Video\Domain;
 
@@ -23,7 +23,7 @@ final class VideoFinder
         $video = $this->repository->find($id);
 
         if ($video === null) {
-            throw new VideoNotExistException((string) $id);
+            throw new VideoNotExistException((string)$id);
         }
 
         return $video;
