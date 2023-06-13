@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
-
 final class Email extends StringValueObject
 {
     public function __construct(protected string $value)
@@ -20,7 +19,7 @@ final class Email extends StringValueObject
     private function validate(): void
     {
         if (!filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-//            throw new InvalidValueException($this->value);
+            throw new \InvalidArgumentException('Invalid EMAIL provided.');
         }
     }
 }
