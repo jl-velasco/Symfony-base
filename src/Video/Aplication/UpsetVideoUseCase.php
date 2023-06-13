@@ -3,12 +3,14 @@
 namespace Symfony\Base\Video\Aplication;
 
 
+use _PHPStan_a3459023a\Nette\InvalidArgumentException;
+use http\Exception\RuntimeException;
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
 use Symfony\Base\Shared\ValueObject\Url;
 use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\Video\Dominio\Video;
-use Symfony\Base\Video\Dominio\VideoRepository;
+use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Domain\VideoRepository;
 
 class UpsetVideoUseCase
 {
@@ -24,6 +26,7 @@ class UpsetVideoUseCase
                              string $url,
     ): void
     {
+        try{
         $this->repository->save(
             new Video(
                 new Uuid($video_id),
@@ -33,7 +36,11 @@ class UpsetVideoUseCase
                 new Url($url)
             )
         );
+        }catch (\InvalidArgumentException $exception){
+        throw new InvalidArgumentException("El tipo de dato no es el adecuado");
+        } catch (\Exception $exception){
+            throw new RuntimeException('Ocurrio un error inesperado');
+        }
     }
-
 
 }

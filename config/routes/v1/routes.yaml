@@ -17,3 +17,8 @@ user_delete:
   path: /user/{id}
   controller: Symfony\Base\App\Controller\User\UserDeleteController
   methods: DELETE
+
+video_get:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\VideoGetController
+  methods: GET
