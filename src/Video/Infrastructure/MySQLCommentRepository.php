@@ -1,12 +1,13 @@
 <?php
 
-namespace Symfony\Base\Comment\Infrastructure;
+namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Message;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Infrastructure\Exception\DBConnectionException;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentRepository;
 
@@ -22,9 +23,9 @@ class MySQLCommentRepository implements CommentRepository
     {
         if ($this->findById($comment->id())) {
             return $this->update($comment);
-        } else {
-            return $this->insert($comment);
         }
+
+        return $this->insert($comment);
     }
 
     /**
@@ -33,13 +34,17 @@ class MySQLCommentRepository implements CommentRepository
      */
     public function findById(Uuid $id): ?Comment
     {
-        $result = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_COMMENT)
-            ->where('id = :id')
-            ->setParameter('id', $id->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_COMMENT)
+                ->where('id = :id')
+                ->setParameter('id', $id->value())
+                ->executeQuery()
+                ->fetchAssociative();
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
 
         if (!$result) {
             return null;
@@ -60,13 +65,17 @@ class MySQLCommentRepository implements CommentRepository
      */
     public function findByVideoId(Uuid $videoId): array
     {
-        $result = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_COMMENT)
-            ->where('video_id = :video_id')
-            ->setParameter('video_id', $videoId->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_COMMENT)
+                ->where('video_id = :video_id')
+                ->setParameter('video_id', $videoId->value())
+                ->executeQuery()
+                ->fetchAssociative();
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
 
         if (!$result) {
             return [];
@@ -88,10 +97,14 @@ class MySQLCommentRepository implements CommentRepository
 
     public function deleteById(Uuid $id): int
     {
-        return $this->connection->delete(
-            self::TABLE_COMMENT,
-            ['id' => $id->value()]
-        );
+        try {
+            return $this->connection->delete(
+                self::TABLE_COMMENT,
+                ['id' => $id->value()]
+            );
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
     }
 
     /**
@@ -99,14 +112,18 @@ class MySQLCommentRepository implements CommentRepository
      */
     private function insert(Comment $comment): int
     {
-        return $this->connection->insert(
-            self::TABLE_COMMENT,
-            [
-                'id' => $comment->id()->value(),
-                'video_id' => $comment->videoId()->value(),
-                'message' => $comment->message()->value()
-            ]
-        );
+        try{
+            return $this->connection->insert(
+                self::TABLE_COMMENT,
+                [
+                    'id' => $comment->id()->value(),
+                    'video_id' => $comment->videoId()->value(),
+                    'message' => $comment->message()->value()
+                ]
+            );
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
     }
 
     /**
@@ -114,20 +131,22 @@ class MySQLCommentRepository implements CommentRepository
      */
     private function update(Comment $comment): int
     {
-        return $this->connection->createQueryBuilder()
-            ->update(self::TABLE_COMMENT)
-            ->set('video_id', ':video_id')
-            ->set('name', ':name')
-            ->set('message', ':message')
-            ->set('updated_at', ':updated_at')
-            ->where('id = :id')
-            ->setParameters([
-                'id' => $comment->id(),
-                'video_id' => $comment->videoId()->value(),
-                'message' => $comment->message()->value(),
-                'updated_at' => new Date(),
-            ])
-            ->executeQuery()
-            ->rowCount();
+        try {
+            return $this->connection->update(
+                self::TABLE_COMMENT,
+                [
+                    'video_id' => $comment->videoId()->value(),
+                    'message' => $comment->message()->value(),
+                    'updated_at' => new Date(),
+                ],
+                [
+                    'id' => $comment->id()->value()
+                ]
+            );
+
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
+
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Video\Domain\Exceptions\VideoNotExistException;
 
 final class VideoFinder
 {
@@ -14,14 +14,14 @@ final class VideoFinder
     }
 
     /**
-     * @throws UserNotExistException
+     * @throws VideoNotExistException
      */
     public function __invoke(Uuid $id): Video
     {
         $video = $this->repository->find($id);
 
         if ($video === null) {
-            throw new UserNotExistException((string) $id);
+            throw new VideoNotExistException((string) $id);
         }
 
         return $video;

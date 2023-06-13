@@ -9,6 +9,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Infrastructure\Exception\DBConnectionException;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
@@ -20,6 +21,10 @@ class MySQLVideoRepository implements VideoRepository
     {
     }
 
+    /**
+     * @throws DBConnectionException
+     * @throws DBALException
+     */
     public function save(Video $video): void
     {
 
@@ -35,8 +40,8 @@ class MySQLVideoRepository implements VideoRepository
                     'created_at' => $video->createdAt()?->stringDateTime()
                 ]
             );
-        } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
         }
     }
 
@@ -46,13 +51,17 @@ class MySQLVideoRepository implements VideoRepository
      */
     public function find(Uuid $uuid): ?Video
     {
-        $result = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_VIDEO)
-            ->where('id = :id')
-            ->setParameter('id', $uuid->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_VIDEO)
+                ->where('id = :id')
+                ->setParameter('id', $uuid->value())
+                ->executeQuery()
+                ->fetchAssociative();
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
 
         if (!$result) {
             return null;
@@ -75,13 +84,18 @@ class MySQLVideoRepository implements VideoRepository
      */
     public function findByUserUuid(Uuid $userUuid): array
     {
-        $result = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_VIDEO)
-            ->where('user_id = :user_id')
-            ->setParameter('user_id', $userUuid->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_VIDEO)
+                ->where('user_id = :user_id')
+                ->setParameter('user_id', $userUuid->value())
+                ->executeQuery()
+                ->fetchAssociative();
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
+
 
         if (!$result) {
             return [];
@@ -106,9 +120,13 @@ class MySQLVideoRepository implements VideoRepository
 
     public function delete(Uuid $uuid): void
     {
+        try {
         $this->connection->delete(
             self::TABLE_VIDEO,
             ['id' => $uuid->value()]
         );
+        } catch (Exception $e) {
+            throw new DBConnectionException("BD connection failed: ".$e->getMessage());
+        }
     }
 }
