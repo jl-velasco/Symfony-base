@@ -7,5 +7,12 @@ services:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
 
+    Symfony\Base\App\Listener\:
+        resource: '../app/Listener'
+
     Symfony\Base\:
         resource: '../src/'
+
+    Symfony\Base\App\Listener\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onException }

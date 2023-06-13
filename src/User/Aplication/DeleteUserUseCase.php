@@ -3,11 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
-use Symfony\Base\Shared\ValueObject\Email;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\User\Domain\Password;
-use Symfony\Base\User\Domain\User;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserRepository;
 
 class DeleteUserUseCase

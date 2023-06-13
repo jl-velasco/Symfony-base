@@ -20,6 +20,6 @@ final class UserDeleteController
     {
         $this->useCase->__invoke($id);
 
-        return new Response(status: Response::HTTP_OK);
+        return new Response(status: Response::HTTP_NO_CONTENT);
     }
 }

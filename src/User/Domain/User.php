@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Domain;
 
-use Symfony\Base\Shared\Exception\InvalidValueException;
-use Symfony\Base\Shared\ValueObject\Date;
-use Symfony\Base\Shared\ValueObject\Email;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Email;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 final class User
 {
@@ -40,6 +40,16 @@ final class User
     public function password(): Password
     {
         return $this->password;
+    }
+
+    public function createdAt(): Date
+    {
+        return $this->createdAt;
+    }
+
+    public function updatedAt(): ?Date
+    {
+        return $this->updatedAt;
     }
 
     /**
