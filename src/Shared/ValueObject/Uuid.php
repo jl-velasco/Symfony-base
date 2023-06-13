@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 
 final class Uuid
 {
     /** @throws InvalidValueException */
     public function __construct(protected string $value)
     {
+        if (!Uuid::isValid($this->value))
+            throw new InvalidValueException("Not acceptable UUID format");
         $this->validate($value);
     }
 

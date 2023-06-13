@@ -2,6 +2,7 @@
 
 namespace Symfony\Base\Comment\Domain;
 
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\ValueObject\CreatedAt;
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\UpdatedAt;
@@ -10,7 +11,7 @@ use Symfony\Base\Shared\ValueObject\Uuid;
 class Comment
 {
     public function __construct(
-        private readonly Uuid $uuid,
+        private readonly Uuid $id,
         private readonly Uuid $videoId,
         private readonly Description $comment,
         private readonly CreatedAt $createdAt,
@@ -22,9 +23,9 @@ class Comment
     /**
      * @return Uuid
      */
-    public function getUuid(): Uuid
+    public function id(): Uuid
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function comment(): Description
@@ -56,5 +57,31 @@ class Comment
         return $this->videoId;
     }
 
+    public function toPrimitives(): array
+    {
+        $result = [
+            'id' => $this->id()->value(),
+            'video_id' => $this->videoId()->value(),
+            'comment' => $this->comment()->value(),
+            'created_at' => (string)$this->createdAt(),
+            'updated_at' => (string)$this->updatedAt(),
+        ];
+
+        return $result;
+    }
+
+    /**
+     * @throws InvalidValueException
+     */
+    static public function fromPrimitives($data): Comment
+    {
+        return new self(
+            new Uuid($data['id']),
+            new Uuid($data['video_id']),
+            new Description($data['comment']),
+            CreatedAt::fromPrimitive($data['created_at']),
+            UpdatedAt::fromPrimitive($data['updated_at']),
+        );
+    }
 
 }

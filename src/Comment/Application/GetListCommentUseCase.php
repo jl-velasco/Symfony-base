@@ -11,7 +11,7 @@ use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Comment\Domain\Comment;
 use Symfony\Base\Comment\Domain\CommentRepository;
 
-class UpsertCommentUseCase
+class GetListCommentUseCase
 {
     public function __construct(
         private readonly CommentRepository $repository
@@ -23,22 +23,16 @@ class UpsertCommentUseCase
      * @throws InvalidValueException
      */
     public function __invoke(
-        string $id,
-        string $videoId,
-        string $comment,
-        string $createdAt = '',
-        string $updatedAt = '',
+        string $videoId
     ): array
     {
-        return $this->repository->save(
-            new Comment(
-                new Uuid($id),
-                new Uuid($videoId),
-                new Description($comment),
-                CreatedAt::fromPrimitive($createdAt),
-                UpdatedAt::fromPrimitive($updatedAt),
-            )
-        )->toPrimitives();
+        $comments = $this->repository->getByVideo(
+            new Uuid($videoId)
+        );
+        $result = [];
+        foreach($comments as $comment)
+            $result[] = $comment->toPrimitives();
+        return $result;
     }
 
 

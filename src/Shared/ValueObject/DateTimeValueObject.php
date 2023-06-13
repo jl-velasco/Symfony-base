@@ -19,6 +19,6 @@ abstract class DateTimeValueObject
 
     public function __toString(): string
     {
-        return $this->value->format("d.m.Y H:i");
+        return $this->value->format("Y-m-d H:i:s");
     }
 }

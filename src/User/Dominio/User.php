@@ -51,4 +51,33 @@ final class User
     {
         return $this->updatedAt;
     }
+
+    public function toPrimitives($withoutPassword = false): array
+    {
+        $result = [
+            'id' => $this->id()->value(),
+            'email' => $this->email()->value(),
+            'name' => $this->name()->value(),
+            'password' => $this->password()->value(),
+            'created_at' => (string)$this->createdAt(),
+            'updated_at' => (string)$this->updatedAt(),
+        ];
+
+        if ($withoutPassword)
+            unset($result['password']);
+
+        return $result;
+    }
+
+    static public function fromPrimitives($data): User
+    {
+        return new self(
+            new Uuid($data['id']),
+            new Email($data['email']),
+            new Name($data['name']),
+            new Password($data['password']),
+            CreatedAt::fromPrimitive($data['created_at']),
+            UpdatedAt::fromPrimitive($data['updated_at']),
+        );
+    }
 }

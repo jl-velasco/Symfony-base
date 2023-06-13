@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Application;
 
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\ValueObject\CreatedAt;
 use Symfony\Base\Shared\ValueObject\Description;
 use Symfony\Base\Shared\ValueObject\Name;
@@ -20,27 +21,30 @@ class UpsertVideoUseCase
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(
         string $id,
         string $userId,
         string $name,
         string $description,
         string $url,
-        string $createdAt,
-        string $updatedAt,
-    ): void
+        string $createdAt = '',
+        string $updatedAt = '',
+    ): array
     {
-        $this->repository->save(
+        return $this->repository->save(
             new Video(
                 new Uuid($id),
                 new Uuid($userId),
                 new Name($name),
                 new Description($description),
                 new Url($url),
-                new CreatedAt(new \DateTime($createdAt)),
-                new UpdatedAt(new \DateTime($updatedAt)),
+                CreatedAt::fromPrimitive($createdAt),
+                UpdatedAt::fromPrimitive($createdAt),
             )
-        );
+        )->toPrimitives();
     }
 
 

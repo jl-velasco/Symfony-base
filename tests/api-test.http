@@ -1,0 +1,78 @@
+### CREATE USER
+
+PUT https://localhost:8000/api/user
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "atyltin@hiberus.com",
+  "password": "12345",
+  "name": "Anton"
+}
+
+
+### CREATE VIDEO
+PUT https://localhost:8000/api/video
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userId": "d8745145-6d90-4f3c-a77b-d37d713a8135",
+  "name": "Test video",
+  "description": "Test description",
+  "url": "https://youtube.com"
+}
+
+### UPDATE VIDEO
+PUT https://localhost:8000/api/video
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "00da8d1c-2e02-48c8-bc0e-3fa40e11ecb9",
+  "userId": "d8745145-6d90-4f3c-a77b-d37d713a8135",
+  "name": "Test video222",
+  "description": "Test description",
+  "url": "https://youtube.com"
+}
+
+
+### DELETE VIDEO
+DELETE https://localhost:8000/api/video/delete
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "d8745145-6d90-4f3c-a77b-d37d713a8135"
+}
+
+
+### CREATE COMMENT
+PUT https://localhost:8000/api/comment
+Accept: application/json
+Content-Type: application/json
+
+{
+  "videoId": "a4cf0465-f29b-4ee6-9a61-079b2f6d81a2",
+  "comment": "Test comment"
+}
+
+### UPDATE COMMENT
+PUT https://localhost:8000/api/comment
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "ff76c8cb-31dc-4207-bdb4-91b318dc92d7",
+  "videoId": "a4cf0465-f29b-4ee6-9a61-079b2f6d81a2",
+  "comment": "Test comment"
+}
+
+### GET COMMENTS BY VIDEO
+POST https://localhost:8000/api/video/comments
+Accept: application/json
+Content-Type: application/json
+
+{
+  "videoId": "a4cf0465-f29b-4ee6-9a61-079b2f6d81a2"
+}

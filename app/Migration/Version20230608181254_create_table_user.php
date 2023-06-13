@@ -19,10 +19,10 @@ final class Version20230608181254_create_table_user extends AbstractMigration
     public function up(Schema $schema): void
     {
         $table = $schema->createTable(self::TABLE_NAME);
-        $table->addColumn('id', 'string', ['notnull' => true]);
-        $table->addColumn('email', 'string', ['notnull' => true]);
-        $table->addColumn('name', 'string', ['notnull' => true]);
-        $table->addColumn('password', 'string', ['notnull' => true]);
+        $table->addColumn('id', 'string', ['notnull' => true, 'length' => 191]);
+        $table->addColumn('email', 'string', ['notnull' => true, 'length' => 191]);
+        $table->addColumn('name', 'string', ['notnull' => true, 'length' => 191]);
+        $table->addColumn('password', 'string', ['notnull' => true, 'length' => 191]);
         $table->addColumn('created_at', 'datetimetz_immutable', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'datetimetz_immutable', ['notnull' => false]);
         $table->setPrimaryKey(['id']);

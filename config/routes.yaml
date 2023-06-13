@@ -2,8 +2,33 @@ v1_controllers:
   resource: routes/v1/routes.yaml
   prefix: '/v1'
 
-home_get:
-  path: /
-  controller: Symfony\Base\App\Controller\Home\HomeGetWebController
+app_user_upsert:
+  path: /api/user
+  controller: Symfony\Base\App\Controller\User\UserUpSertController
   defaults: { auth: false }
-  methods:  [GET]
+  methods:  [PUT]
+
+app_video_upsert:
+  path: /api/video
+  controller: Symfony\Base\App\Controller\Video\VideoUpSertController
+  defaults: { auth: false }
+  methods:  [PUT]
+
+app_video_delete:
+  path: /api/video/delete
+  controller: Symfony\Base\App\Controller\Video\VideoDeleteController
+  defaults: { auth: false }
+  methods:  [DELETE]
+
+app_comment_get_list:
+  path: /api/video/comments
+  controller: Symfony\Base\App\Controller\Comment\CommentGetListController
+  defaults: { auth: false }
+  methods:  [POST]
+
+app_comment_upsert:
+  path: /api/comment
+  controller: Symfony\Base\App\Controller\Comment\CommentUpSertController
+  defaults: { auth: false }
+  methods:  [PUT]
+
