@@ -13,7 +13,7 @@ class UpsertVideoController
     ) {
     }
 
-    public function __invoke(Request $request, string $uuid): Response
+    public function __invoke(string $uuid, Request $request): Response
     {
         $content = $request->getContent();
 

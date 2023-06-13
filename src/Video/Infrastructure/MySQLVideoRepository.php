@@ -21,7 +21,7 @@ class MySQLVideoRepository implements VideoRepository
     {
        try {
            // TODO: Aclarar si el nombre de la bdd se pone a pelo
-           $noConnectionDB = $this->connection->getDoctrine()->getManager('symfony_base_db');
+           $noConnectionDB = $this->connection->isConnected();
        }
        catch (\Exception $e)  {
             throw new VideoNotConnectDBException('symfony_base_db');
