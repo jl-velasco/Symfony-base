@@ -1,0 +1,19 @@
+upsert-video:
+  path: /video/{uuid}
+  controller: Symfony\Base\App\Controller\Videos\UpsertVideo
+  methods: PUT
+  
+user_put:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserPutController
+  methods: PUT
+
+user_get:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserGetController
+  methods: GET
+
+user_delete:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserDeleteController
+  methods: DELETE
