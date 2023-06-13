@@ -46,7 +46,7 @@ final class Video
         return $this->url;
     }
 
-    public function createdAt(): ?Date
+    public function createdAt(): Date
     {
         return $this->createdAt;
     }

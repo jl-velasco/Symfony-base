@@ -40,6 +40,11 @@ class Date
             ->format(self::DATABASE_TIMESTAMP_FORMAT);
     }
 
+    public function value(): string
+    {
+        return $this->stringDateTime();
+    }
+
     public function modify(string $modifier): self
     {
         $this->date = (new DateTimeImmutable())->modify($modifier);
@@ -71,7 +76,7 @@ class Date
     {
         $dateInterval = $this->date->diff($date->date());
 
-        return !($dateInterval->format('%R%a') >= 0);
+        return $dateInterval->format('%R%a') < 0;
     }
 
     public function __toString(): string
