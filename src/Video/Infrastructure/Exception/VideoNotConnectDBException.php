@@ -7,6 +7,6 @@ class VideoNotConnectDBException extends \Exception
 {
     public function __construct(string $id)
     {
-        parent::__construct(sprintf('Video with problem connect database', $id));
+        parent::__construct(sprintf('Video with problem in connect database: ', $id));
     }
 }
