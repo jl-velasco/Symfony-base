@@ -3,10 +3,10 @@
 namespace Symfony\Base\Comment\Domain;
 
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
-use Symfony\Base\Shared\ValueObject\CreatedAt;
-use Symfony\Base\Shared\ValueObject\Description;
-use Symfony\Base\Shared\ValueObject\UpdatedAt;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\CreatedAt;
+use Symfony\Base\Shared\Domain\ValueObject\UpdatedAt;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
 
 class Comment
 {
@@ -72,6 +72,7 @@ class Comment
 
     /**
      * @throws InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
      */
     static public function fromPrimitives($data): Comment
     {

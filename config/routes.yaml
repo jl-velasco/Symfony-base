@@ -2,33 +2,57 @@ v1_controllers:
   resource: routes/v1/routes.yaml
   prefix: '/v1'
 
-app_user_upsert:
-  path: /api/user
-  controller: Symfony\Base\App\Controller\User\UserUpSertController
+app_user_put:
+  path: /api/user/{id}
+  controller: Symfony\Base\App\Controller\User\UserPutController
   defaults: { auth: false }
   methods:  [PUT]
 
-app_video_upsert:
-  path: /api/video
-  controller: Symfony\Base\App\Controller\Video\VideoUpSertController
+app_user_delete:
+  path: /api/user/{id}
+  controller: Symfony\Base\App\Controller\User\UserDeleteController
+  defaults: { auth: false }
+  methods:  [DELETE]
+
+app_user_get_info:
+  path: /api/user/{id}
+  controller: Symfony\Base\App\Controller\User\UserGetController
+  defaults: { auth: false }
+  methods:  [GET]
+
+app_video_put:
+  path: /api/video/{id}
+  controller: Symfony\Base\App\Controller\Video\VideoPutController
   defaults: { auth: false }
   methods:  [PUT]
 
 app_video_delete:
-  path: /api/video/delete
+  path: /api/video/{id}
   controller: Symfony\Base\App\Controller\Video\VideoDeleteController
   defaults: { auth: false }
   methods:  [DELETE]
 
+app_video_get:
+  path: /api/video/{id}
+  controller: Symfony\Base\App\Controller\Video\VideoGetController
+  defaults: { auth: false }
+  methods:  [GET]
+
 app_comment_get_list:
-  path: /api/video/comments
+  path: /api/comments/{videoId}
   controller: Symfony\Base\App\Controller\Comment\CommentGetListController
   defaults: { auth: false }
-  methods:  [POST]
+  methods:  [GET]
 
-app_comment_upsert:
-  path: /api/comment
-  controller: Symfony\Base\App\Controller\Comment\CommentUpSertController
+app_comment_put:
+  path: /api/comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\CommentPutController
   defaults: { auth: false }
   methods:  [PUT]
+
+app_comment_delete:
+  path: /api/comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\CommentDeleteController
+  defaults: { auth: false }
+  methods:  [DELETE]
 

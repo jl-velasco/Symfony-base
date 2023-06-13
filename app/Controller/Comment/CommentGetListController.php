@@ -3,29 +3,26 @@
 namespace Symfony\Base\App\Controller\Comment;
 
 use Symfony\Base\Comment\Application\GetListCommentUseCase;
-use Symfony\Base\Comment\Application\UpsertCommentUseCase;
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
-use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CommentGetListController
+final class CommentGetListController
 {
+    public function __construct(
+        private GetListCommentUseCase $useCase
+    )
+    {
+    }
+
     /**
      * @throws InvalidValueException
      */
-    public function __invoke(Request $request, GetListCommentUseCase $case): Response
+    public function __invoke(string $videoId, Request $request): Response
     {
-        $jsonData = $request->getContent();
-        $data = json_decode($jsonData, true);
-
-        $comments = $case->__invoke(
-            $data['videoId'] ?? ''
-        );
-
-        return new JsonResponse([
-            'comments' => $comments
-        ],Response::HTTP_CREATED);
+        return new JsonResponse($this->useCase->__invoke(
+            $videoId
+        )->toArray(),Response::HTTP_CREATED);
     }
 }

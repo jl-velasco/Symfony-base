@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
-use Symfony\Base\Shared\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 

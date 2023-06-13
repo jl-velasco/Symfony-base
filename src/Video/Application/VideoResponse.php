@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Aplication;
+namespace Symfony\Base\Video\Application;
 
-final class UserResponse
+final class VideoResponse
 {
     public function __construct(
         private readonly array $data,
@@ -17,8 +17,11 @@ final class UserResponse
     {
         return [
             'id' => $this->data['id'],
-            'email' => $this->data['email'],
             'name' => $this->data['name'],
+            'description' => $this->data['description'],
+            'url' => $this->data['url'],
+            'createdAt' => $this->data['created_at'],
+            'updatedAt' => $this->data['updated_at'],
         ];
     }
 }

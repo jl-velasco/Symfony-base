@@ -1,12 +1,12 @@
 <?php
 
-namespace Symfony\Base\App\Controller\Video;
+namespace Symfony\Base\App\Controller\Comment;
 
 use Symfony\Base\Video\Application\DeleteVideoUseCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class VideoDeleteController
+class CommentDeleteController
 {
     public function __construct(
         private readonly DeleteVideoUseCase $useCase

@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Symfony\Base\Comment\Infrastructure;
 
 use Doctrine\DBAL\Connection;
-use Symfony\Base\Comment\Domain\Exceptions\CommentNotFoundException;
-use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
-use Symfony\Base\Shared\ValueObject\Uuid;
 use Symfony\Base\Comment\Domain\Comment;
+use Symfony\Base\Comment\Domain\CommentCollection;
 use Symfony\Base\Comment\Domain\CommentRepository;
+use Symfony\Base\Comment\Domain\Exceptions\CommentNotFoundException;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
 
 class MySQLCommentRepository implements CommentRepository
 {
@@ -64,9 +65,9 @@ class MySQLCommentRepository implements CommentRepository
         return Comment::fromPrimitives($result);
     }
 
-    public function getByVideo(Uuid $id): array
+    public function getByVideo(Uuid $id): CommentCollection
     {
-        $result = [];
+        $result = new CommentCollection();
 
         try {
             $items = $this->connection->createQueryBuilder()
@@ -77,7 +78,7 @@ class MySQLCommentRepository implements CommentRepository
                 ->executeQuery()
                 ->fetchAllAssociative();
             foreach ($items as $item)
-                $result[] = Comment::fromPrimitives($item);
+                $result->add(Comment::fromPrimitives($item));
         } catch (\Exception $e) {
             throw new SqlConnectionException($e);
         }

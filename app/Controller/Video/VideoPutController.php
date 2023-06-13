@@ -1,30 +1,29 @@
 <?php
-declare(strict_types=1);
 
-namespace Symfony\Base\App\Controller\User;
+namespace Symfony\Base\App\Controller\Video;
 
 use Symfony\Base\App\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Base\Video\Application\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Base\User\Aplication\UpsertUserUseCase;
+use Symfony\Component\HttpFoundation\Response;
 
-final class UserPutController extends Controller
+final class VideoPutController extends Controller
 {
     public function __construct(
-        private readonly UpsertUserUseCase $useCase
+        private readonly UpsertVideoUseCase $useCase
     )
     {
     }
 
-    /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
         $data = $this->dataFromRequest($request);
         $this->useCase->__invoke(
             $id,
-            $data['email'] ?? '',
+            $data['userId'] ?? '',
             $data['name'] ?? '',
-            $data['password'] ?? '',
+            $data['description'] ?? '',
+            $data['url'] ?? ''
         );
 
         return new Response(status: Response::HTTP_OK);

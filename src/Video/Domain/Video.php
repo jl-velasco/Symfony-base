@@ -2,12 +2,13 @@
 
 namespace Symfony\Base\Video\Domain;
 
-use Symfony\Base\Shared\ValueObject\CreatedAt;
-use Symfony\Base\Shared\ValueObject\Description;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\UpdatedAt;
-use Symfony\Base\Shared\ValueObject\Url;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
+use Symfony\Base\Shared\Domain\ValueObject\CreatedAt;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\UpdatedAt;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Url;
 
 class Video
 {
@@ -94,6 +95,10 @@ class Video
         return $result;
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     */
     static public function fromPrimitives($data): Video
     {
         return new self(

@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\App\Controller\User;
+namespace Symfony\Base\App\Controller\Video;
 
 use Symfony\Base\App\Controller\Controller;
-use Symfony\Base\User\Aplication\GetUserUseCase;
+use Symfony\Base\Video\Application\GetVideoUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-final class UserGetController extends Controller
+final class VideoGetController extends Controller
 {
     public function __construct(
-        private readonly GetUserUseCase $useCase
+        private readonly GetVideoUseCase $useCase
     )
     {
     }

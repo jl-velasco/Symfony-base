@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -14,6 +15,9 @@ class DeleteUserUseCase
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(string $id): void
     {
         $this->repository->delete(new Uuid($id));

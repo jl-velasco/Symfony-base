@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Shared\ValueObject;
-
-use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
+namespace Symfony\Base\Shared\Domain\ValueObject;
 
 class UpdatedAt extends DateTimeValueObject
 {

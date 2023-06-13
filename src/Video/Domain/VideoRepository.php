@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Domain;
 
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 interface VideoRepository
 {

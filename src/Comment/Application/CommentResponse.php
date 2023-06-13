@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Aplication;
+namespace Symfony\Base\Comment\Application;
 
-final class UserResponse
+final class CommentResponse
 {
     public function __construct(
         private readonly array $data,
@@ -17,8 +17,9 @@ final class UserResponse
     {
         return [
             'id' => $this->data['id'],
-            'email' => $this->data['email'],
-            'name' => $this->data['name'],
+            'video_id' => $this->data['video_id'],
+            'message' => $this->data['comment'],
+            'createdAt' => $this->data['created_at'],
         ];
     }
 }

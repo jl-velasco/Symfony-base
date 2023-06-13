@@ -52,9 +52,22 @@ final class User
         return $this->updatedAt;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id()->value(),
+            'email' => $this->email()->value(),
+            'name' => $this->name()->value(),
+            'password' => $this->password()->value(),
+            'created_at' => (string)$this->createdAt(),
+            'updated_at' => (string)$this->updatedAt(),
+        ];
+    }
+
     /**
      * @param array<string, mixed> $user
      * @throws InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exceptions\InvalidValueException
      */
     public static function fromArray(array $user): self
     {
@@ -67,4 +80,5 @@ final class User
             $user['updated_at'] ? new Date($user['updated_at']) : null,
         );
     }
+
 }
