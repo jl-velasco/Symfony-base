@@ -1,9 +1,10 @@
 <?php
 
-namespace Symfony\Base\Shared\Domain\ValueObject;
+namespace Symfony\Base\Video\Domain;
 
 
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
 
 class Message extends StringValueObject
 {

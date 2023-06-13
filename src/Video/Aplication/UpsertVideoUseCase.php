@@ -30,8 +30,8 @@ class UpsertVideoUseCase
     {
         $this->mySqlVideoRepository->save(
             new Video(
-                new Uuid($userUuid),
                 new Uuid($uuid),
+                new Uuid($userUuid),
                 new Name($name),
                 new Description($description),
                 new Url($url)

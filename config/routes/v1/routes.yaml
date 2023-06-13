@@ -1,3 +1,13 @@
+comment_get:
+  path: /comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\CommentGetController
+  methods: GET
+
+comment_put:
+  path: /comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\CommentPutController
+  methods: PUT
+
 video_get:
   path: /video/{id}
   controller: Symfony\Base\App\Controller\Videos\VideoGetController

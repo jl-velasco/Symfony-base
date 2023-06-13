@@ -5,11 +5,11 @@ namespace Symfony\Base\Video\Infrastructure;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
-use Symfony\Base\Shared\Domain\ValueObject\Message;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exception\DBConnectionException;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentRepository;
+use Symfony\Base\Video\Domain\Message;
 
 class MySQLCommentRepository implements CommentRepository
 {
@@ -21,11 +21,15 @@ class MySQLCommentRepository implements CommentRepository
 
     public function save(Comment $comment): int
     {
-        if ($this->findById($comment->id())) {
-            return $this->update($comment);
-        }
+        try {
+            if ($this->findById($comment->id())) {
+                return $this->update($comment);
+            }
 
-        return $this->insert($comment);
+            return $this->insert($comment);
+        } catch (Exception $e) {
+            throw new DBConnectionException($e->getMessage());
+        }
     }
 
     /**
@@ -53,7 +57,7 @@ class MySQLCommentRepository implements CommentRepository
         return new Comment(
             new Uuid($result['id']),
             new Uuid($result['video_id']),
-            new Message($result['name']),
+            new Message($result['message']),
             new Date($result['created_at']),
             new Date($result['updated_at'])
         );

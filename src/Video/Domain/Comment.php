@@ -3,8 +3,6 @@
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Date;
-use Symfony\Base\Shared\Domain\ValueObject\Message;
-use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 final class Comment
@@ -41,5 +39,10 @@ final class Comment
     public function updatedAt(): ?Date
     {
         return $this->updatedAt;
+    }
+
+    public function equals(Comment $comment): bool
+    {
+        return ($this->id === $comment->id()) || ($this->message === $comment->message());
     }
 }

@@ -27,6 +27,6 @@ class UpsertVideoController
             $data['url']
         );
 
-        return new Response(Response::HTTP_CREATED);
+        return new Response(status: Response::HTTP_CREATED);
     }
 }
