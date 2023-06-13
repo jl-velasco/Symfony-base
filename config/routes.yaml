@@ -7,3 +7,33 @@ home_get:
   controller: Symfony\Base\App\Controller\Home\HomeGetWebController
   defaults: { auth: false }
   methods:  [GET]
+
+user_put:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserPutController
+  methods: PUT
+
+user_get:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserGetController
+  methods: GET
+
+user_delete:
+  path: /user/{id}
+  controller: Symfony\Base\App\Controller\User\UserDeleteController
+  methods: DELETE
+
+video_upsert:
+  path: /video/{uuid}
+  controller: Symfony\Base\App\Controller\Videos\UpsertVideoController
+  methods: PUT
+
+get_video:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Videos\GetVideoController
+  methods: GET
+
+delete_video:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Videos\DeleteVideoController
+  methods: DELETE

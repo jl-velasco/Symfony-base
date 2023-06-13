@@ -16,6 +16,6 @@ class SearchVideoUseCase
 
     public function __invoke(string $id): void
     {
-        $this->repository->search(new Uuid($id));
+        $this->repository->find(new Uuid($id));
     }
 }

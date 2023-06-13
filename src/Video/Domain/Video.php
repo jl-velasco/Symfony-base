@@ -55,4 +55,21 @@ final class Video
     {
         return $this->updatedAt;
     }
+
+    /**
+     * @param array<string, mixed> $user
+     * @throws InvalidValueException
+     */
+    public static function fromArray(array $user): self
+    {
+        return new self(
+            new Uuid($uuid),
+            new Uuid($userUuid),
+            new Name($name),
+            new Description($description),
+            new Url($url)
+            new Date($user['created_at']),
+            $user['updated_at'] ? new Date($user['updated_at']) : null,
+        );
+    }
 }

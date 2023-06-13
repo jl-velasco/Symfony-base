@@ -22,7 +22,6 @@ class MySQLVideoRepository implements VideoRepository
 
     public function save(Video $video): void
     {
-
         try {
             $this->connection->insert(
                 self::TABLE_VIDEO,

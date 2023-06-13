@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 final class Uuid
 {
@@ -44,7 +45,7 @@ final class Uuid
     private function validate(string $id): void
     {
         if (!self::isValid($id)) {
-//            throw new InvalidValueException(sprintf('<%s> does not allow the value <%s>.', Uuid::class, $id));
+            throw new InvalidValueException(sprintf('<%s> does not allow the value <%s>.', Uuid::class, $id));
         }
     }
 }
