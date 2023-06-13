@@ -22,3 +22,8 @@ get_video:
   path: /video/{id}
   controller: Symfony\Base\App\Controller\Videos\GetVideoController
   methods: GET
+
+insert_comment:
+  path: /comment/{id}
+  controller: Symfony\Base\App\Controller\Videos\InsertCommentController
+  method: POST

@@ -99,9 +99,20 @@ abstract class Collection implements Countable, IteratorAggregate
     }
 
     /** @throws \Exception */
-    public function each(callable $callback): void
+    public function each(callable $callback): array
     {
-        array_map($callback, (array) $this->getIterator());
+        return array_map($callback, (array) $this->getIterator());
+    }
+
+    public function firstOf(callable $callback): mixed
+    {
+        foreach ((array) $this->getIterator() as $current) {
+            if (call_user_func($callback, $current)) {
+                return $current;
+            }
+        }
+
+        return null;
     }
 
     abstract protected function type(): string;
