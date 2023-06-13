@@ -20,7 +20,7 @@ final class VideoFinder
      */
     public function __invoke(Uuid $id): Video
     {
-        $video = $this->repository->search($id);
+        $video = $this->repository->find($id);
 
         if ($video === null) {
             throw new VideoNotExistException((string) $id);

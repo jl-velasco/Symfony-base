@@ -22,12 +22,12 @@ class GetVideoUseCase
         $video = $this->finder->__invoke(new Uuid($id));
 
         return new VideoResponse(
-            $video->id()->value(),
-            $video->user_id()->value(),
+            $video->uuid()->value(),
+            $video->userUuid()->value(),
             $video->name()->value(),
             $video->description()->value(),
             $video->url()->value(),
-            $video->created_at()->value()
+            $video->createdAt()->value()
         );
     }
 }
