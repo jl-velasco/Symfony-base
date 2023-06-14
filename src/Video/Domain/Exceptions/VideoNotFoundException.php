@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symfony\Base\Video\Domain\Exceptions;
 
-class VideoNotFoundException extends \Exception
+use Exception;
+
+final class VideoNotFoundException extends Exception
 {
     public function __construct(string $id)
     {
-        parent::__construct(sprintf('Video with id <%s> not exist', $id));
+        parent::__construct(sprintf('Video with id <%s> does not exists', $id));
     }
 }

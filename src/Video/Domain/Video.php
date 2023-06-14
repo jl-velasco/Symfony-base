@@ -2,113 +2,82 @@
 
 namespace Symfony\Base\Video\Domain;
 
-use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
-use Symfony\Base\Shared\Domain\ValueObject\CreatedAt;
-use Symfony\Base\Shared\Domain\ValueObject\Name;
-use Symfony\Base\Shared\Domain\ValueObject\UpdatedAt;
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Exception;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class Video
+final class Video
 {
     public function __construct(
-        private readonly Uuid $id,
-        private readonly Uuid $userId,
+        private readonly Uuid $uuid,
+        private readonly Uuid $userUuid,
         private readonly Name $name,
         private readonly Description $description,
         private readonly Url $url,
-        private readonly ?CreatedAt $createdAt,
-        private readonly ?UpdatedAt $updatedAt,
-    )
-    {
+        private readonly ?Date $createdAt = new Date(),
+        private readonly ?Date $updatedAt = null,
+        private ?Comments $comments = new Comments([])
+    ) {
     }
 
-    /**
-     * @return Uuid
-     */
-    public function id(): Uuid
+    public function uuid(): Uuid
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    /**
-     * @return Name
-     */
+    public function userUuid(): Uuid
+    {
+        return $this->userUuid;
+    }
+
     public function name(): Name
     {
         return $this->name;
     }
 
-    /**
-     * @return Description
-     */
     public function description(): Description
     {
         return $this->description;
     }
 
-    /**
-     * @return Url
-     */
     public function url(): Url
     {
         return $this->url;
     }
 
-    /**
-     * @return CreatedAt
-     */
-    public function createdAt(): CreatedAt
+    public function createdAt(): ?Date
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return UpdatedAt
-     */
-    public function updatedAt(): UpdatedAt
+    public function updatedAt(): ?Date
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return Uuid
-     */
-    public function userId(): Uuid
+    public function comments(): Comments
     {
-        return $this->userId;
+        if (!$this->comments) {
+            $this->comments = new Comments([]);
+        }
+
+        return $this->comments;
     }
 
-    public function toPrimitives(): array
+    public function addComment(Uuid $id, CommentMessage $message): self
     {
-        $result = [
-            'id' => $this->id()->value(),
-            'user_id' => $this->userId()->value(),
-            'name' => $this->name()->value(),
-            'description' => $this->description()->value(),
-            'url' => $this->url()->value(),
-            'created_at' => (string)$this->createdAt(),
-            'updated_at' => (string)$this->updatedAt(),
-        ];
-
-        return $result;
+        $this->comments->add(new Comment($id, $this->uuid(), $message));
+        return $this;
     }
 
     /**
-     * @throws InvalidValueException
-     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     * @throws Exception
      */
-    static public function fromPrimitives($data): Video
+    public function newComments(Video $video): Comments
     {
-        return new self(
-            new Uuid($data['id']),
-            new Uuid($data['user_id']),
-            new Name($data['name']),
-            new Description($data['description']),
-            new Url($data['url']),
-            CreatedAt::fromPrimitive($data['created_at']),
-            UpdatedAt::fromPrimitive($data['updated_at']),
-        );
+        return $video->comments()->diff($this->comments());
     }
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Symfony\Base\Video\Domain;
 
@@ -7,9 +6,13 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 interface VideoRepository
 {
-    public function save(Video $video): Video;
+    public function save(Video $video): void;
 
-    public function search(Uuid $id): Video|null;
+    public function find(Uuid $uuid): ?Video;
 
-    public function delete(Uuid $id): void;
+    public function findByUserUuid(Uuid $userUuid): array;
+
+    public function delete(Uuid $uuid): void;
+
+    public function deleteByUserId(Uuid $id): void;
 }

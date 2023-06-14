@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UpsertVideoController
 {
     public function __construct(
-        private readonly UpsertVideoUseCase $upSertVideoUseCase
+        private readonly UpsertVideoUseCase $upsertVideoUseCase
     ) {
     }
 
@@ -19,7 +19,7 @@ class UpsertVideoController
 
         $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
-        $this->upSertVideoUseCase->__invoke(
+        $this->upsertVideoUseCase->__invoke(
             $uuid,
             $data['user_uuid'],
             $data['name'],
