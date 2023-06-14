@@ -3,6 +3,10 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber:
+            tags: ['symfony.base.domain_event_subscriber']
+
     Symfony\Base\App\Controller\:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
@@ -16,3 +20,13 @@ services:
     Symfony\Base\App\Listener\ApiExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }
+
+    Symfony\Base\Shared\Domain\Bus\Event\InMemorySymfonyEventBus:
+        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+        arguments: [ !tagged symfony.base.domain_event_subscriber ]
