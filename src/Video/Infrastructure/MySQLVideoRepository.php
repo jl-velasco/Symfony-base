@@ -214,4 +214,9 @@ class MySQLVideoRepository implements VideoRepository
             throw new PersistenceLayerException('Insert error: ' .  $e->getMessage());
         }
     }
+
+    public function deleteByUserId(Uuid $id): void
+    {
+      //TODO: Implement deleteByUserId() method.
+    }
 }

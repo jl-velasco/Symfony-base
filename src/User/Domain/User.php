@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Domain;
 
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-final class User
+final class User extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $id,
@@ -65,6 +66,16 @@ final class User
             new Password($user['password']),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
+        );
+    }
+
+    public function delete(): void
+    {
+        $this->record(
+            new UserDeleted(
+                $this->id()->value(),
+                $this->id()->value(),
+            )
         );
     }
 }
