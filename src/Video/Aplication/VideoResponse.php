@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
-use Symfony\Base\Shared\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+
 
 final class VideoResponse
 {

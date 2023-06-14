@@ -1,7 +1,9 @@
 <?php
 
 
-namespace Symfony\Base\Shared\ValueObject;
+namespace Symfony\Base\Shared\Domain\ValueObject;
+
+use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
 
 class Url extends StringValueObject
 {

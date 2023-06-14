@@ -1,7 +1,8 @@
 <?php
 
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\Video;
 
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,11 @@ class UpsertVideoController
     ) {
     }
 
-    public function __invoke(Request $request, string $uuid): Response
+    /**
+     * @throws \JsonException
+     * @throws InvalidValueException
+     */
+    public function __invoke(string $uuid, Request $request): Response
     {
         $content = $request->getContent();
 

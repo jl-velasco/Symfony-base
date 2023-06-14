@@ -3,11 +3,12 @@
 namespace Symfony\Base\Video\Domain;
 
 
-use Symfony\Base\Shared\ValueObject\Date;
-use Symfony\Base\Shared\ValueObject\Description;
-use Symfony\Base\Shared\ValueObject\Name;
-use Symfony\Base\Shared\ValueObject\Url;
-use Symfony\Base\Shared\ValueObject\Uuid;
+use Exception;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Description;
+use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 
 final class Video
@@ -18,12 +19,13 @@ final class Video
                                 private readonly Name        $name,
                                 private readonly Description $description,
                                 private readonly Url         $url,
-                                private readonly ?Date       $created_at= new Date(),
-                                private readonly ?Date       $updated_at= new  Date()
+                                private readonly ?Date       $createdAt= new Date(),
+                                private readonly ?Date       $updatedAt= null,
+                                private ?Comments $comments= new Comments([]),
+
 
 
     ){
-
     }
 
 public function video() : Uuid{
@@ -48,10 +50,19 @@ public function video() : Uuid{
     }
     public function created() : Date
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
     public function updated() : Date
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
+    public function comments(): Comments
+    {
+        if (!$this->comments) {
+            $this->comments = new Comments([]);
+        }
+
+        return $this->comments;
+    }
+
 }

@@ -2,10 +2,13 @@ v1_controllers:
   resource: routes/v1/routes.yaml
   prefix: '/v1'
 
-home_get:
-  path: /
+video_get:
+  path: /video/{id}
   controller: Symfony\Base\App\Controller\Home\HomeGetWebController
   defaults: { auth: false }
   methods:  [GET]
 
-
+upsert-video:
+  path: /video/{uuid}
+  controller: Symfony\Base\App\Controller\Videos\UpsertVideoController
+  methods: PUT
