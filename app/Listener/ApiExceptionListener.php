@@ -23,6 +23,7 @@ class ApiExceptionListener
                 [
                     'code' => $this->exceptionCodeFor($exception),
                     'message' => $exception->getMessage(),
+                    'trace' => $exception->getTrace(),
                 ],
                 $this->exceptionHandler->statusCodeFor(\get_class($exception))
             )

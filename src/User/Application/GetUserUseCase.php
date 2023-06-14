@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Aplication;
+namespace Symfony\Base\User\Application;
 
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;

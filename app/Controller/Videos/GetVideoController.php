@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\Videos;
 
-use Symfony\Base\Video\Aplication\GetVideoUseCase;
+use Symfony\Base\Video\Application\GetVideoUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 

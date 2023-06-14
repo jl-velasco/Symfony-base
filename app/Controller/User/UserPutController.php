@@ -6,7 +6,7 @@ namespace Symfony\Base\App\Controller\User;
 use Symfony\Base\App\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Base\User\Aplication\UpsertUserUseCase;
+use Symfony\Base\User\Application\UpsertUserUseCase;
 
 final class UserPutController extends Controller
 {

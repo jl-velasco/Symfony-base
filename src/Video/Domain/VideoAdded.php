@@ -5,11 +5,11 @@ namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 
-class UserDeleted extends DomainEvent
+class VideoAdded extends DomainEvent
 {
     public function __construct(
         string $aggregateId,
-        private string $userId,
+        private string $url,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -19,13 +19,14 @@ class UserDeleted extends DomainEvent
 
     public static function eventName(): string
     {
-        return 'user.deleted';
+        return 'video.added';
     }
 
     public function toPrimitives(): array
     {
         return [
-            'user_id' => $this->userId,
+            'video_id' => $this->aggregateId(),
+            'url' => $this->url,
         ];
     }
 }

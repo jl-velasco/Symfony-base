@@ -21,7 +21,7 @@ class MySQLVideoRepository implements VideoRepository
 {
     private const TABLE_VIDEO = 'video';
 
-    private const TABLE_COMMENT = 'comment';
+    private const TABLE_COMMENT = 'comments';
 
     public function __construct(private readonly Connection $connection)
     {
@@ -217,6 +217,6 @@ class MySQLVideoRepository implements VideoRepository
 
     public function deleteByUserId(Uuid $id): void
     {
-      //TODO: Implement deleteByUserId() method.
+
     }
 }

@@ -7,21 +7,30 @@ namespace Symfony\Base\Video\Application;
 final class VideoResponse
 {
     public function __construct(
-        private readonly array $data,
+        private readonly string  $uuid,
+        private readonly string  $userUuid,
+        private readonly string  $name,
+        private readonly string  $description,
+        private readonly string  $url,
+        private readonly ?string $createdAt = null,
+        private readonly ?string $updatedAt = null
     )
     {
     }
 
-    /** @return array<string, string> */
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
-            'id' => $this->data['id'],
-            'name' => $this->data['name'],
-            'description' => $this->data['description'],
-            'url' => $this->data['url'],
-            'createdAt' => $this->data['created_at'],
-            'updatedAt' => $this->data['updated_at'],
+            'uuid' => $this->uuid,
+            'user_id' => $this->userUuid,
+            'name' => $this->name,
+            'description' => $this->description,
+            'url' => $this->url,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
         ];
     }
 }

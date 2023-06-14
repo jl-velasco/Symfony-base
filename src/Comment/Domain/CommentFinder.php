@@ -2,12 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Symfony\Base\Comment\Application;
+namespace Symfony\Base\Comment\Domain;
 
-use Symfony\Base\Comment\Domain\CommentRepository;
 use Symfony\Base\Comment\Domain\Exceptions\CommentNotFoundException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Video;
 
 
 final class CommentFinder
@@ -16,14 +14,14 @@ final class CommentFinder
     {
     }
 
-    public function __invoke(Uuid $id): Video
+    public function __invoke(Uuid $id): Comment
     {
-        $video = $this->repository->search($id);
+        $comment = $this->repository->search($id);
 
-        if ($video === null) {
+        if ($comment === null) {
             throw new CommentNotFoundException((string) $id);
         }
 
-        return $video;
+        return $comment;
     }
 }

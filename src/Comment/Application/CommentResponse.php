@@ -7,7 +7,10 @@ namespace Symfony\Base\Comment\Application;
 final class CommentResponse
 {
     public function __construct(
-        private readonly array $data,
+        private readonly string $id,
+        private readonly string $videoId,
+        private readonly string $message,
+        private readonly string $created_at,
     )
     {
     }
@@ -16,10 +19,10 @@ final class CommentResponse
     public function toArray(): array
     {
         return [
-            'id' => $this->data['id'],
-            'video_id' => $this->data['video_id'],
-            'message' => $this->data['comment'],
-            'createdAt' => $this->data['created_at'],
+            'id' => $this->id,
+            'video_id' => $this->videoId,
+            'message' => $this->message,
+            'createdAt' => $this->created_at,
         ];
     }
 }

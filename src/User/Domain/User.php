@@ -78,4 +78,16 @@ final class User extends AggregateRoot
             )
         );
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id()->value(),
+            'email' => $this->email()->value(),
+            'name' => $this->name()->value(),
+            'password' => $this->password()->value(),
+            'created_at' => $this->createdAt()->toFormat("Y-m-d H:i:s"),
+            'updated_at' => $this->createdAt()->toFormat("Y-m-d H:i:s"),
+        ];
+    }
 }
