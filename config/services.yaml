@@ -21,7 +21,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }
 
-    Symfony\Base\Shared\Domain\Bus\Event\InMemorySymfonyEventBus:
+    Symfony\Base\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
         arguments: [ !tagged symfony.base.domain_event_subscriber ]
         lazy: true
 
