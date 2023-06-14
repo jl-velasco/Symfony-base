@@ -22,3 +22,9 @@ user_getVideo:
     path: /video/{id}
     controller: Symfony\Base\App\Controller\Video\VideoGetController
     methods: GET
+
+comment_put:
+  path: /comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\CommentPutController
+  methods: PUT
+

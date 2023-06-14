@@ -16,6 +16,7 @@ final class Video
         private readonly Name $name,
         private readonly Description $description,
         private readonly Url $url,
+        private readonly ?Comment $mensaje = null,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null
     ) {
@@ -54,5 +55,10 @@ final class Video
     public function updatedAt(): ?Date
     {
         return $this->updatedAt;
+    }
+
+    public function comment(): ?\Comment
+    {
+        return $this->comment();
     }
 }
