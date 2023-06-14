@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotExistException;
+use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 
 final class VideoFinder
 {
@@ -14,14 +14,13 @@ final class VideoFinder
     }
 
     /**
-     * @throws VideoNotExistException
+     * @throws VideoNotFoundException
      */
     public function __invoke(Uuid $id): Video
     {
         $video = $this->repository->find($id);
-
         if ($video === null) {
-            throw new VideoNotExistException((string) $id);
+            throw new VideoNotFoundException((string) $id);
         }
 
         return $video;
