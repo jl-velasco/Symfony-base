@@ -9,10 +9,11 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 final class Comment
 {
 
-    public function __construct(private readonly Uuid           $id,
-                                private readonly Uuid           $videoId,
-                                private readonly CommentMessage $message)
-    {
+    public function __construct(
+        private readonly Uuid $id,
+        private readonly Uuid $videoId,
+        private readonly CommentMessage $message
+    ) {
     }
 
     public function equals(Comment $comment): bool

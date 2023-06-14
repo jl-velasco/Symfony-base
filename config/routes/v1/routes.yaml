@@ -1,8 +1,3 @@
-upsert-video:
-  path: /video/{uuid}
-  controller: Symfony\Base\App\Controller\Videos\UpsertVideo
-  methods: PUT
-  
 user_put:
   path: /user/{id}
   controller: Symfony\Base\App\Controller\User\UserPutController
@@ -23,7 +18,12 @@ get_video:
   controller: Symfony\Base\App\Controller\Videos\GetVideoController
   methods: GET
 
+upsert_video:
+  path: /video/{uuid}
+  controller: Symfony\Base\App\Controller\Videos\UpsertVideoController
+  methods: PUT
+
 insert_comment:
   path: /comment/{id}
   controller: Symfony\Base\App\Controller\Videos\InsertCommentController
-  method: POST
+  methods: POST

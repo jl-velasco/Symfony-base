@@ -10,7 +10,7 @@ use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Video\Domain\VideoFinder;
 use Symfony\Base\Video\Domain\VideoRepository;
 
-final class InsertComment
+final class InsertCommentUseCase
 {
     public function __construct(private readonly VideoFinder $videoFinder, private readonly VideoRepository $repository)
     {

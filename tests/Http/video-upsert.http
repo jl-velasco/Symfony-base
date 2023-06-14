@@ -4,15 +4,43 @@ Accept: application/json
 
 ###
 
-### Upsert video
-PUT GET {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
+### Upsert User
+PUT {{host}}/{{version}}/user/a95c0896-1d05-4785-95ec-a7bc0229f353
 Content-Type: application/json
 
 {
-    "user_uuid": "556502d7-c95f-444e-b690-1870a1d83b22",
+  "name": "Pepe",
+  "email": "eb130443s1@2eaeddf.com",
+  "password": "123456"
+}
+
+### Upsert video
+PUT {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
+Content-Type: application/json
+
+{
+    "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
     "name": "Video 2",
     "description": "Descvription video 2",
     "url": "https://www.uuidgenerator.net"
+}
+
+### Insert Comment
+POST {{host}}/{{version}}/comment/276700e0-496d-4f23-9704-d9b51e2f88ce
+Content-Type: application/json
+
+{
+    "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
+    "message": "Comentario del video"
+}
+
+### Other Comment
+POST {{host}}/{{version}}/comment/a95c0896-1d05-4785-95ec-a7bc0229f354
+Content-Type: application/json
+
+{
+    "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
+    "message": "Comentario del video 2"
 }
 
 ###

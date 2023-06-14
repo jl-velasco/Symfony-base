@@ -6,7 +6,7 @@ namespace Symfony\Base\App\Controller\Videos;
 
 use JsonException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
-use Symfony\Base\Video\Aplication\InsertComment;
+use Symfony\Base\Video\Aplication\InsertCommentUseCase;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ final class InsertCommentController
         'message',
     ];
 
-    public function __construct(private readonly InsertComment $useCase)
+    public function __construct(private readonly InsertCommentUseCase $useCase)
     {
     }
 

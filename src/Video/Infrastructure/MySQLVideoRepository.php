@@ -11,14 +11,17 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
+use Symfony\Base\Video\Domain\Comment;
+use Symfony\Base\Video\Domain\CommentMessage;
+use Symfony\Base\Video\Domain\Comments;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 
 class MySQLVideoRepository implements VideoRepository
 {
-    public const TABLE_VIDEO = 'video';
+    private const TABLE_VIDEO = 'video';
 
-    public const TABLE_COMMENTS = 'comments';
+    private const TABLE_COMMENT = 'comment';
 
     public function __construct(private readonly Connection $connection)
     {
@@ -37,21 +40,25 @@ class MySQLVideoRepository implements VideoRepository
 
         $this->update($video);
         $comments = $originalVideo->newComments($video);
-        $this->connection->createQueryBuilder()
-            ->insert(self::TABLE_COMMENTS)
-            ->set('id', ':id')
-            ->set('video_id', ':video')
-            ->set('message', ':message')
-            ->setParameters($comments->each(
-                static function ($comment) {
-                    return [
+        $comments->each(
+            function ($comment) {
+                $this->connection->createQueryBuilder()
+                    ->insert(self::TABLE_COMMENT)
+                    ->values(
+                        [
+                            'id' => ':id',
+                            'video_id' => ':video_id',
+                            'message' => ':message'
+                        ]
+                    )
+                    ->setParameters([
                         'id' => $comment->id(),
-                        'video' => $comment->video(),
+                        'video_id' => $comment->videoId(),
                         'message' => $comment->message(),
-                    ];
-                }
-            ))
-            ->executeQuery();
+                    ])
+                    ->executeStatement();
+            }
+        );
     }
 
     /**
@@ -67,6 +74,14 @@ class MySQLVideoRepository implements VideoRepository
                 ->setParameter('id', $uuid->value())
                 ->executeQuery()
                 ->fetchAssociative();
+
+            $comments = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_COMMENT)
+                ->where('video_id = :video_id')
+                ->setParameter('video_id', $uuid->value())
+                ->executeQuery()
+                ->fetchAllAssociative();
         }
         catch (Exception $e) {
             throw new PersistenceLayerException('Query error: ' .  $e->getMessage());
@@ -83,7 +98,19 @@ class MySQLVideoRepository implements VideoRepository
             new Description($result['description']),
             new Url($result['url']),
             new Date($result['created_at']),
-            new Date($result['updated_at'])
+            new Date($result['updated_at']),
+            new Comments(
+                array_map(
+                    static function ($comment) {
+                        return new Comment(
+                            new Uuid($comment['id']),
+                            new Uuid($comment['video_id']),
+                            new CommentMessage($comment['message']),
+                        );
+                    },
+                    $comments
+                )
+            )
         );
     }
 
@@ -127,6 +154,11 @@ class MySQLVideoRepository implements VideoRepository
      */
     public function delete(Uuid $uuid): void
     {
+        $this->connection->delete(
+            self::TABLE_COMMENT,
+            ['video_id' => $uuid->value()]
+        );
+
         $this->connection->delete(
             self::TABLE_VIDEO,
             ['id' => $uuid->value()]
@@ -173,6 +205,7 @@ class MySQLVideoRepository implements VideoRepository
                     'id' => $video->uuid(),
                     'name' => $video->name(),
                     'description' => $video->description(),
+                    'url' => $video->url(),
                     'updated_at' => new Date(),
                 ])
                 ->executeQuery();

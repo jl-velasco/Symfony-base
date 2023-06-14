@@ -78,6 +78,6 @@ final class Video
      */
     public function newComments(Video $video): Comments
     {
-        return $this->comments()->diff($video->comments());
+        return $video->comments()->diff($this->comments());
     }
 }

@@ -7,7 +7,7 @@ namespace Symfony\Base\Video\Aplication;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\VideoFinder;
 
-final class GetVideo
+final class GetVideoUseCase
 {
     public function __construct(private readonly VideoFinder $finder)
     {
