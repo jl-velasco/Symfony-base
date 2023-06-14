@@ -105,7 +105,7 @@ class MySQLVideoRepository implements VideoRepository
                         return new Comment(
                             new Uuid($comment['id']),
                             new Uuid($comment['video_id']),
-                            new CommentMessage($comment['message']),
+                            new CommentMessage($comment['comment']),
                         );
                     },
                     $comments

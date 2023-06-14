@@ -32,7 +32,8 @@ Content-Type: application/json
   "userId": "d8745145-6d90-4f3c-a77b-d37d713a8135",
   "name": "Test video",
   "description": "Test description",
-  "url": "https://youtube.com"
+  "url": "https://youtube.com",
+  "comments": []
 }
 
 ### DELETE VIDEO
