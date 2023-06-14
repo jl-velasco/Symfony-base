@@ -13,4 +13,6 @@ interface VideoRepository
     public function findByUserUuid(Uuid $userUuid): array;
 
     public function delete(Uuid $uuid): void;
+
+    public function deleteByUserId(Uuid $id): void;
 }
