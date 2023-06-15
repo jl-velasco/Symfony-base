@@ -19,7 +19,9 @@ final class Video
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
-        private ?Comments $comments = new Comments([])
+        private ?Comments $comments = new Comments([]),
+        // TODO: Mover esto a User
+        private ?int $videosCount = null
     ) {
     }
 
@@ -58,6 +60,11 @@ final class Video
         return $this->updatedAt;
     }
 
+    public function videosCount(): ?int
+    {
+        return $this->videosCount;
+    }
+
     public function comments(): Comments
     {
         if (!$this->comments) {
@@ -79,5 +86,17 @@ final class Video
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
+    }
+
+    public function delete(): void
+    {
+        // TODO: Aclarar en que punto decrementamos el videosCount
+        $this->videosCount--;
+        $this->record(
+            new VideoDeleted(
+                $this->id()->value(),
+                $this->id()->value(),
+            )
+        );
     }
 }
