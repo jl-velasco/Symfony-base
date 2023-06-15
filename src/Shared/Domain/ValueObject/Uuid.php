@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 final class Uuid
 {

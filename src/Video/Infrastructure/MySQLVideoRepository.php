@@ -11,6 +11,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
+use Symfony\Base\User\Domain\VideoDeleted;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
@@ -64,14 +65,14 @@ class MySQLVideoRepository implements VideoRepository
     /**
      * @throws PersistenceLayerException|InvalidValueException
      */
-    public function find(Uuid $uuid): ?Video
+    public function find(Uuid $videoId): ?Video
     {
         try {
             $result = $this->connection->createQueryBuilder()
                 ->select('*')
                 ->from(self::TABLE_VIDEO)
                 ->where('id = :id')
-                ->setParameter('id', $uuid->value())
+                ->setParameter('id', $videoId->value())
                 ->executeQuery()
                 ->fetchAssociative();
 
@@ -79,7 +80,7 @@ class MySQLVideoRepository implements VideoRepository
                 ->select('*')
                 ->from(self::TABLE_COMMENT)
                 ->where('video_id = :video_id')
-                ->setParameter('video_id', $uuid->value())
+                ->setParameter('video_id', $videoId->value())
                 ->executeQuery()
                 ->fetchAllAssociative();
         }
@@ -118,13 +119,13 @@ class MySQLVideoRepository implements VideoRepository
      * @throws InvalidValueException
      * @throws Exception
      */
-    public function findByUserUuid(Uuid $userUuid): array
+    public function findByUserUuid(Uuid $videoId): array
     {
         $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
             ->where('user_id = :user_id')
-            ->setParameter('user_id', $userUuid->value())
+            ->setParameter('user_id', $videoId->value())
             ->executeQuery()
             ->fetchAssociative();
 
@@ -152,16 +153,16 @@ class MySQLVideoRepository implements VideoRepository
     /**
      * @throws Exception
      */
-    public function delete(Uuid $uuid): void
+    public function delete(Uuid $videoId): void
     {
         $this->connection->delete(
             self::TABLE_COMMENT,
-            ['video_id' => $uuid->value()]
+            ['video_id' => $videoId->value()]
         );
 
         $this->connection->delete(
             self::TABLE_VIDEO,
-            ['id' => $uuid->value()]
+            ['id' => $videoId->value()]
         );
     }
 
@@ -215,8 +216,10 @@ class MySQLVideoRepository implements VideoRepository
         }
     }
 
-    public function deleteByUserId(Uuid $id): void
+    public function deleteByUserId(Uuid $videoId): void
     {
       //TODO: Implement deleteByUserId() method.
     }
+
+
 }

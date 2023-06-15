@@ -1,14 +1,14 @@
 <?php
-declare(strict_types=1);
 
-namespace Symfony\Base\App\Controller\User;
+namespace Symfony\Base\App\Controller\Video;
 
 use Symfony\Base\User\Aplication\DeleteUserUseCase;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-final class UserDeleteController
+class VideoDeleteController
 {
+
     public function __construct(
         private readonly DeleteUserUseCase $useCase
     )

@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\Shared\Domain\Bus\Event;
 
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Video;
 
 abstract class DomainEvent
 {
@@ -14,7 +15,7 @@ abstract class DomainEvent
         private ?string $eventId = null,
         private ?string $occurredOn = null,
     ) {
-        $this->eventId = $eventId ?: Uuid::random()->value();
+        $this->eventId = $eventId ?: Video::random()->value();
         $this->occurredOn = $occurredOn ?: (new Date())->stringDateTime();
     }
 

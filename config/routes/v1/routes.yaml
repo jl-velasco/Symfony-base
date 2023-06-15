@@ -15,15 +15,20 @@ user_delete:
 
 get_video:
   path: /video/{id}
-  controller: Symfony\Base\App\Controller\Videos\GetVideoController
+  controller: Symfony\Base\App\Controller\Video\GetVideoController
   methods: GET
 
 upsert_video:
   path: /video/{uuid}
-  controller: Symfony\Base\App\Controller\Videos\UpsertVideoController
+  controller: Symfony\Base\App\Controller\Video\UpsertVideoController
   methods: PUT
 
 insert_comment:
   path: /comment/{id}
-  controller: Symfony\Base\App\Controller\Videos\InsertCommentController
+  controller: Symfony\Base\App\Controller\Video\InsertCommentController
   methods: POST
+
+video_delete:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\VideoDeleteController
+  methods: DELETE

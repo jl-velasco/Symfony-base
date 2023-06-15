@@ -20,9 +20,7 @@ class MySQLUserRepository implements UserRepository
     {
     }
 
-    /**
-     * @throws Exception
-     */
+
     public function search(Uuid $id): User|null
     {
         $user = $this->connection

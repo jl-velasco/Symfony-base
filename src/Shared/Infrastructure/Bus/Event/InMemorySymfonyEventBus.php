@@ -26,6 +26,8 @@ class InMemorySymfonyEventBus implements EventBus
                 ),
             ]
         );
+
+
     }
 
     public function publish(DomainEvent ...$events): void

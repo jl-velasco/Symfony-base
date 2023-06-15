@@ -6,7 +6,7 @@ namespace Symfony\Base\Tests\Unit\User\Aplication;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Video;
 use Symfony\Base\User\Aplication\GetUserUseCase;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -35,7 +35,7 @@ class GetUserUseCaseTest extends TestCase
      */
     public function whenUserDoesNotExistRaisesResourceNotFoundException(): void
     {
-        $uuid = Uuid::random();
+        $uuid = Video::random();
         $this->repository
             ->expects(self::once())
             ->method('search')

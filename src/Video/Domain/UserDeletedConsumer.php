@@ -18,4 +18,5 @@ class UserDeletedConsumer implements DomainEventSubscriber
     {
         return [UserDeleted::class];
     }
+
 }

@@ -10,8 +10,8 @@ final class Comment
 {
 
     public function __construct(
-        private readonly Uuid $id,
-        private readonly Uuid $videoId,
+        private readonly Uuid          $id,
+        private readonly Uuid         $videoId,
         private readonly CommentMessage $message
     ) {
     }

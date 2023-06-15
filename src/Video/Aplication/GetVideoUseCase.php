@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Video;
 use Symfony\Base\Video\Domain\VideoFinder;
 
 final class GetVideoUseCase
@@ -15,7 +15,7 @@ final class GetVideoUseCase
 
     public function __invoke(string $id): VideoResponse
     {
-        $video = $this->finder->__invoke(new Uuid($id));
+        $video = $this->finder->__invoke(new Video($id));
         return new VideoResponse(
             $video->uuid()->value(),
             $video->userUuid()->value(),

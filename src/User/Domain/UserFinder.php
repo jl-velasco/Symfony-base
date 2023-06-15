@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\User\Domain;
 
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\ValueObject\Video;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 
 final class UserFinder
@@ -16,7 +16,7 @@ final class UserFinder
     /**
      * @throws UserNotExistException
      */
-    public function __invoke(Uuid $id): User
+    public function __invoke(Video $id): User
     {
         $user = $this->repository->search($id);
 

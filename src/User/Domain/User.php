@@ -10,15 +10,16 @@ use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
+
 final class User extends AggregateRoot
 {
     public function __construct(
-        private readonly Uuid $id,
-        private readonly Email $email,
-        private readonly Name $name,
+        private readonly Uuid   $id,
+        private readonly Email    $email,
+        private readonly Name     $name,
         private readonly Password $password,
-        private readonly ?Date $createdAt = new Date(),
-        private readonly ?Date $updatedAt = null
+        private readonly ?Date    $createdAt = new Date(),
+        private readonly ?Date    $updatedAt = null
     )
     {
     }
@@ -69,6 +70,9 @@ final class User extends AggregateRoot
         );
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function delete(): void
     {
         $this->record(
