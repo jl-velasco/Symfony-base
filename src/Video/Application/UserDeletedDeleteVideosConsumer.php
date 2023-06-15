@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Application;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;

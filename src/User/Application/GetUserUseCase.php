@@ -25,6 +25,6 @@ class GetUserUseCase
     {
         $user = $this->finder->__invoke(new Uuid($id));
 
-        return new UserResponse($user->toArray());
+        return new UserResponse($user);
     }
 }

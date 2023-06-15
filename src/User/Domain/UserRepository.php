@@ -15,4 +15,6 @@ interface UserRepository
     public function searchByEmail(Email $email): User|null;
 
     public function delete(Uuid $id): void;
+    public function incrementVideo(Uuid $id): void;
+    public function decrementVideo(Uuid $id): void;
 }

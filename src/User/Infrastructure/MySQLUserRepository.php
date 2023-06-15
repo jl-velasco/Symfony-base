@@ -101,4 +101,34 @@ class MySQLUserRepository implements UserRepository
             throw new SqlConnectionException($e);
         }
     }
+
+    public function incrementVideo(Uuid $id): void
+    {
+        if (is_null($this->search($id)))
+            throw new UserNotExistException(sprintf('User not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE;
+            $uuid = $id->value();
+            $sql = "update {$table} set videoCount = videoCount + 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+    }
+
+    public function decrementVideo(Uuid $id): void
+    {
+        if (is_null($this->search($id)))
+            throw new UserNotExistException(sprintf('User not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE;
+            $uuid = $id->value();
+            $sql = "update {$table} set videoCount = videoCount - 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+    }
 }

@@ -87,7 +87,7 @@ final class Video extends AggregateRoot
         $this->record(
             new VideoAdded(
                 $this->uuid()->value(),
-                $this->url()->value(),
+                $this->userUuid()->value(),
             )
         );
     }
@@ -97,7 +97,7 @@ final class Video extends AggregateRoot
         $this->record(
             new VideoDeleted(
                 $this->uuid()->value(),
-                $this->url()->value(),
+                $this->userUuid()->value(),
             )
         );
     }
