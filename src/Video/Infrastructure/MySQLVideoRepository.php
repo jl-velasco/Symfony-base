@@ -126,7 +126,7 @@ class MySQLVideoRepository implements VideoRepository
             ->where('user_id = :user_id')
             ->setParameter('user_id', $userUuid->value())
             ->executeQuery()
-            ->fetchAssociative();
+            ->fetchAllAssociative();
 
         if (!$result) {
             return [];
@@ -215,8 +215,15 @@ class MySQLVideoRepository implements VideoRepository
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws InvalidValueException
+     */
     public function deleteByUserId(Uuid $id): void
     {
-
+        $videos = $this->findByUserUuid($id);
+        foreach ($videos as $video) {
+            $this->delete($video->uuid());
+        }
     }
 }

@@ -74,7 +74,7 @@ final class User extends AggregateRoot
         $this->record(
             new UserDeleted(
                 $this->id()->value(),
-                $this->id()->value(),
+                $this->id(),
             )
         );
     }
