@@ -18,8 +18,6 @@ final class Version20230608181255_create_table_user extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->down($schema);
-
         $table = $schema->createTable(self::TABLE_NAME);
         $table->addColumn('id', 'string', ['notnull' => true]);
         $table->addColumn('email', 'string', ['notnull' => true]);

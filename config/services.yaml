@@ -21,7 +21,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus:
+    Symfony\Base\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
         arguments: [ !tagged symfony.base.domain_event_subscriber ]
         lazy: true
 
@@ -30,3 +30,29 @@ services:
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
         arguments: [ !tagged symfony.base.domain_event_subscriber ]
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMqDomainEventsConsumer:
+        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqConnection:
+        arguments:
+            $exchangeName: '%env(RABBITMQ_EXCHANGE)%'
+
+    PhpAmqpLib\Connection\AMQPStreamConnection:
+        arguments:
+            $host: '%env(RABBITMQ_HOST)%'
+            $port: '%env(RABBITMQ_PORT)%'
+            $user: '%env(RABBITMQ_USER)%'
+            $password: '%env(RABBITMQ_PASSWORD)%'
+            $vhost: '%env(RABBITMQ_VHOST)%'
+    PhpAmqpLib\Connection\AbstractConnection: '@PhpAmqpLib\Connection\AMQPStreamConnection'
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer: ~
+    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus: ~
+    Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus'
+
+    Symfony\Base\App\Command\LaunchRabbitMqConsumerCommand:
+        arguments:
+            $consumerList: !tagged symfony.base.domain_event_subscriber
+        tags:
+            - { name: rabbit.command }
