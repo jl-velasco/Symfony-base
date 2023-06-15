@@ -11,6 +11,7 @@ final class Version20230608201254_create_table_video extends AbstractMigration
 {
     private const TABLE_VIDEO = 'video';
     private const TABLE_COMMENTS = 'comment';
+    private const TABLE_USER = 'user';
 
     public function getDescription(): string
     {
@@ -40,6 +41,18 @@ final class Version20230608201254_create_table_video extends AbstractMigration
         $table->addForeignKeyConstraint(self::TABLE_VIDEO, ['video_id'], ['id']);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['id']);
+
+        $table = $schema->createTable(self::TABLE_USER);
+        $table->addColumn('id', 'string', ['notnull' => true]);
+        $table->addColumn('email', 'string', ['notnull' => true]);
+        $table->addColumn('name', 'string', ['notnull' => true]);
+        $table->addColumn('password', 'string', ['notnull' => true]);
+        $table->addColumn('video_counter', 'int', ['notnull' => true, 'default' => 0]);
+        $table->addColumn('created_at', 'datetimetz_immutable', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
+        $table->addColumn('updated_at', 'datetimetz_immutable', ['notnull' => false]);
+        $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['id']);
+        $table->addUniqueIndex(['email']);
     }
 
     public function down(Schema $schema): void
