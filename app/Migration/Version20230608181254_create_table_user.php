@@ -23,6 +23,7 @@ final class Version20230608181254_create_table_user extends AbstractMigration
         $table->addColumn('email', 'string', ['notnull' => true]);
         $table->addColumn('name', 'string', ['notnull' => true]);
         $table->addColumn('password', 'string', ['notnull' => true]);
+        $table->addColumn('count_video', 'integer', ['notnull' => false]);
         $table->addColumn('created_at', 'datetimetz_immutable', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'datetimetz_immutable', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
