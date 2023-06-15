@@ -31,6 +31,20 @@ services:
       retries: 10
     command: [ "--default-authentication-plugin=mysql_native_password" ]
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: symfony_base_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_VHOST: /symfony_base
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - queue_system_local:/var/lib/rabbitmq/
+    ports:
+      - "5672:5672"
+      - "5673:5673"
+      - "15672:15672"
 
 volumes:
   data_base_local:
+  queue_system_local:
