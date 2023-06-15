@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\Video;
 
 use JsonException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\Video;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Base\Video\Aplication\UpsertVideoUseCase;

@@ -12,4 +12,6 @@ interface UserRepository
     public function search(Uuid $id): ?User;
 
     public function delete(Uuid $id): void;
+
+    public function findUserStats(User $user): ?Stats;
 }

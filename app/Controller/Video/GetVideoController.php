@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\Video;
 
 use Symfony\Base\Video\Aplication\GetVideoUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Symfony\Base\Shared\Domain\Bus\Event;
@@ -8,7 +9,6 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 abstract class DomainEvent
 {
-    /** @throws InvalidValueException */
     public function __construct(
         private readonly string $aggregateId,
         private ?string $eventId = null,

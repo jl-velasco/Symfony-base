@@ -40,6 +40,6 @@ final class DomainEventMapping
 
     private function eventNameExtractor(): callable
     {
-        return static fn (string $eventClass): string => $eventClass::eventName();
+        return static fn (string $eventClass): string => call_user_func([$eventClass, 'eventName']);
     }
 }

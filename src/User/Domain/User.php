@@ -18,7 +18,8 @@ final class User extends AggregateRoot
         private readonly Name $name,
         private readonly Password $password,
         private readonly ?Date $createdAt = new Date(),
-        private readonly ?Date $updatedAt = null
+        private readonly ?Date $updatedAt = null,
+        private ?Stats $stats = null
     )
     {
     }
@@ -51,6 +52,20 @@ final class User extends AggregateRoot
     public function updatedAt(): ?Date
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Stats
+     */
+    public function stats(): Stats
+    {
+        return $this->stats ?? new Stats($this->id);
+    }
+
+    public function withStats(Stats $stats): User
+    {
+        $this->stats = $stats;
+        return $this;
     }
 
     /**

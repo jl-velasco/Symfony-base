@@ -27,3 +27,8 @@ insert_comment:
   path: /comment/{id}
   controller: Symfony\Base\App\Controller\Videos\InsertCommentController
   methods: POST
+
+delete_video:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\VideoDeleteController
+  methods: DELETE
