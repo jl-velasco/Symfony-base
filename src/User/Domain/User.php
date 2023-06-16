@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Domain;
 
+use phpseclib3\Math\PrimeField\Integer;
 use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
+use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 final class User extends AggregateRoot
@@ -15,10 +17,11 @@ final class User extends AggregateRoot
     public function __construct(
         private readonly Uuid $id,
         private readonly Email $email,
-        private readonly Name $name,
+        private Name $name,
         private readonly Password $password,
         private readonly ?Date $createdAt = new Date(),
-        private readonly ?Date $updatedAt = null
+        private readonly ?Date $updatedAt = null,
+        public int $countVideo = 0
     )
     {
     }
@@ -48,6 +51,12 @@ final class User extends AggregateRoot
         return $this->createdAt;
     }
 
+    public function countVideo(): Int
+    {
+        return $this->countVideo;
+    }
+
+
     public function updatedAt(): ?Date
     {
         return $this->updatedAt;
@@ -66,6 +75,8 @@ final class User extends AggregateRoot
             new Password($user['password']),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
+            $user['count_video']
+
         );
     }
 
@@ -78,4 +89,5 @@ final class User extends AggregateRoot
             )
         );
     }
+
 }

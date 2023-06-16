@@ -24,7 +24,7 @@ upsert_video:
   methods: PUT
 
 video_delete:
-  path: /user/{id}
+  path: /user/video_delete/{id}
   controller: Symfony\Base\App\Controller\Videos\VideosDeleteController
   methods: DELETE
 

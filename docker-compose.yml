@@ -3,14 +3,17 @@ version: '3'
 services:
   base:
     container_name: symfony_base
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile-dev
+    image: symfony-base_base:latest
+#    build:
+#      context: .
+#      dockerfile: ./docker/Dockerfile-dev
     volumes:
       - ./:/var/www
       - ./var/log:/var/log
     ports:
       - "8001:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   db:
     container_name: symfony_base_db

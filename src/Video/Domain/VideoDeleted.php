@@ -3,12 +3,13 @@
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 class VideoDeleted extends DomainEvent
 {
     public function __construct(
         string $aggregateId,
-        private string $videoId,
+        private readonly Uuid $userId,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -18,7 +19,6 @@ class VideoDeleted extends DomainEvent
 
     public static function eventName(): string
     {
-        // TODO: Implement eventName() method.
         return 'user.deleted';
     }
 
@@ -26,7 +26,9 @@ class VideoDeleted extends DomainEvent
     {
         // TODO: Implement toPrimitives() method.
         return [
-            'video_id' => $this->videoId,
+            'user_id' => $this->aggregateId(),
+            'video_id' => $this->aggregateId()
+
         ];
     }
 }

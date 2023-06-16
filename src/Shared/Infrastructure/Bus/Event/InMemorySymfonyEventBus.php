@@ -33,7 +33,8 @@ class InMemorySymfonyEventBus implements EventBus
         foreach ($events as $event) {
             try {
                 $this->bus->dispatch($event);
-            } catch (NoHandlerForMessageException) {
+            } catch (NoHandlerForMessageException $e) {
+                $a = 1;
             }
         }
     }

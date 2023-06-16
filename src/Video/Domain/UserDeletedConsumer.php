@@ -23,6 +23,7 @@ class UserDeletedConsumer implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
+        // TODO VIDEO CLASS
         return [UserDeleted::class];
     }
 }

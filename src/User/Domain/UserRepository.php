@@ -12,4 +12,11 @@ interface UserRepository
     public function search(Uuid $id): ?User;
 
     public function delete(Uuid $id): void;
+
+    public function increaseCountVideo(User $user) : void;
+
+    public function decreaseCountVideo(User $user) : void;
+
+    public function setCountVideo(User $user, int $countVideo) : void;
+
 }
