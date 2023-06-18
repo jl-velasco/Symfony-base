@@ -36,6 +36,7 @@ abstract class Collection implements Countable, IteratorAggregate
 
     public function add(mixed $item): void
     {
+        Assert::instanceOf($this->type(), $item);
         $this->items[] = $item;
     }
 

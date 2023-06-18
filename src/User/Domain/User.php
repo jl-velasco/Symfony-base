@@ -72,7 +72,7 @@ final class User extends AggregateRoot
     public function delete(): void
     {
         $this->record(
-            new UserDeleted(
+            new UserDeletedDomainEvent(
                 $this->id()->value(),
                 $this->id(),
             )
