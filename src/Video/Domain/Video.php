@@ -98,4 +98,21 @@ final class Video extends AggregateRoot
         );
 
     }
+
+    public function insert(): void
+    {
+
+        $this->record(
+            new VideoInserted(
+                $this->userUuid(), $this->uuid()
+            )
+        /*
+                    new VideoDeleted(
+                        $this->uuid()->value(),
+                        $this->uuid(),
+                    )
+        */
+        );
+
+    }
 }

@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Domain;
 
-use phpseclib3\Math\PrimeField\Integer;
 use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
-use Symfony\Base\Shared\Domain\ValueObject\StringValueObject;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Video\Domain\VideoInserted;
 
 final class User extends AggregateRoot
 {
@@ -75,7 +74,7 @@ final class User extends AggregateRoot
             new Password($user['password']),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
-            $user['count_video']
+            (int)$user['count_video']
 
         );
     }
@@ -84,6 +83,16 @@ final class User extends AggregateRoot
     {
         $this->record(
             new UserDeleted(
+                $this->id()->value(),
+                $this->id(),
+            )
+        );
+    }
+
+    public function insert(): void
+    {
+        $this->record(
+            new VideoInserted(
                 $this->id()->value(),
                 $this->id(),
             )

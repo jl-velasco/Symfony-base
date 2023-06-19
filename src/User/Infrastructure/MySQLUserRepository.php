@@ -118,10 +118,4 @@ class MySQLUserRepository implements UserRepository
         $this->update($user);
         // TODO: Excepcion si no existe
     }
-
-    public function setCountVideo(User $user, int $countVideo): void
-    {
-        $user->countVideo = $countVideo;
-        // TODO: Excepcion si no existe
-    }
 }

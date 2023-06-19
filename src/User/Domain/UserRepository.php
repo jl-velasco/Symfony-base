@@ -16,7 +16,4 @@ interface UserRepository
     public function increaseCountVideo(User $user) : void;
 
     public function decreaseCountVideo(User $user) : void;
-
-    public function setCountVideo(User $user, int $countVideo) : void;
-
 }
