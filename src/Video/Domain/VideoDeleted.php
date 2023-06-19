@@ -5,7 +5,7 @@ namespace Symfony\Base\Video\Domain;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class VideoDeleted extends DomainEvent
+abstract class VideoDeleted extends DomainEvent
 {
     public function __construct(
         string $aggregateId,

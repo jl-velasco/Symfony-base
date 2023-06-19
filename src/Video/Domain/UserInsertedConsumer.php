@@ -8,7 +8,7 @@ use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserInserted;
 
-class UserInsertedConsumer implements DomainEventSubscriber
+abstract class UserInsertedConsumer implements DomainEventSubscriber
 {
     public function __construct(
         private VideoRepository $repository
