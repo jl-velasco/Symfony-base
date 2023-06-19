@@ -9,7 +9,8 @@ final class UserResponse
     public function __construct(
         private readonly string $id,
         private readonly string $email,
-        private readonly string $name
+        private readonly string $name,
+        private readonly int $videoCounter
     )
     {
     }
@@ -20,7 +21,8 @@ final class UserResponse
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'name' => $this->name
+            'name' => $this->name,
+            'video_counter' => $this->videoCounter
         ];
     }
 }

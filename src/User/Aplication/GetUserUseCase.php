@@ -23,7 +23,8 @@ class GetUserUseCase
         return new UserResponse(
             $user->id()->value(),
             $user->email()->value(),
-            $user->name()->value()
+            $user->name()->value(),
+            $user->videoCounter()->value(),
         );
     }
 }

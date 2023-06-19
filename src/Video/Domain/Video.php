@@ -3,13 +3,14 @@
 namespace Symfony\Base\Video\Domain;
 
 use Exception;
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-final class Video
+final class Video extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $uuid,
@@ -73,11 +74,28 @@ final class Video
         return $this;
     }
 
-    /**
-     * @throws Exception
-     */
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
+    }
+
+    public function save(): void
+    {
+        $this->record(
+            new VideoCreated(
+                $this->uuid()->value(),
+                $this->userUuid(),
+            )
+        );
+    }
+
+    public function delete(): void
+    {
+        $this->record(
+            new VideoDeleted(
+                $this->uuid()->value(),
+                $this->userUuid(),
+            )
+        );
     }
 }

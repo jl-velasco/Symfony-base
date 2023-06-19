@@ -64,6 +64,7 @@ class MySQLUserRepository implements UserRepository
             ->set('name', ':name')
             ->set('password', ':password')
             ->set('updated_at', ':updated_at')
+            ->set('video_counter', ':video_counter')
             ->where('id = :id')
             ->setParameters([
                 'id' => $user->id(),
@@ -71,6 +72,7 @@ class MySQLUserRepository implements UserRepository
                 'name' => $user->name(),
                 'password' => $user->password(),
                 'updated_at' => new Date(),
+                'video_counter' => $user->videoCounter()
             ])
             ->executeQuery();
     }
@@ -94,11 +96,10 @@ class MySQLUserRepository implements UserRepository
         $this->connection->insert(
             self::TABLE_USER,
             [
-                'id' => $user->id(),
-                'email' => $user->email(),
-                'name' => $user->name(),
-                'password' => $user->password(),
-
+                'id' => $user->id()->value(),
+                'email' => $user->email()->value(),
+                'name' => $user->name()->value(),
+                'password' => $user->password()->value(),
             ]
         );
     }
