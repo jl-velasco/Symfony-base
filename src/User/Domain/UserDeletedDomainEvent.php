@@ -6,7 +6,7 @@ namespace Symfony\Base\User\Domain;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class UserDeleted extends DomainEvent
+class UserDeletedDomainEvent extends DomainEvent
 {
     private const ROUTING_KEY = 'hiberus.user.event.user_deleted';
 

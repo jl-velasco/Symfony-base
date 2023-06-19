@@ -20,7 +20,7 @@ final class Video extends AggregateRoot
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
-        private ?Comments $comments = new Comments([]),
+        private ?Comments $comments = new Comments([])
     ) {
     }
 
@@ -74,45 +74,28 @@ final class Video extends AggregateRoot
         return $this;
     }
 
-    /**
-     * @throws Exception
-     */
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
     }
 
-    public function delete(): void
+    public function save(): void
     {
-
         $this->record(
-            new VideoDeleted(
-                $this->userUuid(), $this->uuid()
+            new VideoCreated(
+                $this->uuid()->value(),
+                $this->userUuid(),
             )
-            /*
-                        new VideoDeleted(
-                            $this->uuid()->value(),
-                            $this->uuid(),
-                        )
-            */
         );
-
     }
 
-    public function insert(): void
+    public function delete(): void
     {
-
         $this->record(
-            new VideoInserted(
-                $this->userUuid(), $this->uuid()
+            new VideoDeleted(
+                $this->uuid()->value(),
+                $this->userUuid(),
             )
-        /*
-                    new VideoDeleted(
-                        $this->uuid()->value(),
-                        $this->uuid(),
-                    )
-        */
         );
-
     }
 }

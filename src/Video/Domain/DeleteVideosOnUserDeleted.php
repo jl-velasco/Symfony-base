@@ -1,28 +1,32 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\UserDeleted;
+use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 
-abstract class UserDeletedConsumer //implements DomainEventSubscriber
+class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 {
     public function __construct(
-        private VideoRepository $repository
+        private readonly VideoRepository $repository
     ) {
     }
 
     public function __invoke(DomainEvent $event): void
     {
         $data = $event->toPrimitives();
-        $this->repository->deleteByUserId(new Uuid($data['user_id']));
+
+        $videos = $this->repository->findByUserId(new Uuid($data['user_id']));
+        foreach ($videos as $video) {
+            $this->repository->delete($video->uuid());
+        }
     }
 
     public static function subscribedTo(): array
     {
-        return [UserDeleted::class];
+        return [UserDeletedDomainEvent::class];
     }
 }

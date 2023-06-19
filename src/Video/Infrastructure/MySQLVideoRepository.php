@@ -16,6 +16,7 @@ use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Domain\Videos;
 
 class MySQLVideoRepository implements VideoRepository
 {
@@ -118,31 +119,32 @@ class MySQLVideoRepository implements VideoRepository
      * @throws InvalidValueException
      * @throws Exception
      */
-    public function findByUserUuid(Uuid $userUuid): array
+    public function findByUserId(Uuid $userId): Videos
     {
+        $videos = new Videos();
         $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
             ->where('user_id = :user_id')
-            ->setParameter('user_id', $userUuid->value())
+            ->setParameter('user_id', $userId->value())
             ->executeQuery()
             ->fetchAllAssociative();
 
         if (!$result) {
-            return [];
+            return $videos;
         }
 
-        $videos = [];
-
         foreach ($result as $video) {
-            $videos[] = new Video(
-                new Uuid($video['id']),
-                new Uuid($video['user_id']),
-                new Name($video['name']),
-                new Description($video['description']),
-                new Url($video['url']),
-                new Date($video['created_at']),
-                new Date($video['updated_at'])
+            $videos->add(
+                new Video(
+                    new Uuid($video['id']),
+                    new Uuid($video['user_id']),
+                    new Name($video['name']),
+                    new Description($video['description']),
+                    new Url($video['url']),
+                    new Date($video['created_at']),
+                    new Date($video['updated_at'])
+                )
             );
         }
 
@@ -212,18 +214,6 @@ class MySQLVideoRepository implements VideoRepository
         }
         catch (Exception $e) {
             throw new PersistenceLayerException('Insert error: ' .  $e->getMessage());
-        }
-    }
-
-    /**
-     * @throws Exception
-     * @throws InvalidValueException
-     */
-    public function deleteByUserId(Uuid $id): void
-    {
-        $videos = $this->findByUserUuid($id);
-        foreach ($videos as $video) {
-            $this->delete($video->uuid());
         }
     }
 }

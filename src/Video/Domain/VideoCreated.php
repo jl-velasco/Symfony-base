@@ -6,9 +6,9 @@ namespace Symfony\Base\Video\Domain;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class VideoDeleted extends DomainEvent
+class VideoCreated extends DomainEvent
 {
-    private const ROUTING_KEY = 'hiberus.video.event.video_deleted';
+    private const ROUTING_KEY = 'hiberus.video.event.video_created';
 
     public function __construct(
         string $aggregateId,

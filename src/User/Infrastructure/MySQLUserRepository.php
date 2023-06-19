@@ -64,15 +64,15 @@ class MySQLUserRepository implements UserRepository
             ->set('name', ':name')
             ->set('password', ':password')
             ->set('updated_at', ':updated_at')
-            ->set('count_video', ':count_video')
+            ->set('video_counter', ':video_counter')
             ->where('id = :id')
             ->setParameters([
                 'id' => $user->id(),
                 'email' => $user->email(),
                 'name' => $user->name(),
                 'password' => $user->password(),
-                'count_video' => $user->countVideo(),
                 'updated_at' => new Date(),
+                'video_counter' => $user->videoCounter()
             ])
             ->executeQuery();
     }
@@ -96,26 +96,11 @@ class MySQLUserRepository implements UserRepository
         $this->connection->insert(
             self::TABLE_USER,
             [
-                'id' => $user->id(),
-                'email' => $user->email(),
-                'name' => $user->name(),
-                'password' => $user->password(),
-
+                'id' => $user->id()->value(),
+                'email' => $user->email()->value(),
+                'name' => $user->name()->value(),
+                'password' => $user->password()->value(),
             ]
         );
-    }
-
-    public function increaseCountVideo(User $user): void
-    {
-        $user->countVideo++;
-        $this->update($user);
-        // TODO: Excepcion si no existe
-    }
-
-    public function decreaseCountVideo(User $user): void
-    {
-        $user->countVideo--;
-        $this->update($user);
-        // TODO: Excepcion si no existe
     }
 }

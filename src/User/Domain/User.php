@@ -18,6 +18,7 @@ final class User extends AggregateRoot
         private readonly Email $email,
         private Name $name,
         private readonly Password $password,
+        private ?VideoCounter $videoCounter = new VideoCounter(0),
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
         public int $countVideo = 0
@@ -61,6 +62,21 @@ final class User extends AggregateRoot
         return $this->updatedAt;
     }
 
+    public function videoCounter(): VideoCounter
+    {
+        return $this->videoCounter;
+    }
+
+    public function addVideo(): void
+    {
+        $this->videoCounter = $this->videoCounter->add();
+    }
+
+    public function substractVideo(): void
+    {
+        $this->videoCounter = $this->videoCounter->substract();
+    }
+
     /**
      * @param array<string, mixed> $user
      * @throws InvalidValueException
@@ -72,6 +88,7 @@ final class User extends AggregateRoot
             new Email($user['email']),
             new Name($user['name']),
             new Password($user['password']),
+            new VideoCounter($user['video_counter']),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
             (int)$user['count_video']
@@ -82,7 +99,7 @@ final class User extends AggregateRoot
     public function delete(): void
     {
         $this->record(
-            new UserDeleted(
+            new UserDeletedDomainEvent(
                 $this->id()->value(),
                 $this->id(),
             )

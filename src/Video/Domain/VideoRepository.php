@@ -10,9 +10,7 @@ interface VideoRepository
 
     public function find(Uuid $uuid): ?Video;
 
-    public function findByUserUuid(Uuid $userUuid): array;
+    public function findByUserId(Uuid $userId): Videos;
 
     public function delete(Uuid $uuid): void;
-
-    public function deleteByUserId(Uuid $id): void;
 }
