@@ -4,11 +4,10 @@ declare(strict_types = 1);
 namespace Symfony\Base\User\Domain;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
-use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\VideoDeleted;
 
-class VideoDeletedConsumer implements DomainEventSubscriber
+class VideoDeletedConsumer// implements DomainEventSubscriber
 {
     public function __construct(
         private readonly UserRepository $repository,
@@ -19,7 +18,8 @@ class VideoDeletedConsumer implements DomainEventSubscriber
 
     public function __invoke(DomainEvent $event): void
     {
-        $user = $this->finder->__invoke(new Uuid($event->userId()));
+        $data = $event->toPrimitives();
+        $user = $this->finder->__invoke(new Uuid($data['user_id']));
         $user->substractVideo();
         $this->repository->save($user);
     }
