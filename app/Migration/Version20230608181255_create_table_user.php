@@ -7,7 +7,7 @@ namespace Symfony\Base\App\Migration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-final class Version20230608181255_create_table_user extends AbstractMigration
+final class Version20230608181254_create_table_user extends AbstractMigration
 {
     private const TABLE_NAME = 'user';
 
