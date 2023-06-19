@@ -3,19 +3,26 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
-use Symfony\Base\Shared\Domain\Exceptions\InvalidEmailException;
 
-class Email extends StringValueObject
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+
+final class Email extends StringValueObject
 {
     public function __construct(protected string $value)
     {
-        if (!Email::validate($value))
-            throw new InvalidEmailException("Email format is incorrect");
-        parent::__construct($value);
+        parent::__construct($this->value);
+        $this->validate();
     }
 
-    public static function validate($email): bool
+    public function isEquals(Email $other): bool
     {
-        return !!filter_var($email, FILTER_VALIDATE_EMAIL);
+        return $this->value === $other->value;
+    }
+
+    private function validate(): void
+    {
+        if (!filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidValueException($this->value);
+        }
     }
 }
