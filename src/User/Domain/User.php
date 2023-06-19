@@ -19,7 +19,8 @@ final class User extends AggregateRoot
         private readonly Name     $name,
         private readonly Password $password,
         private readonly ?Date    $createdAt = new Date(),
-        private readonly ?Date    $updatedAt = null
+        private readonly ?Date    $updatedAt = null,
+        private ?Stats $stats = null
     )
     {
     }
@@ -69,17 +70,28 @@ final class User extends AggregateRoot
             $user['updated_at'] ? new Date($user['updated_at']) : null,
         );
     }
-
     /**
-     * @throws InvalidValueException
+     * @return Stats
      */
+    public function stats(): Stats
+    {
+        return $this->stats ?? new Stats($this->id);
+    }
+
+    public function withStats(Stats $stats): User
+    {
+        $this->stats = $stats;
+        return $this;
+    }
+
     public function delete(): void
     {
         $this->record(
             new UserDeleted(
                 $this->id()->value(),
-                $this->id()->value(),
+                $this->id(),
             )
         );
     }
+
 }

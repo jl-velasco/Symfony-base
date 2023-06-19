@@ -92,16 +92,9 @@ final class Video extends AggregateRoot
     {
         new VideoDeleted(
             $this->uuid()->value(),
-            $this->userUuid()->value());
+            $this->userUuid());
     }
 
-    /**
-     * @throws InvalidValueException
-     */
-    public function created(): void
-    {
-     new VideoCreated(
-         $this->uuid->value(),
-         $this->userUuid->value());
-    }
+
+
 }

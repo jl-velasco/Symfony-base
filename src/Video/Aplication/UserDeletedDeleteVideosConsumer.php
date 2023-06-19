@@ -1,17 +1,20 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserDeleted;
+use Symfony\Base\Video\Domain\VideoRepository;
 
-class UserDeletedConsumer //implements DomainEventSubscriber
+class UserDeletedDeleteVideosConsumer implements DomainEventSubscriber
 {
+    private const QUEUE_NAME = 'user.user_deleted.delete_videos';
+
     public function __construct(
-        private VideoRepository $repository
+        private readonly VideoRepository $repository
     ) {
     }
 
@@ -19,6 +22,8 @@ class UserDeletedConsumer //implements DomainEventSubscriber
     {
         $data = $event->toPrimitives();
         $this->repository->deleteByUserId(new Uuid($data['user_id']));
+        // Para ver los retries
+        // $this->repository->deleteByUserId($data['user_id']);
     }
 
     public static function subscribedTo(): array
@@ -26,4 +31,8 @@ class UserDeletedConsumer //implements DomainEventSubscriber
         return [UserDeleted::class];
     }
 
+    public static function queue(): string
+    {
+        return self::QUEUE_NAME;
+    }
 }

@@ -11,7 +11,6 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
-use Symfony\Base\User\Domain\VideoDeleted;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
@@ -127,7 +126,7 @@ class MySQLVideoRepository implements VideoRepository
             ->where('user_id = :user_id')
             ->setParameter('user_id', $videoId->value())
             ->executeQuery()
-            ->fetchAssociative();
+            ->fetchAllAssociative();
 
         if (!$result) {
             return [];
@@ -216,9 +215,19 @@ class MySQLVideoRepository implements VideoRepository
         }
     }
 
+
+
+    /**
+     * @throws Exception
+     * @throws InvalidValueException
+     */
     public function deleteByUserId(Uuid $videoId): void
+
     {
-      //TODO: Implement deleteByUserId() method.
+        $videos = $this->findByUserUuid($videoId);
+        foreach ($videos as $video) {
+            $this->delete($video->uuid());
+        }
     }
 
 

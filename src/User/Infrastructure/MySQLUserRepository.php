@@ -5,15 +5,17 @@ namespace Symfony\Base\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\User\Domain\Stats;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
 class MySQLUserRepository implements UserRepository
 {
     private const TABLE_USER = 'user';
-
+    private const TABLE_STATS = 'stats';
     public function __construct(
         private readonly Connection $connection
     )
@@ -21,6 +23,10 @@ class MySQLUserRepository implements UserRepository
     }
 
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function search(Uuid $id): User|null
     {
         $user = $this->connection
@@ -40,7 +46,7 @@ class MySQLUserRepository implements UserRepository
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|InvalidValueException
      */
     public function save(User $user): void
     {
@@ -99,5 +105,32 @@ class MySQLUserRepository implements UserRepository
 
             ]
         );
+        $this->connection->insert(
+            self::TABLE_STATS,
+            [
+                'id' => $user->stats()->userId()->value(),
+                'videos' => $user->stats()->videos(),
+            ]
+        );
+    }
+    /**
+     * @throws Exception
+     */
+    public function findUserStats(User $user): ?Stats
+    {
+        $user = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from(self::TABLE_STATS)
+            ->where('id = :id')
+            ->setParameter('id', $user->id()->value())
+            ->executeQuery()
+            ->fetchAssociative();
+
+        if ($user) {
+            return Stats::fromArray($user);
+        }
+
+        return null;
     }
 }

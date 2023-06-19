@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Tests\Unit\User\Aplication;
 
+use JsonSchema\Exception\ResourceNotFoundException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Base\Shared\Domain\ValueObject\Video;
+use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\User\Aplication\GetUserUseCase;
 use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\Video\Domain\Video;
 
 /**
  * @internal
  */
-class GetUserUseCaseTest extends TestCase
+class GetClassifiedQueryHandlerTest extends TestCase
 {
     /** @var UserRepository&MockObject */
     private mixed $repository;

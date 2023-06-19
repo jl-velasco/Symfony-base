@@ -19,10 +19,10 @@ PUT {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
 Content-Type: application/json
 
 {
-    "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
-    "name": "Video 2",
-    "description": "Descvription video 2",
-    "url": "https://www.uuidgenerator.net"
+  "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
+  "name": "Video 2",
+  "description": "Descvription video 2",
+  "url": "https://www.uuidgenerator.net"
 }
 
 ### Insert Comment
@@ -30,8 +30,8 @@ POST {{host}}/{{version}}/comment/276700e0-496d-4f23-9704-d9b51e2f88ce
 Content-Type: application/json
 
 {
-    "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
-    "message": "Comentario del video"
+  "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
+  "message": "Comentario del video"
 }
 
 ### Other Comment
@@ -39,8 +39,41 @@ POST {{host}}/{{version}}/comment/a95c0896-1d05-4785-95ec-a7bc0229f354
 Content-Type: application/json
 
 {
-    "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
-    "message": "Comentario del video 2"
+  "video_id": "dba649b4-70d4-4603-b506-0cfdb1bb1cdb",
+  "message": "Comentario del video 2"
+}
+
+###
+
+
+
+### Upsert video
+PUT {{host}}/{{version}}/video/344621f3-aca8-49de-be67-031d0c693a1d
+Content-Type: application/json
+
+{
+  "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
+  "name": "Video 3",
+  "description": "Descvription video 3",
+  "url": "https://www.uuidgenerator.net"
+}
+
+### Insert Comment
+POST {{host}}/{{version}}/comment/ac5bd6f3-3f21-4d3a-be96-f01fa60c5128
+Content-Type: application/json
+
+{
+  "video_id": "344621f3-aca8-49de-be67-031d0c693a1d",
+  "message": "Comentario del video"
+}
+
+### Other Comment
+POST {{host}}/{{version}}/comment/035c6fd5-b78a-474d-b719-9444c045c7f2
+Content-Type: application/json
+
+{
+  "video_id": "344621f3-aca8-49de-be67-031d0c693a1d",
+  "message": "Comentario del video 2"
 }
 
 ###

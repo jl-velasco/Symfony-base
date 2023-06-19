@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 final class Uuid
 {
-    /** @throws InvalidValueException */
+
     public function __construct(protected string $value)
     {
         $this->validate($value);
@@ -25,7 +24,7 @@ final class Uuid
         return RamseyUuid::isValid($id);
     }
 
-    /** @throws InvalidValueException */
+
     public static function random(): self
     {
         return new self(RamseyUuid::uuid4()->toString());
@@ -41,11 +40,11 @@ final class Uuid
         return $this->value() === $other->value();
     }
 
-    /** @throws InvalidValueException */
+
     private function validate(string $id): void
     {
-        if (!self::isValid($id)) {
-//            throw new InvalidValueException(sprintf('<%s> does not allow the value <%s>.', Uuid::class, $id));
-        }
+//        if (!self::isValid($id)) {
+////            throw new InvalidValueException(sprintf('<%s> does not allow the value <%s>.', Uuid::class, $id));
+//        }
     }
 }
