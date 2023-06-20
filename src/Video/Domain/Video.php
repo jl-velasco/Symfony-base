@@ -16,7 +16,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 final class Video extends AggregateRoot
 {
     public function __construct(
-        private readonly Uuid      $uuid,
+        private readonly Uuid        $uuid,
         private readonly Uuid        $userUuid,
         private readonly Name        $name,
         private readonly Description $description,
@@ -86,7 +86,6 @@ final class Video extends AggregateRoot
     }
 
     /**
-     * @throws InvalidValueException
      */
     public function deleted(): void
     {
