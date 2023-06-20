@@ -11,9 +11,11 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
+use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
+use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 use Symfony\Base\Video\Domain\Videos;
@@ -226,6 +228,48 @@ class MySQLVideoRepository implements VideoRepository
         $videos = $this->findByUserUuid($id);
         foreach ($videos as $video) {
             $this->delete($video->uuid());
+        }
+    }
+
+    /**
+     * @throws InvalidValueException
+     * @throws SqlConnectionException
+     * @throws PersistenceLayerException
+     * @throws VideoNotFoundException
+     */
+    public function incrementComment(Uuid $id): void
+    {
+        if (is_null($this->find($id)))
+            throw new VideoNotFoundException(sprintf('Video not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE_VIDEO;
+            $uuid = $id->value();
+            $sql = "update {$table} set comment_counter = comment_counter + 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+    }
+
+    /**
+     * @throws InvalidValueException
+     * @throws SqlConnectionException
+     * @throws PersistenceLayerException
+     * @throws VideoNotFoundException
+     */
+    public function decrementComment(Uuid $id): void
+    {
+        if (is_null($this->find($id)))
+            throw new VideoNotFoundException(sprintf('Video not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE_VIDEO;
+            $uuid = $id->value();
+            $sql = "update {$table} set comment_counter = comment_counter - 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
         }
     }
 }

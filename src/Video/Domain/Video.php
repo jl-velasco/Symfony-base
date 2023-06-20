@@ -22,7 +22,8 @@ final class Video extends AggregateRoot
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
-        private ?Comments $comments = new Comments([])
+        private ?Comments $comments = new Comments([]),
+        private ?CommentCounter $commentCounter = new CommentCounter(0),
     ) {
     }
 
@@ -73,7 +74,13 @@ final class Video extends AggregateRoot
     public function addComment(Uuid $id, CommentMessage $message): self
     {
         $this->comments->add(new Comment($id, $this->uuid(), $message));
+        $this->commentCounter = $this->commentCounter->increment();
         return $this;
+    }
+
+    public function deleteComment(): void
+    {
+        $this->commentCounter = $this->commentCounter->decrement();
     }
 
     /**
@@ -83,6 +90,12 @@ final class Video extends AggregateRoot
     {
         return $video->comments()->diff($this->comments());
     }
+
+    public function commentCounter(): CommentCounter
+    {
+        return $this->commentCounter;
+    }
+
 
     public function add()
     {

@@ -13,4 +13,7 @@ interface VideoRepository
     public function findByUserId(Uuid $userId): Videos;
 
     public function delete(Uuid $uuid): void;
+
+    public function incrementComment(Uuid $id): void;
+    public function decrementComment(Uuid $id): void;
 }

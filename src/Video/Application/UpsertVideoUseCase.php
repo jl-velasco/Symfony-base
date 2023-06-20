@@ -53,7 +53,7 @@ class UpsertVideoUseCase
 
         $this->mySqlVideoRepository->save($video);
 
-        if ($pushEvent || true){
+        if ($pushEvent){
             $video->add();
             $this->bus->publish(...$video->pullDomainEvents());
         }

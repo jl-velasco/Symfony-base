@@ -2,13 +2,16 @@
 
 namespace Symfony\Base\Comment\Domain;
 
+use Symfony\Base\Comment\Domain\Events\CommentAddedEvent;
+use Symfony\Base\Comment\Domain\Events\CommentDeletedEvent;
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\CreatedAt;
 use Symfony\Base\Shared\Domain\ValueObject\UpdatedAt;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 
-class Comment
+class Comment extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $id,
@@ -82,6 +85,26 @@ class Comment
             new Description($data['comment']),
             CreatedAt::fromPrimitive($data['created_at']),
             UpdatedAt::fromPrimitive($data['updated_at']),
+        );
+    }
+
+    public function add(): void
+    {
+        $this->record(
+            new CommentAddedEvent(
+                $this->id()->value(),
+                $this->videoId(),
+            )
+        );
+    }
+
+    public function delete(): void
+    {
+        $this->record(
+            new CommentDeletedEvent(
+                $this->id()->value(),
+                $this->videoId(),
+            )
         );
     }
 

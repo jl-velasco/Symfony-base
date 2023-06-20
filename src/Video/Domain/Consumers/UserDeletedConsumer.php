@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Domain\Consumers;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\Events\UserDeletedEvent;
+use Symfony\Base\Video\Domain\VideoRepository;
 
 class UserDeletedConsumer
 {
