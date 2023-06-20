@@ -34,4 +34,25 @@ class VideoTest extends TestCase
         $this->assertEquals($message->value(), $comment->message()->value());
         $this->assertTrue($comment->videoId()->equals($video->uuid()));
     }
+
+    /**
+     * @test
+     * @throws InvalidValueException
+     */
+    public function whenTheSameCommentIsAddedTwiceThenTheCommentShouldNotBeDuplicated()
+    {
+        $video = VideoMother::create()
+            ->random()
+            ->withRandomComments()
+            ->build();
+        $comments = $video->comments();
+        $count = $comments->count();
+        $uuid = Uuid::random();
+        $message = new CommentMessage('This is my comment message');
+        $video->addComment($uuid, $message);
+        $comments = $video->comments();
+        $this->assertCount($count + 1, $comments);
+        $video->addComment($uuid, $message);
+        $this->assertCount($count + 1, $comments);
+    }
 }

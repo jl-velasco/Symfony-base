@@ -101,11 +101,11 @@ final class VideoMother extends Mother
     {
         $this->comments = new Comments(iterator_to_array((function() {
             for ($i = 0; $i++; $i < $this->faker->numberBetween(1, 20)) {
-                yield new Comment(
-                    Uuid::random(),
-                    $this->uuid,
-                    new CommentMessage(implode('. ', $this->faker->sentences(8)))
-                );
+                yield CommentMother::create()
+                    ->random()
+                    ->withVideoId($this->uuid)
+                    ->build()
+                ;
             }
         })()));
         return $this;
