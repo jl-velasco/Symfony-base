@@ -16,6 +16,7 @@ use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Domain\Videos;
 
 class MySQLVideoRepository implements VideoRepository
 {
@@ -39,6 +40,7 @@ class MySQLVideoRepository implements VideoRepository
         }
 
         $this->update($video);
+
         $comments = $originalVideo->newComments($video);
         $comments->each(
             function ($comment) {
@@ -118,7 +120,7 @@ class MySQLVideoRepository implements VideoRepository
      * @throws InvalidValueException
      * @throws Exception
      */
-    public function findByUserUuid(Uuid $userUuid): array
+    public function findByUserId(Uuid $userId): Videos
     {
         $result = $this->connection->createQueryBuilder()
             ->select('*')
@@ -146,7 +148,7 @@ class MySQLVideoRepository implements VideoRepository
             );
         }
 
-        return $videos;
+        return new Videos($videos);
     }
 
     /**

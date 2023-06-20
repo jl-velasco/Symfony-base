@@ -25,7 +25,6 @@ final class RabbitMqEventBus implements EventBus
     {
         $body = DomainEventJsonSerializer::serialize($event);
         $routingKey = $event->eventName();
-
         $this->connection->publish($body, $routingKey);
     }
 }

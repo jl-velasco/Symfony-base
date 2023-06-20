@@ -15,6 +15,7 @@ use Symfony\Base\User\Application\Exceptions\DuplicateUserException;
 use Symfony\Base\User\Domain\Password;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\User\Domain\VideoCounter;
 
 class UpsertUserUseCase
 {
@@ -50,6 +51,7 @@ class UpsertUserUseCase
                 new Email($email),
                 new Name($name),
                 new Password($password),
+                new VideoCounter(0),
                 new Date($createdAt),
                 new Date($updatedAt)
             )

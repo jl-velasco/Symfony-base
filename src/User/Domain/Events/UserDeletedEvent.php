@@ -1,17 +1,19 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\User\Domain\Events;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
+use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class VideoDeleted extends DomainEvent
+class UserDeletedEvent extends DomainEvent
 {
-    private const ROUTING_KEY = 'hiberus.video.event.video_deleted';
+    private const ROUTING_KEY = 'hiberus.user.event.user_deleted';
 
     public function __construct(
         string $aggregateId,
-        private string $userId,
+        private readonly Uuid $userId,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -27,17 +29,19 @@ class VideoDeleted extends DomainEvent
     public function toPrimitives(): array
     {
         return [
-            'video_id' => $this->aggregateId(),
-            'user_id' => $this->userId,
+            'user_id' => $this->userId->value(),
         ];
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public static function fromPrimitives(
         string $aggregateId,
         array $body,
         ?string $eventId,
         ?string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, $body['user_id'], $eventId, $occurredOn);
+        return new self($aggregateId, new Uuid($body['user_id']), $eventId, $occurredOn);
     }
 }

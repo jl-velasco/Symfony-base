@@ -4,11 +4,10 @@ declare(strict_types=1);
 namespace Symfony\Base\Video\Domain;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
-use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\UserDeletedDomainEvent;
+use Symfony\Base\User\Domain\Events\UserDeletedEvent;
 
-class DeleteVideosOnUserDeleted implements DomainEventSubscriber
+class UserDeletedConsumer
 {
     public function __construct(
         private readonly VideoRepository $repository
@@ -27,6 +26,6 @@ class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
-        return [UserDeletedDomainEvent::class];
+        return [UserDeletedEvent::class];
     }
 }

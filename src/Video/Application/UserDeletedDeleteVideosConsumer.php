@@ -6,7 +6,7 @@ namespace Symfony\Base\Video\Application;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\UserDeleted;
+use Symfony\Base\User\Domain\Events\UserDeletedEvent;
 use Symfony\Base\Video\Domain\VideoRepository;
 
 class UserDeletedDeleteVideosConsumer implements DomainEventSubscriber
@@ -28,7 +28,7 @@ class UserDeletedDeleteVideosConsumer implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
-        return [UserDeleted::class];
+        return [UserDeletedEvent::class];
     }
 
     public static function queue(): string

@@ -9,6 +9,8 @@ use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Video\Domain\Events\VideoAddedEvent;
+use Symfony\Base\Video\Domain\Events\VideoDeletedEvent;
 
 final class Video extends AggregateRoot
 {
@@ -85,9 +87,9 @@ final class Video extends AggregateRoot
     public function add()
     {
         $this->record(
-            new VideoAdded(
+            new VideoAddedEvent(
                 $this->uuid()->value(),
-                $this->userUuid()->value(),
+                $this->userUuid(),
             )
         );
     }
@@ -95,9 +97,9 @@ final class Video extends AggregateRoot
     public function delete()
     {
         $this->record(
-            new VideoDeleted(
+            new VideoDeletedEvent(
                 $this->uuid()->value(),
-                $this->userUuid()->value(),
+                $this->userUuid(),
             )
         );
     }

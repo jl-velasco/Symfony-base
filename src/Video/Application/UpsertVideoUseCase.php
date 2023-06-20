@@ -42,18 +42,18 @@ class UpsertVideoUseCase
         } catch (VideoNotFoundException) {
             $pushEvent = true;
         }
-        $this->mySqlVideoRepository->save(
-            new Video(
-                new Uuid($id),
-                new Uuid($userUuid),
-                new Name($name),
-                new Description($description),
-                new Url($url)
-            )
+
+        $video = new Video(
+            new Uuid($id),
+            new Uuid($userUuid),
+            new Name($name),
+            new Description($description),
+            new Url($url)
         );
 
-        if ($pushEvent){
-            $video = $this->finder->__invoke(new Uuid($id));
+        $this->mySqlVideoRepository->save($video);
+
+        if ($pushEvent || true){
             $video->add();
             $this->bus->publish(...$video->pullDomainEvents());
         }

@@ -28,7 +28,7 @@ class DeleteUserUseCase
     {
         $user = $this->finder->__invoke(new Uuid($id));
         $user->delete();
-        //$this->repository->delete(new Uuid($id));
+        $this->repository->delete(new Uuid($id));
         $this->bus->publish(...$user->pullDomainEvents());
     }
 }

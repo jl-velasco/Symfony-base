@@ -1,12 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\User\Domain;
+namespace Symfony\Base\User\Domain\Consumers;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\VideoAdded;
+use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\Video\Domain\Events\VideoAddedEvent;
 
 class VideoDeletedConsumer implements DomainEventSubscriber
 {
@@ -26,7 +27,7 @@ class VideoDeletedConsumer implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
-        return [VideoAdded::class];
+        return [VideoAddedEvent::class];
     }
 
     public static function queue(): string

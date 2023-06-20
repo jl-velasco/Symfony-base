@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Domain\Events;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-class VideoAdded extends DomainEvent
+class VideoDeletedEvent extends DomainEvent
 {
-    private const ROUTING_KEY = 'hiberus.video.event.video_added';
+    private const ROUTING_KEY = 'hiberus.video.event.video_deleted';
 
     public function __construct(
         string $aggregateId,
-        private string $userId,
+        private readonly Uuid $userId,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -25,10 +25,14 @@ class VideoAdded extends DomainEvent
         return self::ROUTING_KEY;
     }
 
+    public function userId(): Uuid
+    {
+        return $this->userId;
+    }
+
     public function toPrimitives(): array
     {
         return [
-            'video_id' => $this->aggregateId(),
             'user_id' => $this->userId,
         ];
     }
@@ -39,6 +43,6 @@ class VideoAdded extends DomainEvent
         ?string $eventId,
         ?string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, $body['user_id'], $eventId, $occurredOn);
+        return new self($aggregateId, new Uuid($body['user_id']), $eventId, $occurredOn);
     }
 }

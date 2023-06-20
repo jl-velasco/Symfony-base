@@ -1,6 +1,7 @@
 <?php
 
 namespace Symfony\Base\App\Controller;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
 class Controller

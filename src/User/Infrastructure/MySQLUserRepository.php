@@ -110,7 +110,7 @@ class MySQLUserRepository implements UserRepository
         try {
             $table = self::TABLE;
             $uuid = $id->value();
-            $sql = "update {$table} set videoCount = videoCount + 1 where id = '{$uuid}'";
+            $sql = "update {$table} set video_counter = video_counter + 1 where id = '{$uuid}'";
             $this->connection->prepare($sql)->executeQuery();
         } catch (\Exception $e) {
             throw new SqlConnectionException($e);
@@ -125,7 +125,7 @@ class MySQLUserRepository implements UserRepository
         try {
             $table = self::TABLE;
             $uuid = $id->value();
-            $sql = "update {$table} set videoCount = videoCount - 1 where id = '{$uuid}'";
+            $sql = "update {$table} set video_counter = video_counter - 1 where id = '{$uuid}'";
             $this->connection->prepare($sql)->executeQuery();
         } catch (\Exception $e) {
             throw new SqlConnectionException($e);

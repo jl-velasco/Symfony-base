@@ -9,6 +9,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\User\Domain\Events\UserDeletedEvent;
 
 final class User extends AggregateRoot
 {
@@ -89,7 +90,7 @@ final class User extends AggregateRoot
     public function delete(): void
     {
         $this->record(
-            new UserDeletedDomainEvent(
+            new UserDeletedEvent(
                 $this->id()->value(),
                 $this->id(),
             )

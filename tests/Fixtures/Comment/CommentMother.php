@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Tests\Fixtures\User;
+namespace Symfony\Base\Tests\Fixtures\Comment;
 
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
@@ -12,7 +12,7 @@ use Symfony\Base\User\Domain\Password;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\VideoCounter;
 
-class UserMother extends Mother
+class CommentMother extends Mother
 {
 
     private Uuid $id;
