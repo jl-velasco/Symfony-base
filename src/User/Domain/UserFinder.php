@@ -7,7 +7,7 @@ namespace Symfony\Base\User\Domain;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 
-final class UserFinder
+class UserFinder
 {
     public function __construct(private readonly UserRepository $repository)
     {

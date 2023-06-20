@@ -84,6 +84,7 @@ final class Video extends AggregateRoot
         Url $url,
     ): self
     {
+
         $video = new self(
             $uuid,
             $userUuid,

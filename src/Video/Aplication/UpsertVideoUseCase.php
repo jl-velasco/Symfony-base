@@ -43,9 +43,6 @@ class UpsertVideoUseCase
                 new Description($description),
                 new Url($url)
             );
-            $this->videoRepository->save(
-                $video
-            );
         } catch (VideoNotFoundException) {
             $video = Video::create(
                 new Uuid($uuid),
@@ -54,9 +51,8 @@ class UpsertVideoUseCase
                 new Description($description),
                 new Url($url)
             );
-            $this->videoRepository->save($video);
         }
-
+        $this->videoRepository->save($video);
         $this->bus->publish(...$video->pullDomainEvents());
     }
 }
