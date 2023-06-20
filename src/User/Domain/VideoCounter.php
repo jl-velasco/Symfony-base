@@ -12,12 +12,12 @@ class VideoCounter extends IntValueObject
         parent::__construct($value);
     }
 
-    public function add(): self
+    public function increase(): self
     {
         return new self($this->value() + 1);
     }
 
-    public function substract(): self
+    public function decrease(): self
     {
         return new self($this->value() - 1);
     }
@@ -25,8 +25,7 @@ class VideoCounter extends IntValueObject
     private function validate(int $value): void
     {
         if ($value < 0) {
-            throw new \InvalidArgumentException('Invalid URL provided.');
+            throw new \InvalidArgumentException('Value cannot be less than 0');
         }
     }
-
 }

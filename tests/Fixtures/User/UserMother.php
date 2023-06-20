@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\Tests\Fixtures\User;
 
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
@@ -13,18 +14,20 @@ use Symfony\Base\User\Domain\VideoCounter;
 
 class UserMother extends Mother
 {
-
     private Uuid $id;
     private Email $email;
     private Name $name;
     private Password $password;
     private VideoCounter $videoCounter;
 
-    public static function create(): Mother
+    public static function create(): UserMother
     {
         return new self();
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function random(): self
     {
         $this->id = Uuid::random();

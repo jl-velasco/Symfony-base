@@ -13,23 +13,32 @@ use Symfony\Base\User\Domain\VideoCounter;
 class UserTest extends TestCase
 {
 
+    /**
+     * @throws InvalidValueException
+     */
     public function testUserIsDeleted(): void
     {
         $user = UserMother::create()->random()->build();
         $user->delete();
         $events = $user->pullDomainEvents();
-        $var = $events[0];
-        $this->assertEquals(UserDeletedDomainEvent::class, $var::class);
+        $firtsEvent = $events[0];
+        $this->assertEquals(UserDeletedDomainEvent::class, $firtsEvent::class);
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function testUserAddVideo(): void
     {
         $user = UserMother::create()->random()->build();
         $this->assertEquals(0, $user->videoCounter()->value());
-        $user->addVideo();
+        $user->increaseVideoCounter();
         $this->assertEquals(1, $user->videoCounter()->value());
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function testUserSubstractShouldOk(): void
     {
         $user = UserMother::create()
@@ -38,14 +47,17 @@ class UserTest extends TestCase
             ->build();
 
         $this->assertEquals(1, $user->videoCounter()->value());
-        $user->substractVideo();
+        $user->decreaseVideoCounter();
         $this->assertEquals(0, $user->videoCounter()->value());
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function testUserSubstractVideoWhenCounterIsZero(): void
     {
         $user = UserMother::create()->random()->build();
         $this->expectException(InvalidArgumentException::class);
-        $user->substractVideo();
+        $user->decreaseVideoCounter();
     }
 }
