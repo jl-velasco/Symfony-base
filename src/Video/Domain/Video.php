@@ -10,7 +10,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
-final class Video extends AggregateRoot
+class Video extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $uuid,
