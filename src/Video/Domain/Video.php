@@ -9,8 +9,10 @@ use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Video\Domain\Events\VideoAddedEvent;
+use Symfony\Base\Video\Domain\Events\VideoDeletedEvent;
 
-final class Video extends AggregateRoot
+class Video extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $uuid,
@@ -20,7 +22,8 @@ final class Video extends AggregateRoot
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
-        private ?Comments $comments = new Comments([])
+        private ?Comments $comments = new Comments([]),
+        private ?CommentCounter $commentCounter = new CommentCounter(0),
     ) {
     }
 
@@ -61,52 +64,53 @@ final class Video extends AggregateRoot
 
     public function comments(): Comments
     {
+        if (!$this->comments) {
+            $this->comments = new Comments([]);
+        }
+
         return $this->comments;
     }
 
-    public function addComment(Uuid $id, CommentMessage $message): void
+    public function addComment(Uuid $id, CommentMessage $message): self
     {
-        $this->comments->add(
-            new Comment($id, $this->uuid(), $message)
-        );
+        $this->comments->add(new Comment($id, $this->uuid(), $message));
+        $this->commentCounter = $this->commentCounter->increment();
+        return $this;
     }
 
+    public function deleteComment(): void
+    {
+        $this->commentCounter = $this->commentCounter->decrement();
+    }
+
+    /**
+     * @throws Exception
+     */
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
     }
 
-    public static function create(
-        Uuid $uuid,
-        Uuid $userUuid,
-        Name $name,
-        Description $description,
-        Url $url,
-    ): self
+    public function commentCounter(): CommentCounter
     {
-
-        $video = new self(
-            $uuid,
-            $userUuid,
-            $name,
-            $description,
-            $url,
-        );
-
-        $video->record(
-            new VideoCreatedDomainEvent(
-                $uuid->value(),
-                $userUuid,
-            )
-        );
-
-        return $video;
+        return $this->commentCounter;
     }
 
-    public function delete(): void
+
+    public function add()
     {
         $this->record(
-            new VideoDeletedDomainEvent(
+            new VideoAddedEvent(
+                $this->uuid()->value(),
+                $this->userUuid(),
+            )
+        );
+    }
+
+    public function delete()
+    {
+        $this->record(
+            new VideoDeletedEvent(
                 $this->uuid()->value(),
                 $this->userUuid(),
             )

@@ -11,9 +11,11 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
+use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
 use Symfony\Base\Video\Domain\Comment;
 use Symfony\Base\Video\Domain\CommentMessage;
 use Symfony\Base\Video\Domain\Comments;
+use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoRepository;
 use Symfony\Base\Video\Domain\Videos;
@@ -22,7 +24,7 @@ class MySQLVideoRepository implements VideoRepository
 {
     private const TABLE_VIDEO = 'video';
 
-    private const TABLE_COMMENT = 'comment';
+    private const TABLE_COMMENT = 'comments';
 
     public function __construct(private readonly Connection $connection)
     {
@@ -40,6 +42,7 @@ class MySQLVideoRepository implements VideoRepository
         }
 
         $this->update($video);
+
         $comments = $originalVideo->newComments($video);
         $comments->each(
             function ($comment) {
@@ -106,7 +109,7 @@ class MySQLVideoRepository implements VideoRepository
                         return new Comment(
                             new Uuid($comment['id']),
                             new Uuid($comment['video_id']),
-                            new CommentMessage($comment['message']),
+                            new CommentMessage($comment['comment']),
                         );
                     },
                     $comments
@@ -121,34 +124,33 @@ class MySQLVideoRepository implements VideoRepository
      */
     public function findByUserId(Uuid $userId): Videos
     {
-        $videos = new Videos();
         $result = $this->connection->createQueryBuilder()
             ->select('*')
             ->from(self::TABLE_VIDEO)
             ->where('user_id = :user_id')
-            ->setParameter('user_id', $userId->value())
+            ->setParameter('user_id', $userUuid->value())
             ->executeQuery()
             ->fetchAllAssociative();
 
         if (!$result) {
-            return $videos;
+            return [];
         }
 
+        $videos = [];
+
         foreach ($result as $video) {
-            $videos->add(
-                new Video(
-                    new Uuid($video['id']),
-                    new Uuid($video['user_id']),
-                    new Name($video['name']),
-                    new Description($video['description']),
-                    new Url($video['url']),
-                    new Date($video['created_at']),
-                    new Date($video['updated_at'])
-                )
+            $videos[] = new Video(
+                new Uuid($video['id']),
+                new Uuid($video['user_id']),
+                new Name($video['name']),
+                new Description($video['description']),
+                new Url($video['url']),
+                new Date($video['created_at']),
+                new Date($video['updated_at'])
             );
         }
 
-        return $videos;
+        return new Videos($videos);
     }
 
     /**
@@ -214,6 +216,60 @@ class MySQLVideoRepository implements VideoRepository
         }
         catch (Exception $e) {
             throw new PersistenceLayerException('Insert error: ' .  $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidValueException
+     */
+    public function deleteByUserId(Uuid $id): void
+    {
+        $videos = $this->findByUserUuid($id);
+        foreach ($videos as $video) {
+            $this->delete($video->uuid());
+        }
+    }
+
+    /**
+     * @throws InvalidValueException
+     * @throws SqlConnectionException
+     * @throws PersistenceLayerException
+     * @throws VideoNotFoundException
+     */
+    public function incrementComment(Uuid $id): void
+    {
+        if (is_null($this->find($id)))
+            throw new VideoNotFoundException(sprintf('Video not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE_VIDEO;
+            $uuid = $id->value();
+            $sql = "update {$table} set comment_counter = comment_counter + 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+    }
+
+    /**
+     * @throws InvalidValueException
+     * @throws SqlConnectionException
+     * @throws PersistenceLayerException
+     * @throws VideoNotFoundException
+     */
+    public function decrementComment(Uuid $id): void
+    {
+        if (is_null($this->find($id)))
+            throw new VideoNotFoundException(sprintf('Video not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE_VIDEO;
+            $uuid = $id->value();
+            $sql = "update {$table} set comment_counter = comment_counter - 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
         }
     }
 }

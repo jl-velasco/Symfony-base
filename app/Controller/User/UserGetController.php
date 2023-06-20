@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
-use Symfony\Base\User\Aplication\GetUserUseCase;
+use Symfony\Base\App\Controller\Controller;
+use Symfony\Base\User\Application\GetUserUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-final class UserGetController
+final class UserGetController extends Controller
 {
     public function __construct(
         private readonly GetUserUseCase $useCase

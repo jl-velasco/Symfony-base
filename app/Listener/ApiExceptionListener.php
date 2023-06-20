@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\App\Listener;
 
-use Symfony\Base\Shared\Domain\DomainError;
 use Symfony\Base\Shared\Domain\Utils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -32,11 +31,7 @@ class ApiExceptionListener
 
     private function exceptionCodeFor(Throwable $error): string
     {
-        $domainErrorClass = DomainError::class;
-
-        return $error instanceof $domainErrorClass
-            ? $error->errorCode()
-            : Utils::toSnakeCase(Utils::extractClassName($error));
+        return Utils::toSnakeCase(Utils::extractClassName($error));
     }
 
 }

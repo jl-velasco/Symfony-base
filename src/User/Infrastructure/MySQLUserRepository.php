@@ -4,16 +4,16 @@ declare(strict_types=1);
 namespace Symfony\Base\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
-use Symfony\Base\Shared\Domain\ValueObject\Date;
+use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\User;
+use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
+use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\User\Domain\User;
 
 class MySQLUserRepository implements UserRepository
 {
-    private const TABLE_USER = 'user';
+    public const TABLE = 'user';
 
     public function __construct(
         private readonly Connection $connection
@@ -21,88 +21,114 @@ class MySQLUserRepository implements UserRepository
     {
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidValueException
-     */
+    public function save(User $user): User
+    {
+        try {
+            if (!is_null($entity = $this->search($user->id()))) {
+                $this->connection->update(
+                    self::TABLE,
+                    $user->toArray(),
+                    [
+                        'id' => $entity->id()->value()
+                    ]
+                );
+            } else
+                $this->connection->insert(
+                    self::TABLE,
+                    $user->toArray(),
+                );
+        }
+        catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+
+        return $this->search($user->id());
+    }
+
     public function search(Uuid $id): User|null
     {
-        $user = $this->connection
-            ->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_USER)
-            ->where('id = :id')
-            ->setParameter('id', $id->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE)
+                ->where('id = :id')
+                ->setParameter('id', $id->value())
+                ->executeQuery()
+                ->fetchAssociative();
 
-        if ($user) {
-            return User::fromArray($user);
-        }
+            if (!$result)
+                return null;
 
-        return null;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function save(User $user): void
-    {
-        if ($this->search($user->id())) {
-            $this->update($user);
-        } else {
-            $this->insert($user);
+            return User::fromArray($result);
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
         }
     }
 
-    /**
-     * @throws Exception
-     */
-    private function update(User $user): void
+    public function searchByEmail(Email $email): User|null
     {
-        $this->connection->createQueryBuilder()
-            ->update(self::TABLE_USER)
-            ->set('email', ':email')
-            ->set('name', ':name')
-            ->set('password', ':password')
-            ->set('updated_at', ':updated_at')
-            ->set('video_counter', ':video_counter')
-            ->where('id = :id')
-            ->setParameters([
-                'id' => $user->id(),
-                'email' => $user->email(),
-                'name' => $user->name(),
-                'password' => $user->password(),
-                'updated_at' => new Date(),
-                'video_counter' => $user->videoCounter()
-            ])
-            ->executeQuery();
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE)
+                ->where('email = :email')
+                ->setParameter('email', $email->value())
+                ->executeQuery()
+                ->fetchAssociative();
+
+            if (!$result)
+                return null;
+
+            return User::fromArray($result);
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
     }
 
-    /**
-     * @throws Exception
-     */
     public function delete(Uuid $id): void
     {
-        $this->connection->delete(
-            self::TABLE_USER,
-            ['id' => $id]
-        );
+        if (is_null($this->search($id)))
+            throw new UserNotExistException(sprintf('User not found. ID: %s',$id->value()));
+
+        try {
+            $this->connection->delete(
+                self::TABLE,
+                [
+                    'id' => $id->value()
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
     }
 
-    /**
-     * @throws Exception
-     */
-    private function insert(User $user): void
+    public function incrementVideo(Uuid $id): void
     {
-        $this->connection->insert(
-            self::TABLE_USER,
-            [
-                'id' => $user->id()->value(),
-                'email' => $user->email()->value(),
-                'name' => $user->name()->value(),
-                'password' => $user->password()->value(),
-            ]
-        );
+        if (is_null($this->search($id)))
+            throw new UserNotExistException(sprintf('User not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE;
+            $uuid = $id->value();
+            $sql = "update {$table} set video_counter = video_counter + 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
+    }
+
+    public function decrementVideo(Uuid $id): void
+    {
+        if (is_null($this->search($id)))
+            throw new UserNotExistException(sprintf('User not found. ID: %s',$id->value()));
+
+        try {
+            $table = self::TABLE;
+            $uuid = $id->value();
+            $sql = "update {$table} set video_counter = video_counter - 1 where id = '{$uuid}'";
+            $this->connection->prepare($sql)->executeQuery();
+        } catch (\Exception $e) {
+            throw new SqlConnectionException($e);
+        }
     }
 }

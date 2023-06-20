@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Symfony\Base\Tests\Unit\User\Domain;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
@@ -26,12 +27,7 @@ class UserFinderTest extends TestCase
      * */
     public function whenUserNotExistShouldThrowException(): void
     {
-        $this->repository
-            ->expects(self::once())
-            ->method('search')
-            ->willReturn(null);
-
-        $this->expectException(UserNotExistException::class);
+        $this->expectException(InvalidValueException::class);
         $this->useCase->__invoke(new Uuid('123'));
     }
 

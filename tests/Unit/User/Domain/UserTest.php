@@ -5,40 +5,30 @@ namespace Symfony\Base\Tests\Unit\User\Domain;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Domain\UserDeletedDomainEvent;
+use Symfony\Base\User\Domain\Events\UserDeletedEvent;
 use Symfony\Base\User\Domain\VideoCounter;
 
 class UserTest extends TestCase
 {
 
-    /**
-     * @throws InvalidValueException
-     */
     public function testUserIsDeleted(): void
     {
         $user = UserMother::create()->random()->build();
         $user->delete();
         $events = $user->pullDomainEvents();
-        $firtsEvent = $events[0];
-        $this->assertEquals(UserDeletedDomainEvent::class, $firtsEvent::class);
+        $var = $events[0];
+        $this->assertEquals(UserDeletedEvent::class, $var::class);
     }
 
-    /**
-     * @throws InvalidValueException
-     */
     public function testUserAddVideo(): void
     {
         $user = UserMother::create()->random()->build();
         $this->assertEquals(0, $user->videoCounter()->value());
-        $user->increaseVideoCounter();
+        $user->addVideo();
         $this->assertEquals(1, $user->videoCounter()->value());
     }
 
-    /**
-     * @throws InvalidValueException
-     */
     public function testUserSubstractShouldOk(): void
     {
         $user = UserMother::create()
@@ -47,17 +37,14 @@ class UserTest extends TestCase
             ->build();
 
         $this->assertEquals(1, $user->videoCounter()->value());
-        $user->decreaseVideoCounter();
+        $user->substractVideo();
         $this->assertEquals(0, $user->videoCounter()->value());
     }
 
-    /**
-     * @throws InvalidValueException
-     */
     public function testUserSubstractVideoWhenCounterIsZero(): void
     {
         $user = UserMother::create()->random()->build();
         $this->expectException(InvalidArgumentException::class);
-        $user->decreaseVideoCounter();
+        $user->substractVideo();
     }
 }

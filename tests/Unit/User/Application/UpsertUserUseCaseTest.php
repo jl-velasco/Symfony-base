@@ -5,7 +5,7 @@ namespace Symfony\Base\Tests\Unit\User\Application;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Aplication\UpsertUserUseCase;
+use Symfony\Base\User\Application\UpsertUserUseCase;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 

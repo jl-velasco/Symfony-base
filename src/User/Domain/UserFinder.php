@@ -6,6 +6,7 @@ namespace Symfony\Base\User\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\User\Domain\UserRepository;
 
 class UserFinder
 {

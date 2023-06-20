@@ -1,0 +1,59 @@
+### CREATE / UPDATE USER
+
+PUT https://localhost:8001/api/user/d8745145-6d90-4f3c-a77b-d37d713a8135
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "atyltin@hiberus.com",
+  "password": "12345",
+  "name": "Anton"
+}
+
+### DELETE USER
+DELETE https://localhost:8001/api/user/d8745145-6d90-4f3c-a77b-d37d713a8135
+Accept: application/json
+Content-Type: application/json
+
+{}
+
+### GET USER
+GET https://localhost:8001/api/user/d8745145-6d90-4f3c-a77b-d37d713a8135
+Accept: application/json
+Content-Type: application/json
+
+
+### CREATE / UPDATE VIDEO
+PUT https://localhost:8001/api/video/d8745145-6d90-4f3c-a77b-d37d713a8136
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userId": "d8745145-6d90-4f3c-a77b-d37d713a8135",
+  "name": "Test video",
+  "description": "Test description",
+  "url": "https://youtube.com",
+  "comments": []
+}
+
+### DELETE VIDEO
+DELETE https://localhost:8001/api/video/d8745145-6d90-4f3c-a77b-d37d713a8136
+Accept: application/json
+Content-Type: application/json
+
+{}
+
+### CREATE / UPDATE COMMENT
+PUT https://localhost:8001/api/comment/d8745145-6d90-4f3c-a77b-d37d713a8136
+Accept: application/json
+Content-Type: application/json
+
+{
+  "videoId": "d8745145-6d90-4f3c-a77b-d37d713a8136",
+  "message": "Test comment"
+}
+
+### GET COMMENTS BY VIDEO
+GET https://localhost:8001/api/comments/d8745145-6d90-4f3c-a77b-d37d713a8136
+Accept: application/json
+Content-Type: application/json

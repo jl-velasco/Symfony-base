@@ -6,7 +6,7 @@ namespace Symfony\Base\Tests\Unit\User\Application;
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Aplication\DeleteUserUseCase;
+use Symfony\Base\User\Application\DeleteUserUseCase;
 use Symfony\Base\User\Domain\UserFinder;
 use Symfony\Base\User\Domain\UserRepository;
 

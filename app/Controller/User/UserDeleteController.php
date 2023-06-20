@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
-use Symfony\Base\User\Aplication\DeleteUserUseCase;
+use Symfony\Base\App\Controller\Controller;
+use Symfony\Base\User\Application\DeleteUserUseCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-final class UserDeleteController
+final class UserDeleteController extends Controller
 {
     public function __construct(
         private readonly DeleteUserUseCase $useCase

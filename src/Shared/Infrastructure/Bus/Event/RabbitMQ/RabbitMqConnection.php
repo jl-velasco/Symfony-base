@@ -9,6 +9,7 @@ use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
+use Psr\Log\LoggerInterface;
 
 class RabbitMqConnection
 {
@@ -73,6 +74,7 @@ class RabbitMqConnection
         );
 
         $AMQPMessage->set('application_headers', $headers);
+
         $this->channel->basic_publish(
             $AMQPMessage,
             $this->exchangeName,
