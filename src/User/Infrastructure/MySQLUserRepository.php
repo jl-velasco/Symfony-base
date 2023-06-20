@@ -5,6 +5,7 @@ namespace Symfony\Base\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\User;
@@ -22,6 +23,7 @@ class MySQLUserRepository implements UserRepository
 
     /**
      * @throws Exception
+     * @throws InvalidValueException
      */
     public function search(Uuid $id): User|null
     {

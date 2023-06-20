@@ -1,18 +1,16 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\UserDeleted;
+use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 use Symfony\Base\Video\Domain\VideoRepository;
 
-class UserDeletedDeleteVideosConsumer implements DomainEventSubscriber
+class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 {
-    private const QUEUE_NAME = 'user.user_deleted.delete_videos';
-
     public function __construct(
         private readonly VideoRepository $repository
     ) {
@@ -21,18 +19,21 @@ class UserDeletedDeleteVideosConsumer implements DomainEventSubscriber
     public function __invoke(DomainEvent $event): void
     {
         $data = $event->toPrimitives();
-        $this->repository->deleteByUserId(new Uuid($data['user_id']));
-        // Para ver los retries
-        // $this->repository->deleteByUserId($data['user_id']);
+
+        $videos = $this->repository->findByUserId(new Uuid($data['user_id']));
+        foreach ($videos as $video) {
+            $this->repository->delete($video->uuid());
+        }
     }
 
     public static function subscribedTo(): array
     {
-        return [UserDeleted::class];
+        return [UserDeletedDomainEvent::class];
     }
 
+    //TODO: remove coupling
     public static function queue(): string
     {
-        return self::QUEUE_NAME;
+        return 'user.user_deleted.delete_videos';
     }
 }

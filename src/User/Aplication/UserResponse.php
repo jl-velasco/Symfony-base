@@ -15,7 +15,7 @@ final class UserResponse
     {
     }
 
-    /** @return array<string, string> */
+    /** @return array<string, int|string> */
     public function toArray(): array
     {
         return [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Video\Aplication;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Video\Domain\VideoFinder;
 
 final class GetVideoUseCase
@@ -13,9 +14,13 @@ final class GetVideoUseCase
     {
     }
 
+    /**
+     * @throws VideoNotFoundException
+     */
     public function __invoke(string $id): VideoResponse
     {
         $video = $this->finder->__invoke(new Uuid($id));
+
         return new VideoResponse(
             $video->uuid()->value(),
             $video->userUuid()->value(),

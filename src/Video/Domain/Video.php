@@ -61,17 +61,14 @@ final class Video extends AggregateRoot
 
     public function comments(): Comments
     {
-        if (!$this->comments) {
-            $this->comments = new Comments([]);
-        }
-
         return $this->comments;
     }
 
-    public function addComment(Uuid $id, CommentMessage $message): self
+    public function addComment(Uuid $id, CommentMessage $message): void
     {
-        $this->comments->add(new Comment($id, $this->uuid(), $message));
-        return $this;
+        $this->comments->add(
+            new Comment($id, $this->uuid(), $message)
+        );
     }
 
     public function newComments(Video $video): Comments
@@ -79,20 +76,36 @@ final class Video extends AggregateRoot
         return $video->comments()->diff($this->comments());
     }
 
-    public function save(): void
+    public static function create(
+        Uuid $uuid,
+        Uuid $userUuid,
+        Name $name,
+        Description $description,
+        Url $url,
+    ): self
     {
-        $this->record(
-            new VideoCreated(
-                $this->uuid()->value(),
-                $this->userUuid(),
+        $video = new self(
+            $uuid,
+            $userUuid,
+            $name,
+            $description,
+            $url,
+        );
+
+        $video->record(
+            new VideoCreatedDomainEvent(
+                $uuid->value(),
+                $userUuid,
             )
         );
+
+        return $video;
     }
 
     public function delete(): void
     {
         $this->record(
-            new VideoDeleted(
+            new VideoDeletedDomainEvent(
                 $this->uuid()->value(),
                 $this->userUuid(),
             )
