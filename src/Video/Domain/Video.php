@@ -12,7 +12,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Events\VideoAddedEvent;
 use Symfony\Base\Video\Domain\Events\VideoDeletedEvent;
 
-final class Video extends AggregateRoot
+class Video extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $uuid,

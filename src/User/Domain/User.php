@@ -11,7 +11,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\Events\UserDeletedEvent;
 
-final class User extends AggregateRoot
+class User extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $id,
@@ -21,8 +21,7 @@ final class User extends AggregateRoot
         private ?VideoCounter $videoCounter = new VideoCounter(0),
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null
-    )
-    {
+    ) {
     }
 
     public function id(): Uuid
@@ -60,14 +59,14 @@ final class User extends AggregateRoot
         return $this->videoCounter;
     }
 
-    public function addVideo(): void
+    public function increaseVideoCounter(): void
     {
-        $this->videoCounter = $this->videoCounter->add();
+        $this->videoCounter = $this->videoCounter->increase();
     }
 
-    public function substractVideo(): void
+    public function decreaseVideoCounter(): void
     {
-        $this->videoCounter = $this->videoCounter->substract();
+        $this->videoCounter = $this->videoCounter->decrease();
     }
 
     /**
@@ -92,7 +91,6 @@ final class User extends AggregateRoot
         $this->record(
             new UserDeletedEvent(
                 $this->id()->value(),
-                $this->id(),
             )
         );
     }

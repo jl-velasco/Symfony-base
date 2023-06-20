@@ -9,11 +9,8 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 class UserDeletedEvent extends DomainEvent
 {
-    private const ROUTING_KEY = 'hiberus.user.event.user_deleted';
-
     public function __construct(
         string $aggregateId,
-        private readonly Uuid $userId,
         ?string $eventId = null,
         ?string $occurredOn = null
     )
@@ -23,13 +20,13 @@ class UserDeletedEvent extends DomainEvent
 
     public static function eventName(): string
     {
-        return self::ROUTING_KEY;
+        return 'hiberus.user.event.user_deleted';
     }
 
     public function toPrimitives(): array
     {
         return [
-            'user_id' => $this->userId->value(),
+            'user_id' => $this->aggregateId(),
         ];
     }
 
@@ -42,6 +39,6 @@ class UserDeletedEvent extends DomainEvent
         ?string $eventId,
         ?string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, new Uuid($body['user_id']), $eventId, $occurredOn);
+        return new self($aggregateId, $eventId, $occurredOn);
     }
 }
