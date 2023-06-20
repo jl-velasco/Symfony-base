@@ -1,7 +1,3 @@
-### Find by uuid
-GET {{host}}/{{version}}/ticket/a95c0896-1d05-4785-95ec-a7bc0229f352
-Accept: application/json
-
 ###
 
 ### Upsert User
