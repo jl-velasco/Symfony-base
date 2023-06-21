@@ -5,8 +5,10 @@ namespace Symfony\Base\Tests\Unit\User\Aplication;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\User\Aplication\DeleteUserUseCase;
+use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserFinder;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -31,7 +33,10 @@ class DeleteUserUseCaseTest extends TestCase
 
     /**
      * @test
-     * */
+     *
+     * @throws UserNotExistException
+     * @throws InvalidValueException
+     */
     public function deleteUserShouldOk(): void
     {
         $user = UserMother::create()->random()->build();
