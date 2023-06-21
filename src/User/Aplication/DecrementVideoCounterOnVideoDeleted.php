@@ -6,35 +6,39 @@ namespace Symfony\Base\User\Aplication;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserFinder;
 use Symfony\Base\User\Domain\UserRepository;
-use Symfony\Base\Video\Domain\VideoCreated;
+use Symfony\Base\Video\Domain\VideoDeletedDomainEvent;
 
-class VideoCreatedAddVideoCounterConsumer implements DomainEventSubscriber
+class DecrementVideoCounterOnVideoDeleted implements DomainEventSubscriber
 {
-    private const QUEUE_NAME = 'video.video_created.add_video_counter';
-
     public function __construct(
         private readonly UserRepository $repository,
         private readonly UserFinder $finder
-    ) {
+    )
+    {
     }
 
+    /**
+     * @throws UserNotExistException
+     */
     public function __invoke(DomainEvent $event): void
     {
         $data = $event->toPrimitives();
         $user = $this->finder->__invoke(new Uuid($data['user_id']));
-        $user->addVideo();
+        $user->decreaseVideoCounter();
         $this->repository->save($user);
     }
 
     public static function subscribedTo(): array
     {
-        return [VideoCreated::class];
+        return [VideoDeletedDomainEvent::class];
     }
 
+    //TODO: remove coupling
     public static function queue(): string
     {
-        return self::QUEUE_NAME;
+        return 'video.video_deleted.decrease_video_counter';
     }
 }

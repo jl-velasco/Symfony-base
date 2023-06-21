@@ -16,6 +16,9 @@ class GetUserUseCase
     {
     }
 
+    /**
+     * @throws UserNotExistException
+     */
     public function __invoke(string $id): UserResponse
     {
         $user = $this->finder->__invoke(new Uuid($id));

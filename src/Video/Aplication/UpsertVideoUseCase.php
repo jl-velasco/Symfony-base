@@ -3,6 +3,7 @@
 namespace Symfony\Base\Video\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
@@ -15,13 +16,16 @@ use Symfony\Base\Video\Domain\VideoRepository;
 class UpsertVideoUseCase
 {
     public function __construct(
-        private readonly VideoRepository $mySqlVideoRepository,
-        private readonly VideoFinder $finder,
+        private readonly VideoRepository $videoRepository,
+        private readonly VideoFinder $videoFinder,
         private readonly EventBus $bus
     )
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(
         string $uuid,
         string $userUuid,
@@ -31,7 +35,7 @@ class UpsertVideoUseCase
     ): void
     {
         try {
-            $video = $this->finder->__invoke(new Uuid($uuid));
+            $this->videoFinder->__invoke(new Uuid($uuid));
             $video = new Video(
                 new Uuid($uuid),
                 new Uuid($userUuid),
@@ -39,20 +43,16 @@ class UpsertVideoUseCase
                 new Description($description),
                 new Url($url)
             );
-
-            $this->mySqlVideoRepository->save($video);
-        } catch (VideoNotFoundException $e) {
-            $video = new Video(
+        } catch (VideoNotFoundException) {
+            $video = Video::create(
                 new Uuid($uuid),
                 new Uuid($userUuid),
                 new Name($name),
                 new Description($description),
                 new Url($url)
             );
-
-            $video->save();
-            $this->mySqlVideoRepository->save($video);
-            $this->bus->publish(...$video->pullDomainEvents());
         }
+        $this->videoRepository->save($video);
+        $this->bus->publish(...$video->pullDomainEvents());
     }
 }

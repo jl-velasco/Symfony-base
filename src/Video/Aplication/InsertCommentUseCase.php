@@ -12,7 +12,7 @@ use Symfony\Base\Video\Domain\VideoRepository;
 
 final class InsertCommentUseCase
 {
-    public function __construct(private readonly VideoFinder $videoFinder, private readonly VideoRepository $repository)
+    public function __construct(private readonly VideoFinder $videoFinder, private readonly VideoRepository $videoRepository)
     {
     }
 
@@ -23,7 +23,7 @@ final class InsertCommentUseCase
     {
         $video = $this->videoFinder->__invoke(new Uuid($videoId));
         $video->addComment(new Uuid($id), new CommentMessage($message));
-        $this->repository->save($video);
+        $this->videoRepository->save($video);
     }
 
 }
