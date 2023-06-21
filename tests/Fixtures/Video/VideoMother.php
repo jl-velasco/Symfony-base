@@ -30,6 +30,7 @@ class VideoMother extends Mother
         $this->userUuid = Uuid::random();
         $this->name = new Name($this->faker->name());
         $this->description = new Description($this->faker->text());
+        $this->url = new Url($this->faker->url());
         return $this;
     }
 
@@ -39,7 +40,8 @@ class VideoMother extends Mother
             $this->uuid,
             $this->userUuid,
             $this->name,
-            $this->description
+            $this->description,
+            $this->url
         );
     }
 
