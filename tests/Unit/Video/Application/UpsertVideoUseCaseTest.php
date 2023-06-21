@@ -51,7 +51,9 @@ class UpsertVideoUseCaseTest extends TestCase
         $this->bus
             ->expects(self::once())
             ->method('publish')
-            ->with(self::callback(static fn(VideoCreatedDomainEvent $event) => $event->aggregateId() === $video->uuid()->value()));
+            ->with(self::callback(static fn(VideoCreatedDomainEvent $event) =>
+                $event->aggregateId() === $video->uuid()->value()
+            ));
 
         $this->useCase->__invoke(
             $video->uuid()->value(),
