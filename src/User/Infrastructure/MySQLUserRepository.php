@@ -5,9 +5,11 @@ namespace Symfony\Base\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -27,20 +29,24 @@ class MySQLUserRepository implements UserRepository
      */
     public function search(Uuid $id): User|null
     {
-        $user = $this->connection
-            ->createQueryBuilder()
-            ->select('*')
-            ->from(self::TABLE_USER)
-            ->where('id = :id')
-            ->setParameter('id', $id->value())
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $user = $this->connection
+                ->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_USER)
+                ->where('id = :id')
+                ->setParameter('id', $id->value())
+                ->executeQuery()
+                ->fetchAssociative();
 
-        if ($user) {
-            return User::fromArray($user);
+            if ($user) {
+                return User::fromArray($user);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            throw new PersistenceLayerException($e->getMessage());
         }
-
-        return null;
     }
 
     /**
