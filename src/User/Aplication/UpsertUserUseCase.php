@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
@@ -18,6 +19,9 @@ class UpsertUserUseCase
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(
         string $id,
         string $email,
