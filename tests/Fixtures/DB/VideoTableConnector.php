@@ -13,10 +13,10 @@ use Symfony\Base\Video\Domain\Video;
 
 class VideoTableConnector
 {
-    private const TABLE_VIDEO = 'video';
-    private const TABLE_COMMENT = 'comment';
+    public const TABLE_VIDEO = 'video';
+    public const TABLE_COMMENT = 'comment';
 
-    public static function create(Schema $schema): void
+    public static function createTable(Schema $schema): void
     {
         $table = $schema->createTable(self::TABLE_VIDEO);
         $table->addColumn('id', 'string', ['notnull' => true]);
