@@ -183,6 +183,7 @@ class MySQLVideoRepository implements VideoRepository
                     'name' => $video->name()->value(),
                     'description' => $video->description()->value(),
                     'url' => $video->url()->value(),
+                    'comment_counter' => $video->commentCounter()->value(),
                     'created_at' => $video->createdAt()?->stringDateTime()
                 ]
             );
@@ -204,12 +205,14 @@ class MySQLVideoRepository implements VideoRepository
                 ->set('description', ':description')
                 ->set('url', ':url')
                 ->set('updated_at', ':updated_at')
+                ->set('comment_counter', ':comment_counter')
                 ->where('id = :id')
                 ->setParameters([
                     'id' => $video->uuid(),
                     'name' => $video->name(),
                     'description' => $video->description(),
                     'url' => $video->url(),
+                    'comment_counter' => $video->commentCounter(),
                     'updated_at' => new Date(),
                 ])
                 ->executeQuery();

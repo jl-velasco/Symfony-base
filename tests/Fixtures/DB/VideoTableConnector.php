@@ -7,15 +7,19 @@ namespace Symfony\Base\Tests\Fixtures\DB;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\SchemaException;
 use Exception;
 use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
 use Symfony\Base\Video\Domain\Video;
 
 class VideoTableConnector
 {
-    private const TABLE_VIDEO = 'video';
-    private const TABLE_COMMENT = 'comment';
+    public const TABLE_VIDEO = 'video';
+    public const TABLE_COMMENT = 'comments';
 
+    /**
+     * @throws SchemaException
+     */
     public static function create(Schema $schema): void
     {
         $table = $schema->createTable(self::TABLE_VIDEO);
@@ -24,6 +28,7 @@ class VideoTableConnector
         $table->addColumn('name', 'string', ['notnull' => true]);
         $table->addColumn('description', 'text', ['notnull' => true, 'length' => 1000]);
         $table->addColumn('url', 'string', ['notnull' => true]);
+        $table->addColumn('comment_counter', 'integer', ['default' => 0]);
         $table->addColumn('created_at', 'datetimetz_immutable', ['notnull' => true]);
         $table->addColumn('updated_at', 'datetimetz_immutable', ['notnull' => false]);
         $table->setPrimaryKey(['id']);

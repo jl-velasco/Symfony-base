@@ -25,6 +25,7 @@ final class Version20230608201254_create_table_video extends AbstractMigration
         $table->addColumn('name', 'string', ['notnull' => true, 'length' => 191]);
         $table->addColumn('description', 'text', ['notnull' => true, 'length' => 1000]);
         $table->addColumn('url', 'string', ['notnull' => true, 'length' => 191]);
+        $table->addColumn('comment_counter', 'integer', ['default' => 0]);
         $table->addColumn('created_at', 'datetimetz_immutable', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'datetimetz_immutable', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
