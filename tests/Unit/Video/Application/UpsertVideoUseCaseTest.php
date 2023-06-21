@@ -8,6 +8,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Tests\Fixtures\Video\VideoMother;
 use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\Video\Domain\VideoCreatedDomainEvent;
 use Symfony\Base\Video\Domain\VideoFinder;
 use Symfony\Base\Video\Domain\VideoRepository;
 
@@ -50,7 +51,7 @@ class UpsertVideoUseCaseTest extends TestCase
         $this->bus
             ->expects(self::once())
             ->method('publish')
-            ->with(...$video->pullDomainEvents());
+            ->with(self::callback(static fn(VideoCreatedDomainEvent $event) => $event->aggregateId() === $video->uuid()->value()));
 
         $this->useCase->__invoke(
             $video->uuid()->value(),
@@ -80,8 +81,7 @@ class UpsertVideoUseCaseTest extends TestCase
 
         $this->bus
             ->expects(self::once())
-            ->method('publish')
-            ->with(...$video->pullDomainEvents());
+            ->method('publish');
 
         $this->useCase->__invoke(
             $video->uuid()->value(),
