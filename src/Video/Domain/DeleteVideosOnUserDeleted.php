@@ -8,7 +8,7 @@ use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 
-class DeleteVideosOnUserDeleted implements DomainEventSubscriber
+abstract class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 {
     public function __construct(
         private readonly VideoRepository $repository

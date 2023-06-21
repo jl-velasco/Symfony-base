@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 
 final class Uuid
 {
-    /** @throws InvalidValueException */
+
     public function __construct(protected string $value)
     {
         $this->validate($value);
@@ -40,7 +41,7 @@ final class Uuid
         return $this->value() === $other->value();
     }
 
-    /** @throws InvalidValueException */
+
     private function validate(string $id): void
     {
         if (!self::isValid($id)) {
