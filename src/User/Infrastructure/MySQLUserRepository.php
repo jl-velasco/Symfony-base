@@ -102,6 +102,7 @@ class MySQLUserRepository implements UserRepository
                 'email' => $user->email()->value(),
                 'name' => $user->name()->value(),
                 'password' => $user->password()->value(),
+                'created_at' => $user->createdAt()->stringDateTime(),
             ]
         );
     }

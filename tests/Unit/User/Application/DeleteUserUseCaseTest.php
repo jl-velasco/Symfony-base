@@ -3,18 +3,22 @@ declare(strict_types = 1);
 
 namespace Symfony\Base\Tests\Unit\User\Application;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\User\Aplication\DeleteUserUseCase;
+use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 use Symfony\Base\User\Domain\UserFinder;
 use Symfony\Base\User\Domain\UserRepository;
 
 class DeleteUserUseCaseTest extends TestCase
 {
-    private UserRepository $repository;
-    private UserFinder $finder;
-    private EventBus $bus;
+    private UserRepository&MockObject $repository;
+    private UserFinder&MockObject $finder;
+    private EventBus&MockObject $bus;
     private DeleteUserUseCase $useCase;
 
     public function setUp(): void
@@ -31,7 +35,10 @@ class DeleteUserUseCaseTest extends TestCase
 
     /**
      * @test
-     * */
+     *
+     * @throws UserNotExistException
+     * @throws InvalidValueException
+     */
     public function deleteUserShouldOk(): void
     {
         $user = UserMother::create()->random()->build();
@@ -49,7 +56,9 @@ class DeleteUserUseCaseTest extends TestCase
         $this->bus
             ->expects(self::once())
             ->method('publish')
-            ->with(...$user->pullDomainEvents());
+            ->with(self::callback(
+                static fn (UserDeletedDomainEvent $event) => ($event->aggregateId() === $user->id()->value())
+            ));
 
         $this->useCase->__invoke($user->id()->value());
     }
