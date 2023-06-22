@@ -26,6 +26,7 @@ class MySQLUserRepository implements UserRepository
     /**
      * @throws Exception
      * @throws InvalidValueException
+     * @throws PersistenceLayerException
      */
     public function search(Uuid $id): User|null
     {
