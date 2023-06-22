@@ -47,6 +47,12 @@ class CommentMother extends Mother
         $this->message= $message;
         return $this;
     }
+
+    public function withVideoId(Uuid $videoId): self
+    {
+        $this->videoId = $videoId;
+        return $this;
+    }
 }
 
 
