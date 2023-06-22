@@ -69,7 +69,7 @@ class CommentInsertFunctionalTest extends FunctionalTestCase
                 'message' => $comment->message()->value(),
             ]
         );
-        self::assertEquals(500, $response->getStatusCode());
+        self::assertEquals(404, $response->getStatusCode());
     }
 
     public function testInsertCommentVideoNotExistShouldKo(): void

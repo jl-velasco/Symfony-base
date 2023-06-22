@@ -26,6 +26,9 @@ class VideoPutFunctionalTest extends FunctionalTestCase
             ]
         );
         self::assertEquals(200, $response->getStatusCode());
+
+        $videos = $this->getAllFromRepository('video');
+        self::assertEquals($video->uuid()->value(), $videos[0]['id']);
     }
 
     public function testUpdateVideoShouldOk(): void
