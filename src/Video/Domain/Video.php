@@ -16,7 +16,7 @@ final class Video extends AggregateRoot
         private readonly Uuid $uuid,
         private readonly Uuid $userUuid,
         private readonly Name $name,
-        private readonly Description $description,
+        private Description $description,
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
@@ -74,6 +74,12 @@ final class Video extends AggregateRoot
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
+    }
+
+    public function changeDescription(string $description): void
+    {
+        $this->description = $this->description->changeDescription($description);
+
     }
 
     public static function create(

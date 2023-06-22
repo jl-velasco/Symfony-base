@@ -32,4 +32,9 @@ class Description extends StringValueObject
             );
         }
     }
+
+    public function changeDescription(string $value)
+    {
+        return new self($value);
+    }
 }
