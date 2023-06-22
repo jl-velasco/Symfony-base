@@ -20,7 +20,7 @@ final class Video extends AggregateRoot
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
-        private ?Comments $comments = new Comments([])
+        private readonly ?Comments $comments = new Comments([])
     ) {
     }
 
