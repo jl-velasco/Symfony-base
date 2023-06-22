@@ -42,20 +42,23 @@ class MySQLVideoRepository implements VideoRepository
         $this->update($video);
         $comments = $originalVideo->newComments($video);
         $comments->each(
-            function ($comment) {
+            function (Comment $comment) {
                 $this->connection->createQueryBuilder()
                     ->insert(self::TABLE_COMMENT)
                     ->values(
                         [
                             'id' => ':id',
                             'video_id' => ':video_id',
-                            'message' => ':message'
+                            'message' => ':message',
+                            'created_at' => ':created_at',
                         ]
                     )
                     ->setParameters([
-                        'id' => $comment->id(),
-                        'video_id' => $comment->videoId(),
-                        'message' => $comment->message(),
+                        'id' => $comment->id()->value(),
+                        'video_id' => $comment->videoId()->value(),
+                        'message' => $comment->message()->value(),
+                        'created_at' => $comment->createdAt()?->stringDateTime(),
+                        'updated_at' => $comment->updatedAt()?->stringDateTime(),
                     ])
                     ->executeStatement();
             }

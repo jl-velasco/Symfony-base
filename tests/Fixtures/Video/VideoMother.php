@@ -58,7 +58,15 @@ class VideoMother extends Mother
             $this->url,
             $this->createdAt,
             $this->updateAt,
+            $this->comments
         );
+    }
+
+    public function withId(Uuid $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function withDescription(Description $description): self
