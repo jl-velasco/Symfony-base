@@ -10,22 +10,20 @@ use Symfony\Base\Video\Domain\CommentMessage;
 
 class CommentMother extends Mother
 {
-    private readonly Uuid $id;
-    private readonly Uuid $videoId;
-    private readonly CommentMessage $message;
+    private Uuid $id;
+    private Uuid $videoId;
+    private CommentMessage $message;
 
-    public static function create(): Mother{
+    public static function create(): self
+    {
         return new self();
     }
 
-    /**
-     * @throws InvalidValueException
-     */
     public function random(): self
     {
-        $this->id= Uuid::random();
-        $this->videoId=Uuid::random();
-        $this->message= new CommentMessage($this->faker->text());
+        $this->id = Uuid::random();
+        $this->videoId = Uuid::random();
+        $this->message = new CommentMessage($this->faker->text());
         return $this;
     }
 
@@ -38,9 +36,21 @@ class CommentMother extends Mother
         );
     }
 
+    public function withId(Uuid $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function withVideoId(Uuid $videoId): self
+    {
+        $this->videoId = $videoId;
+        return $this;
+    }
+
     public function withMessage(CommentMessage $message): self
     {
-        $this->message= $message;
+        $this->message = $message;
         return $this;
     }
 }
