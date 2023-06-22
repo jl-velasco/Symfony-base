@@ -44,7 +44,7 @@ class MySQLUserRepository implements UserRepository
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|InvalidValueException
      */
     public function save(User $user): void
     {

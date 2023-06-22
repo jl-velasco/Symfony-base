@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Tests\Unit\User\Infrastructure;
 
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\DbalTestCase;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
@@ -24,6 +26,10 @@ class MySQLUserRepositoryTest extends DbalTestCase
         UserTableConnector::createTable($schema);
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function testCreateUser(): void
     {
         $user = UserMother::create()->random()->build();
@@ -38,6 +44,10 @@ class MySQLUserRepositoryTest extends DbalTestCase
         self::assertEquals($user->name()->value(), $all[0]['name']);
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function testUpdateUser(): void
     {
         $user = UserMother::create()->random()->build();
@@ -59,6 +69,10 @@ class MySQLUserRepositoryTest extends DbalTestCase
         self::assertEquals($oldUser[0]['video_counter'] + 1 , $lastUser[0]['video_counter']);
     }
 
+    /**
+     * @throws InvalidValueException
+     * @throws Exception
+     */
     public function testSearchUser(): void
     {
         $userMother = UserMother::create()->random()->build();

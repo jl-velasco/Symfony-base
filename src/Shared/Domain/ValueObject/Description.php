@@ -32,4 +32,13 @@ class Description extends StringValueObject
             );
         }
     }
+
+    /**
+     * @throws InvalidValueException
+     */
+    public function changeDescription(string $value): Description
+    {
+        return new self($value);
+    }
+
 }

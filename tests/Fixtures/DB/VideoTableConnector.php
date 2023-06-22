@@ -13,8 +13,8 @@ use Symfony\Base\Video\Domain\Video;
 
 class VideoTableConnector
 {
-    private const TABLE_VIDEO = 'video';
-    private const TABLE_COMMENT = 'comment';
+    public const TABLE_VIDEO = 'video';
+    public const TABLE_COMMENT = 'comment';
 
     public static function create(Schema $schema): void
     {

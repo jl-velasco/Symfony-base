@@ -4,6 +4,7 @@ namespace Symfony\Base\Video\Domain;
 
 use Exception;
 use Symfony\Base\Shared\Domain\AggregateRoot;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
@@ -16,7 +17,7 @@ final class Video extends AggregateRoot
         private readonly Uuid $uuid,
         private readonly Uuid $userUuid,
         private readonly Name $name,
-        private readonly Description $description,
+        private Description $description,
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
@@ -44,6 +45,13 @@ final class Video extends AggregateRoot
         return $this->description;
     }
 
+    /**
+     * @throws InvalidValueException
+     */
+    public function changeDescription(string $description): void
+    {
+        $this->description = $this->description->changeDescription($description);
+    }
     public function url(): Url
     {
         return $this->url;
@@ -71,6 +79,9 @@ final class Video extends AggregateRoot
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function newComments(Video $video): Comments
     {
         return $video->comments()->diff($this->comments());
@@ -112,4 +123,6 @@ final class Video extends AggregateRoot
             )
         );
     }
+
+
 }

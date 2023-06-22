@@ -37,6 +37,7 @@ class UpsertVideoUseCase
         try {
             $this->videoFinder->__invoke(new Uuid($uuid));
             $video = new Video(
+
                 new Uuid($uuid),
                 new Uuid($userUuid),
                 new Name($name),
