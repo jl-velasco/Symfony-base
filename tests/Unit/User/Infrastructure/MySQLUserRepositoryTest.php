@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Symfony\Base\Tests\Unit\User\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\Schema;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
@@ -113,5 +115,53 @@ class MySQLUserRepositoryTest extends DbalTestCase
         $this->expectException(PersistenceLayerException::class);
 
         $repository->search(Uuid::random());
+    }
+
+    /** @test */
+    public function shouldFailWhenTheConnectionOk(): void
+    {
+        $userMother = UserMother::create()->random()->build();
+
+        $connectionMock = $this->createMock(Connection::class);
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $resultMock = $this->createMock(Result::class);
+
+        $repository = new MySQLUserRepository($connectionMock);
+
+        $connectionMock->expects($this->once())
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilderMock);
+
+        $queryBuilderMock->expects($this->once())
+            ->method('select')
+            ->with('*')
+            ->willReturnSelf();
+
+        $queryBuilderMock->expects($this->once())
+            ->method('from')
+            ->with('user')
+            ->willReturnSelf();
+
+        $queryBuilderMock->expects($this->once())
+            ->method('where')
+            ->with('id = :id')
+            ->willReturnSelf();
+
+        $queryBuilderMock->expects($this->once())
+            ->method('setParameter')
+            ->with('id', $userMother->id()->value())
+            ->willReturnSelf();
+
+        $queryBuilderMock->expects($this->once())
+            ->method('executeQuery')
+            ->willReturn($resultMock);
+
+        $resultMock->expects($this->once())
+            ->method('fetchAssociative')
+            ->willReturn($userMother->toArray());
+
+        $user = $repository->search($userMother->id());
+
+        self::assertEquals($user->id()->value(),$userMother->id()->value());
     }
 }
