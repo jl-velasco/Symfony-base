@@ -11,7 +11,7 @@ use Symfony\Base\Tests\Fixtures\DB\VideoTableConnector;
 use Symfony\Base\Tests\Fixtures\Video\VideoMother;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;
 
-class GetVideoControllerTest extends FunctionalTestCase
+class GetVideoTest extends FunctionalTestCase
 {
     private const VERB = 'GET';
     private const ENDPOINT = '/v1/video/{{uuid}}';
