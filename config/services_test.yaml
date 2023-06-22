@@ -1,0 +1,10 @@
+framework:
+    test: true
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Symfony\Base\Tests\:
+    resource: '../tests'
+
