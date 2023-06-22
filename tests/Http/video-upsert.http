@@ -19,7 +19,7 @@ PUT {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
 Content-Type: application/json
 
 {
-  "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
+  "user_id": "a95c0896-1d05-4785-95ec-a7bc0229f353",
   "name": "Video 2",
   "description": "Descvription video 2",
   "url": "https://www.uuidgenerator.net"
@@ -52,7 +52,7 @@ PUT {{host}}/{{version}}/video/344621f3-aca8-49de-be67-031d0c693a1d
 Content-Type: application/json
 
 {
-  "user_uuid": "a95c0896-1d05-4785-95ec-a7bc0229f353",
+  "user_id": "a95c0896-1d05-4785-95ec-a7bc0229f353",
   "name": "Video 3",
   "description": "Descvription video 3",
   "url": "https://www.uuidgenerator.net"

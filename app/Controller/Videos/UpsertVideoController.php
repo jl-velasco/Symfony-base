@@ -21,7 +21,7 @@ class UpsertVideoController
 
         $this->upsertVideoUseCase->__invoke(
             $uuid,
-            $data['user_uuid'],
+            $data['user_id'],
             $data['name'],
             $data['description'],
             $data['url']

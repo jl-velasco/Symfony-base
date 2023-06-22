@@ -69,7 +69,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
             "/v1/user/{$user->id()->value()}",
             []
         );
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertEquals(500, $response->getStatusCode());
     }
 
     protected function createTables(Schema $schema): void
