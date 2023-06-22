@@ -8,3 +8,4 @@ services:
   Symfony\Base\Tests\:
     resource: '../tests'
 
+  Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Tests\Functional\FakeEventBus'

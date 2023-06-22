@@ -65,7 +65,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
         );
 
         $response = $this->doJsonRequest(
-            'DELETE',
+            'PUT',
             "/v1/user/{$user->id()->value()}",
             []
         );
