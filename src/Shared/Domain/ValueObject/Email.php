@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 
 final class Email extends StringValueObject
 {

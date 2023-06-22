@@ -6,8 +6,6 @@ namespace Symfony\Base\App\Listener;
 use Symfony\Base\Comment\Domain\Exceptions\CommentNotFoundException;
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
-use Symfony\Base\User\Dominio\Exceptions\PasswordIncorrectException;
-use Symfony\Base\User\Dominio\Exceptions\UserNotFoundException;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Base\Shared\Infrastructure\Exceptions\SqlConnectionException;
 use Symfony\Component\HttpFoundation\Response;

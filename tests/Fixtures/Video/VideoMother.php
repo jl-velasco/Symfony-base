@@ -37,7 +37,7 @@ class VideoMother extends Mother
 
     /**
      * @throws InvalidValueException
-     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exceptions\InvalidValueException
      */
     public function random(): self
     {

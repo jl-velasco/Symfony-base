@@ -6,6 +6,6 @@ namespace Symfony\Base\Shared\Domain\ValueObject;
 class UpdatedAt extends DateTimeValueObject
 {
     static function fromPrimitive($dateTime = '') {
-        return new self(new \DateTime($dateTime));
+        return new self(new \DateTime($dateTime ?? ''));
     }
 }

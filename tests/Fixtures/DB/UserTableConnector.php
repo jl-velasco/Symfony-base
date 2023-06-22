@@ -7,7 +7,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\Schema;
 use Exception;
-use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
+use Symfony\Base\Shared\Domain\Exceptions\InternalErrorException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 
 class UserTableConnector

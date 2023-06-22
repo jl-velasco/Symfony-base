@@ -5,10 +5,8 @@ namespace Symfony\Base\User\Application;
 
 use Symfony\Base\Shared\Domain\Exceptions\InvalidEmailException;
 use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
-use Symfony\Base\Shared\Domain\ValueObject\CreatedAt;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
-use Symfony\Base\Shared\Domain\ValueObject\UpdatedAt;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\User\Application\Exceptions\DuplicateUserException;
@@ -28,7 +26,7 @@ class UpsertUserUseCase
     /**
      * @throws InvalidValueException
      * @throws InvalidEmailException
-     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exceptions\InvalidValueException
      */
     public function __invoke(
         string $id,

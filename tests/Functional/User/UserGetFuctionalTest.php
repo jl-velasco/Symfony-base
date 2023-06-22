@@ -25,7 +25,7 @@ class UserGetFuctionalTest extends FunctionalTestCase
 
         $response = $this->doJsonRequest(
             'Get',
-            "/v1/user/{$user->id()->value()}",
+            "/api/user/{$user->id()->value()}",
             []
         );
         self::assertEquals(200, $response->getStatusCode());
@@ -39,7 +39,7 @@ class UserGetFuctionalTest extends FunctionalTestCase
 
         $response = $this->doJsonRequest(
             'Get',
-            "/v1/user/{$user->id()->value()}",
+            "/api/user/{$user->id()->value()}",
             []
         );
         self::assertEquals(404, $response->getStatusCode());

@@ -4,7 +4,7 @@ namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
@@ -52,13 +52,17 @@ class MySQLVideoRepository implements VideoRepository
                         [
                             'id' => ':id',
                             'video_id' => ':video_id',
-                            'message' => ':message'
+                            'message' => ':message',
+                            'created_at' => ':created_at',
+                            'updated_at' => ':updated_at',
                         ]
                     )
                     ->setParameters([
                         'id' => $comment->id(),
                         'video_id' => $comment->videoId(),
                         'message' => $comment->message(),
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     ])
                     ->executeStatement();
             }
@@ -109,7 +113,7 @@ class MySQLVideoRepository implements VideoRepository
                         return new Comment(
                             new Uuid($comment['id']),
                             new Uuid($comment['video_id']),
-                            new CommentMessage($comment['comment']),
+                            new CommentMessage($comment['message']),
                         );
                     },
                     $comments
@@ -184,7 +188,8 @@ class MySQLVideoRepository implements VideoRepository
                     'description' => $video->description()->value(),
                     'url' => $video->url()->value(),
                     'comment_counter' => $video->commentCounter()->value(),
-                    'created_at' => $video->createdAt()?->stringDateTime()
+                    'created_at' => $video->createdAt()?->stringDateTime(),
+                    'updated_at' => $video->updatedAt()?->stringDateTime(),
                 ]
             );
         }

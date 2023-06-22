@@ -15,8 +15,8 @@ class Comment extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $id,
-        private readonly Uuid $videoId,
-        private readonly Description $comment,
+        private Uuid $videoId,
+        private Description $comment,
         private readonly CreatedAt $createdAt,
         private readonly UpdatedAt $updatedAt,
     )
@@ -65,7 +65,7 @@ class Comment extends AggregateRoot
         $result = [
             'id' => $this->id()->value(),
             'video_id' => $this->videoId()->value(),
-            'comment' => $this->comment()->value(),
+            'message' => $this->comment()->value(),
             'created_at' => (string)$this->createdAt(),
             'updated_at' => (string)$this->updatedAt(),
         ];
@@ -75,18 +75,36 @@ class Comment extends AggregateRoot
 
     /**
      * @throws InvalidValueException
-     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exceptions\InvalidValueException
      */
     static public function fromPrimitives($data): Comment
     {
         return new self(
             new Uuid($data['id']),
             new Uuid($data['video_id']),
-            new Description($data['comment']),
+            new Description($data['message']),
             CreatedAt::fromPrimitive($data['created_at']),
             UpdatedAt::fromPrimitive($data['updated_at']),
         );
     }
+
+    /**
+     * @param Uuid $videoId
+     */
+    public function setVideoId(Uuid $videoId): void
+    {
+        $this->videoId = $videoId;
+    }
+
+    /**
+     * @param Description $comment
+     */
+    public function setComment(Description $comment): void
+    {
+        $this->comment = $comment;
+    }
+
+
 
     public function add(): void
     {

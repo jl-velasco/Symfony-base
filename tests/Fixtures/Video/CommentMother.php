@@ -2,7 +2,7 @@
 
 namespace Symfony\Base\Tests\Fixtures\Video;
 
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\Mother;
 use Symfony\Base\Video\Domain\Comment;
@@ -10,9 +10,9 @@ use Symfony\Base\Video\Domain\CommentMessage;
 
 class CommentMother extends Mother
 {
-    private readonly Uuid $id;
-    private readonly Uuid $videoId;
-    private readonly CommentMessage $message;
+    private Uuid $id;
+    private Uuid $videoId;
+    private CommentMessage $message;
 
     public static function create(): Mother{
         return new self();
@@ -41,6 +41,12 @@ class CommentMother extends Mother
     public function withMessage(CommentMessage $message): self
     {
         $this->message= $message;
+        return $this;
+    }
+
+    public function withVideo(Uuid $videoId): self
+    {
+        $this->videoId = $videoId;
         return $this;
     }
 }

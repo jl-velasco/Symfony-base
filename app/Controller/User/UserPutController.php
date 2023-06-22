@@ -10,6 +10,11 @@ use Symfony\Base\User\Application\UpsertUserUseCase;
 
 final class UserPutController extends Controller
 {
+    protected array $REQUIRED_FIELDS = [
+        'name',
+        'email',
+    ];
+
     public function __construct(
         private readonly UpsertUserUseCase $useCase
     )
@@ -20,10 +25,11 @@ final class UserPutController extends Controller
     public function __invoke(string $id, Request $request): Response
     {
         $data = $this->dataFromRequest($request);
+
         $this->useCase->__invoke(
             $id,
-            $data['email'] ?? '',
-            $data['name'] ?? '',
+            $data['email'],
+            $data['name'],
             $data['password'] ?? '',
         );
 

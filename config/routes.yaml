@@ -46,7 +46,7 @@ app_comment_get_list:
 
 app_comment_put:
   path: /api/comment/{id}
-  controller: Symfony\Base\App\Controller\Comment\CommentPutController
+  controller: Symfony\Base\App\Controller\Video\InsertCommentController
   defaults: { auth: false }
   methods:  [PUT]
 
@@ -55,4 +55,3 @@ app_comment_delete:
   controller: Symfony\Base\App\Controller\Comment\CommentDeleteController
   defaults: { auth: false }
   methods:  [DELETE]
-

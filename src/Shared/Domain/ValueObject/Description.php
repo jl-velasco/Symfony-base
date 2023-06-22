@@ -3,7 +3,7 @@
 namespace Symfony\Base\Shared\Domain\ValueObject;
 
 
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 
 class Description extends StringValueObject
 {

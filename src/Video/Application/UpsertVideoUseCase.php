@@ -26,7 +26,7 @@ class UpsertVideoUseCase
     /**
      * @throws InvalidValueException
      * @throws InvalidValueException
-     * @throws \Symfony\Base\Shared\Domain\Exception\InvalidValueException
+     * @throws \Symfony\Base\Shared\Domain\Exceptions\InvalidValueException
      */
     public function __invoke(
         string $id,

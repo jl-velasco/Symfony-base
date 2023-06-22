@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\Tests\Functional\User;
 
 use Doctrine\DBAL\Schema\Schema;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
@@ -17,7 +18,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
 
         $response = $this->doJsonRequest(
             'PUT',
-            "/v1/user/{$user->id()->value()}",
+            "/api/user/{$user->id()->value()}",
             [
                 'email' => $user->email()->value(),
                 'name' => $user->name()->value(),
@@ -43,7 +44,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
                     'email' => 'email@email.com',
                     'name' => '',
                     'password' => 'password',
-                    'expected' => 200
+                    'expected' => 400
                 ],
             ],
         ];
@@ -51,6 +52,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
 
     /**
      * @dataProvider dataProviderForCreateUser
+     * @throws InvalidValueException
      */
     public function testCreateUserShouldKo($params): void
     {
@@ -58,18 +60,19 @@ class UserPutFuctionalTest extends FunctionalTestCase
 
         UserTableConnector::insert(
             $this->connection,
-            $user->id()->value(),
-            $user->email()->value(),
-            $user->name()->value(),
-            $user->password()->value()
+            Uuid::random()->value(),
+            $params['email'],
+            $params['name'],
+            $params['password']
         );
 
         $response = $this->doJsonRequest(
-            'DELETE',
-            "/v1/user/{$user->id()->value()}",
+            'PUT',
+            "/api/user/{$user->id()->value()}",
             []
         );
-        self::assertEquals(200, $response->getStatusCode());
+
+        self::assertEquals($params['expected'], $response->getStatusCode());
     }
 
     protected function createTables(Schema $schema): void

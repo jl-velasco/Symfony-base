@@ -7,7 +7,7 @@ namespace Symfony\Base\Shared\Domain\ValueObject;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 
 class Date
 {

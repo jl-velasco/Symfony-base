@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Base\App\Controller\Video;
 
 use JsonException;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Video\Application\InsertCommentUseCase;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;

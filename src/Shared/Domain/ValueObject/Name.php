@@ -5,5 +5,4 @@ namespace Symfony\Base\Shared\Domain\ValueObject;
 
 class Name extends StringValueObject
 {
-
 }

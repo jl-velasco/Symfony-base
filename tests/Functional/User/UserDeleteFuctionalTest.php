@@ -17,7 +17,7 @@ class UserDeleteFuctionalTest extends FunctionalTestCase
 
         $response = $this->doJsonRequest(
             'PUT',
-            "/v1/user/{$user->id()->value()}",
+            "/api/user/{$user->id()->value()}",
             [
                 'email' => $user->email()->value(),
                 'name' => $user->name()->value(),

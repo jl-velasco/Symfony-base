@@ -49,7 +49,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "videoId": "d8745145-6d90-4f3c-a77b-d37d713a8136",
+  "video_id": "d8745145-6d90-4f3c-a77b-d37d713a8136",
   "message": "Test comment"
 }
 

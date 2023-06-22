@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\User\Domain;
 
 use Symfony\Base\Shared\Domain\AggregateRoot;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Exceptions\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
@@ -107,17 +107,5 @@ class User extends AggregateRoot
                 $this->id()->value(),
             )
         );
-    }
-
-    public function toArray()
-    {
-        return [
-            'id' => $this->id()->value(),
-            'email' => $this->email()->value(),
-            'name' => $this->name()->value(),
-            'password' => $this->password()->value(),
-            'created_at' => $this->createdAt()->toFormat("Y-m-d H:i:s"),
-            'updated_at' => $this->createdAt()->toFormat("Y-m-d H:i:s"),
-        ];
     }
 }
