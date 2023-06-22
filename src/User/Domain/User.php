@@ -86,6 +86,20 @@ class User extends AggregateRoot
         );
     }
 
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id()->value(),
+            'email' => $this->email()->value(),
+            'name' => $this->name()->value(),
+            'password' => $this->password()->value(),
+            'video_counter' => $this->videoCounter()->value(),
+            'created_at' => $this->createdAt()->stringDateTime(),
+            'updated_at' => $this->updatedAt()?->stringDateTime(),
+        ];
+    }
+
     public function delete(): void
     {
         $this->record(
