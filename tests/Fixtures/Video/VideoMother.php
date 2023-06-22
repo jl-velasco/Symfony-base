@@ -23,7 +23,7 @@ class VideoMother extends Mother
     private Date $updateAt;
     private Comments $comments;
 
-    public static function create(): Mother
+    public static function create(): self
     {
         return new self();
     }
