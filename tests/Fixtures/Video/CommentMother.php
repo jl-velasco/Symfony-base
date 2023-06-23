@@ -10,7 +10,7 @@ use Symfony\Base\Video\Domain\CommentMessage;
 
 class CommentMother extends Mother
 {
-    private readonly Uuid $id;
+    private Uuid $id;
     private readonly Uuid $videoId;
     private readonly CommentMessage $message;
 
@@ -41,6 +41,12 @@ class CommentMother extends Mother
     public function withMessage(CommentMessage $message): self
     {
         $this->message= $message;
+        return $this;
+    }
+
+    public function withVideoId(Uuid $id): self
+    {
+        $this->id = $id;
         return $this;
     }
 }

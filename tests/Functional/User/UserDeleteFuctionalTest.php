@@ -14,13 +14,20 @@ class UserDeleteFuctionalTest extends FunctionalTestCase
     public function testDeleteUserShouldOk(): void
     {
         $user = UserMother::create()->random()->build();
+        UserTableConnector::insert(
+            $this->connection,
+            $user->id()->value(),
+            $user->email()->value(),
+            $user->name()->value(),
+            $user->password()->value()
+        );
 
         $response = $this->doJsonRequest(
             'DELETE',
             "/v1/user/{$user->id()->value()}",
             []
         );
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertEquals(204, $response->getStatusCode());
     }
 
     public function testDeleteUserShouldKo(): void

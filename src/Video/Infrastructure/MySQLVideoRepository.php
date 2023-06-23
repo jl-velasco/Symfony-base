@@ -49,13 +49,20 @@ class MySQLVideoRepository implements VideoRepository
                         [
                             'id' => ':id',
                             'video_id' => ':video_id',
-                            'message' => ':message'
+                            'message' => ':message',
+                            'created_at' =>  ':created_at',
+                            'updated_at' =>  ':updated_at'
+
+
                         ]
                     )
                     ->setParameters([
                         'id' => $comment->id(),
                         'video_id' => $comment->videoId(),
                         'message' => $comment->message(),
+                        'created_at' => $comment->createdAt(),
+                        'updated_at' => $comment->updatedAt(),
+
                     ])
                     ->executeStatement();
             }

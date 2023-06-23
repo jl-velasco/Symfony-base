@@ -12,7 +12,9 @@ final class Comment
     public function __construct(
         private readonly Uuid $id,
         private readonly Uuid $videoId,
-        private readonly CommentMessage $message
+        private readonly CommentMessage $message,
+        private readonly Date $createAt = new Date(),
+        private readonly ?Date $updateAt = null
     ) {
     }
 
@@ -34,5 +36,15 @@ final class Comment
     public function message(): CommentMessage
     {
         return $this->message;
+    }
+
+    public function createdAt(): Date
+    {
+        return $this->createAt;
+    }
+
+    public function updatedAt(): ?Date
+    {
+        return $this->updateAt;
     }
 }
