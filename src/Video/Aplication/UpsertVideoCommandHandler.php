@@ -2,6 +2,7 @@
 
 namespace Symfony\Base\Video\Aplication;
 
+use Symfony\Base\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
@@ -13,7 +14,7 @@ use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoFinder;
 use Symfony\Base\Video\Domain\VideoRepository;
 
-class UpsertVideoUseCase
+class UpsertVideoCommandHandler implements CommandHandler
 {
     public function __construct(
         private readonly VideoRepository $videoRepository,
@@ -26,30 +27,24 @@ class UpsertVideoUseCase
     /**
      * @throws InvalidValueException
      */
-    public function __invoke(
-        string $uuid,
-        string $userUuid,
-        string $name,
-        string $description,
-        string $url
-    ): void
+    public function __invoke(UpsertVideoCommand $command): void
     {
         try {
-            $this->videoFinder->__invoke(new Uuid($uuid));
+            $this->videoFinder->__invoke(new Uuid($command->uuid()));
             $video = new Video(
-                new Uuid($uuid),
-                new Uuid($userUuid),
-                new Name($name),
-                new Description($description),
-                new Url($url)
+                new Uuid($command->uuid()),
+                new Uuid($command->userUuid()),
+                new Name($command->name()),
+                new Description($command->description()),
+                new Url($command->url())
             );
         } catch (VideoNotFoundException) {
             $video = Video::create(
-                new Uuid($uuid),
-                new Uuid($userUuid),
-                new Name($name),
-                new Description($description),
-                new Url($url)
+                new Uuid($command->uuid()),
+                new Uuid($command->userUuid()),
+                new Name($command->name()),
+                new Description($command->description()),
+                new Url($command->url())
             );
         }
         $this->videoRepository->save($video);
