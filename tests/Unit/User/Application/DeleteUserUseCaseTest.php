@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Aplication\DeleteUserUseCase;
+use Symfony\Base\User\Aplication\DeleteUserCommandHandler;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 use Symfony\Base\User\Domain\UserFinder;
@@ -19,14 +19,14 @@ class DeleteUserUseCaseTest extends TestCase
     private UserRepository&MockObject $repository;
     private UserFinder&MockObject $finder;
     private EventBus&MockObject $bus;
-    private DeleteUserUseCase $useCase;
+    private DeleteUserCommandHandler $useCase;
 
     public function setUp(): void
     {
         $this->repository = $this->createMock(UserRepository::class);
         $this->finder = $this->createMock(UserFinder::class);
         $this->bus = $this->createMock(EventBus::class);
-        $this->useCase = new DeleteUserUseCase(
+        $this->useCase = new DeleteUserCommandHandler(
             $this->repository,
             $this->finder,
             $this->bus,

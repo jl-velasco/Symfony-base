@@ -3,24 +3,18 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
-use Symfony\Base\Shared\Domain\Bus\Query\QueryBus;
+use Symfony\Base\App\Controller\ApiController;
 use Symfony\Base\User\Aplication\GetUserQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-final class UserGetController
+final class UserGetController extends ApiController
 {
-    public function __construct(
-        private readonly QueryBus $queryBus,
-    )
-    {
-    }
-
     /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
-        $reponse = $this->queryBus->ask(
+        $reponse = $this->ask(
             new GetUserQuery($id)
         );
 
