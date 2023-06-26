@@ -7,6 +7,12 @@ services:
         Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber:
             tags: ['symfony.base.domain_event_subscriber']
 
+        Symfony\Base\Shared\Domain\Bus\Query\QueryHandler:
+            tags: ['symfony.base.query_handler']
+
+        Symfony\Base\Shared\Domain\Bus\Command\CommandHandler:
+            tags: ['symfony.base.command_handler']
+
     Symfony\Base\App\Controller\:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
@@ -23,6 +29,14 @@ services:
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
         arguments: [ !tagged symfony.base.domain_event_subscriber ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+        arguments: [ !tagged symfony.base.query_handler ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: [ !tagged symfony.base.command_handler ]
         lazy: true
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:

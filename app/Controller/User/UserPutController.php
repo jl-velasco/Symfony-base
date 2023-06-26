@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
+use Symfony\Base\Shared\Domain\Bus\Command\CommandBus;
+use Symfony\Base\User\Aplication\UpsertUserCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use RuntimeException;
-use Symfony\Base\User\Aplication\UpsertUserUseCase;
 
 final class UserPutController
 {
     public function __construct(
-        private readonly UpsertUserUseCase $useCase
+        private readonly CommandBus $commandBus,
     )
     {
     }
@@ -20,11 +21,14 @@ final class UserPutController
     public function __invoke(string $id, Request $request): Response
     {
         $data = $this->dataFromRequest($request);
-        $this->useCase->__invoke(
-            $id,
-            $data['email'],
-            $data['name'],
-            $data['password'],
+
+        $this->commandBus->dispatch(
+            new UpsertUserCommand(
+                $id,
+                $data['email'],
+                $data['name'],
+                $data['password'],
+            )
         );
 
         return new Response(status: Response::HTTP_OK);
