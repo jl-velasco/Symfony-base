@@ -8,12 +8,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Tests\Fixtures\Comment\CommentMother;
 use Symfony\Base\Tests\Fixtures\Mother;
-
-
-
-
 use Symfony\Base\Video\Domain\Comments;
 use Symfony\Base\Video\Domain\Video;
 
@@ -39,18 +34,6 @@ class VideoMother extends Mother
     public function random(): self
     {
         $this->id = Uuid::random();
-
-        $this->userUuid=Uuid::random();
-        $this->name = new Name($this->faker->name());
-        $this->description=new Description($this->faker->text());
-        $this->url=new Url($this->faker->url());
-        $this->createdAt=new Date($this->faker->date());
-        $this->updateAt=new  Date($this->faker->date());
-        $this->comments= new Comments();
-         for ($i=0;$i<$this->faker->randomNumber(1);$i++){
-             $this->comments->add(CommentMother::create()->random()->build());
-         }
-
         $this->userUuid = Uuid::random();
         $this->name = new Name($this->faker->name());
         $this->description = new Description($this->faker->text());
@@ -92,23 +75,10 @@ class VideoMother extends Mother
         return $this;
     }
 
-    public function withCreatedAt(Date $date): self
-    {
-     $this->createdAt= $date;
-     return $this;
-    }
-
-    public function withUpdatedAt(Date $date): self
-    {
-        $this->updateAt= $date;
-        return $this;
-
-    }
-    public function withComments( Comments $value) : self
+    public function withComments(Comments $value): self
     {
         $this->comments = $value;
+
         return $this;
     }
-
-
 }

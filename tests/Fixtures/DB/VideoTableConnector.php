@@ -7,6 +7,7 @@ namespace Symfony\Base\Tests\Fixtures\DB;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\SchemaException;
 use Exception;
 use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
 use Symfony\Base\Video\Domain\Video;
@@ -16,6 +17,9 @@ class VideoTableConnector
     public const TABLE_VIDEO = 'video';
     public const TABLE_COMMENT = 'comment';
 
+    /**
+     * @throws SchemaException
+     */
     public static function create(Schema $schema): void
     {
         $table = $schema->createTable(self::TABLE_VIDEO);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Symfony\Base\Tests\Functional\User;
 
 use Doctrine\DBAL\Schema\Schema;
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;

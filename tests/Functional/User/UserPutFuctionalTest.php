@@ -4,13 +4,16 @@ declare(strict_types=1);
 namespace Symfony\Base\Tests\Functional\User;
 
 use Doctrine\DBAL\Schema\Schema;
-use Symfony\Base\Shared\Domain\ValueObject\Uuid;
+use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;
 
 class UserPutFuctionalTest extends FunctionalTestCase
 {
+    /**
+     * @throws InvalidValueException
+     */
     public function testCreateUserShouldOk(): void
     {
         $user = UserMother::create()->random()->build();
@@ -51,6 +54,7 @@ class UserPutFuctionalTest extends FunctionalTestCase
 
     /**
      * @dataProvider dataProviderForCreateUser
+     * @throws InvalidValueException
      */
     public function testCreateUserShouldKo($params): void
     {

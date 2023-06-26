@@ -11,7 +11,7 @@ use Symfony\Base\Video\Domain\CommentMessage;
 class CommentMother extends Mother
 {
     private readonly Uuid $id;
-    private readonly Uuid $videoId;
+    private  Uuid $videoId;
     private readonly CommentMessage $message;
 
     public static function create(): Mother{
@@ -19,7 +19,6 @@ class CommentMother extends Mother
     }
 
     /**
-     * @throws InvalidValueException
      */
     public function random(): self
     {
@@ -38,9 +37,9 @@ class CommentMother extends Mother
         );
     }
 
-    public function withMessage(CommentMessage $message): self
+    public function withVideoId(Uuid $videoId): self
     {
-        $this->message= $message;
+        $this->videoId = $videoId;
         return $this;
     }
 }
