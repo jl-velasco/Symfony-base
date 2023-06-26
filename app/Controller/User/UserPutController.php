@@ -3,26 +3,20 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
-use Symfony\Base\Shared\Domain\Bus\Command\CommandBus;
+use Symfony\Base\App\Controller\ApiController;
 use Symfony\Base\User\Aplication\UpsertUserCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use RuntimeException;
 
-final class UserPutController
+final class UserPutController extends ApiController
 {
-    public function __construct(
-        private readonly CommandBus $commandBus,
-    )
-    {
-    }
-
     /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
         $data = $this->dataFromRequest($request);
 
-        $this->commandBus->dispatch(
+        $this->dispatch(
             new UpsertUserCommand(
                 $id,
                 $data['email'],
