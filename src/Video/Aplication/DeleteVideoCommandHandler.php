@@ -21,9 +21,9 @@ class DeleteVideoCommandHandler implements CommandHandler
     /**
      * @throws VideoNotFoundException
      */
-    public function __invoke(string $uuid): void
+    public function __invoke(DeleteVideoCommand $command): void
     {
-        $video = $this->finder->__invoke(new Uuid($uuid));
+        $video = $this->finder->__invoke(new Uuid($command->uuid()));
         $video->delete();
 
         $this->videoRepository->delete($video->uuid());
