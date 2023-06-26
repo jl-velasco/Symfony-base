@@ -9,7 +9,7 @@ use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserFinder;
 use Symfony\Base\User\Domain\UserRepository;
 
-class DeleteUserUseCase
+class DeleteUserCommandHandler
 {
     public function __construct(
         private readonly UserRepository $repository,
@@ -22,12 +22,12 @@ class DeleteUserUseCase
     /**
      * @throws UserNotExistException
      */
-    public function __invoke(string $id): void
+    public function __invoke(DeleteUserCommand $command): void
     {
-        $user = $this->finder->__invoke(new Uuid($id));
+        $user = $this->finder->__invoke(new Uuid($command->id()));
         $user->delete();
 
-        $this->repository->delete(new Uuid($id));
+        $this->repository->delete(new Uuid($command->id()));
         $this->bus->publish(...$user->pullDomainEvents());
     }
 }

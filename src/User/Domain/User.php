@@ -79,7 +79,7 @@ final class User extends AggregateRoot
             new Email($user['email']),
             new Name($user['name']),
             new Password($user['password']),
-            new VideoCounter($user['video_counter']),
+            new VideoCounter($user['count_video'] ?? 0),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
         );
