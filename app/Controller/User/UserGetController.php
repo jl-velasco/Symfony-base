@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\User;
 
-use Symfony\Base\User\Aplication\GetUserUseCase;
+use Symfony\Base\Shared\Domain\Bus\Query\QueryBus;
+use Symfony\Base\User\Aplication\GetUserQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class UserGetController
 {
     public function __construct(
-        private readonly GetUserUseCase $useCase
+        private readonly QueryBus $queryBus,
     )
     {
     }
@@ -19,8 +20,12 @@ final class UserGetController
     /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
+        $reponse = $this->queryBus->ask(
+            new GetUserQuery($id)
+        );
+
         return new JsonResponse(
-            $this->useCase->__invoke($id)->toArray(),
+            $reponse->toArray(),
             Response::HTTP_OK
         );
     }

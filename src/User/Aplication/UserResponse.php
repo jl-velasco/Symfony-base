@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
-final class UserResponse
+use Symfony\Base\Shared\Domain\Bus\Query\Response;
+
+final class UserResponse implements Response
 {
     public function __construct(
         private readonly string $id,

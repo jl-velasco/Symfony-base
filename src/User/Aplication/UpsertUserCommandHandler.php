@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
+use Symfony\Base\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
@@ -10,7 +11,7 @@ use Symfony\Base\User\Domain\Password;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
-class UpsertUserUseCase
+class UpsertUserCommandHandler implements CommandHandler
 {
     public function __construct(
         private readonly UserRepository $repository
@@ -18,19 +19,14 @@ class UpsertUserUseCase
     {
     }
 
-    public function __invoke(
-        string $id,
-        string $email,
-        string $name,
-        string $password
-    ): void
+    public function __invoke(UpsertUserCommand $command): void
     {
         $this->repository->save(
             new User(
-                new Uuid($id),
-                new Email($email),
-                new Name($name),
-                new Password($password),
+                new Uuid($command->id()),
+                new Email($command->email()),
+                new Name($command->name()),
+                new Password($command->password()),
             )
         );
     }
