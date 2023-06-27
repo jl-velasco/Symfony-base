@@ -12,7 +12,7 @@ use Symfony\Base\Tests\Fixtures\DB\VideoTableConnector;
 use Symfony\Base\Tests\Fixtures\Video\CommentMother;
 use Symfony\Base\Tests\Fixtures\Video\VideoMother;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;
-use Symfony\Base\Video\Domain\Comments;
+use Symfony\Base\Video\Studio\Domain\Comments;
 
 class InsertCommentTest extends FunctionalTestCase
 {

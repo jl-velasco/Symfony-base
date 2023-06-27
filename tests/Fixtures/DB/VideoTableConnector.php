@@ -9,7 +9,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Schema\Schema;
 use Exception;
 use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
-use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Studio\Domain\Video;
 
 class VideoTableConnector
 {

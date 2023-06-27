@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Studio\Application;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\CommentMessage;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
-use Symfony\Base\Video\Domain\VideoFinder;
-use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Studio\Domain\CommentMessage;
+use Symfony\Base\Video\Studio\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\Video\Studio\Domain\VideoFinder;
+use Symfony\Base\Video\Studio\Domain\VideoRepository;
 
 final class InsertCommentUseCase
 {

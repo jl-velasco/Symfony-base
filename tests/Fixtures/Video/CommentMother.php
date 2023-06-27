@@ -2,11 +2,10 @@
 
 namespace Symfony\Base\Tests\Fixtures\Video;
 
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\Mother;
-use Symfony\Base\Video\Domain\Comment;
-use Symfony\Base\Video\Domain\CommentMessage;
+use Symfony\Base\Video\Studio\Domain\Comment;
+use Symfony\Base\Video\Studio\Domain\CommentMessage;
 
 class CommentMother extends Mother
 {

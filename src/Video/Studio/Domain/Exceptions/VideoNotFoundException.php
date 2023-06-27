@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Domain\Exceptions;
+namespace Symfony\Base\Video\Studio\Domain\Exceptions;
 
 use Exception;
 

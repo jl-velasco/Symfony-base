@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Studio\Domain;
 
 use Symfony\Base\Shared\Domain\Collection;
 

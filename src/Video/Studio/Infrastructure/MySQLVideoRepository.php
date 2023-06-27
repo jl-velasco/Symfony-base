@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Video\Infrastructure;
+namespace Symfony\Base\Video\Studio\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -11,12 +11,12 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
-use Symfony\Base\Video\Domain\Comment;
-use Symfony\Base\Video\Domain\CommentMessage;
-use Symfony\Base\Video\Domain\Comments;
-use Symfony\Base\Video\Domain\Video;
-use Symfony\Base\Video\Domain\VideoRepository;
-use Symfony\Base\Video\Domain\Videos;
+use Symfony\Base\Video\Studio\Domain\Comment;
+use Symfony\Base\Video\Studio\Domain\CommentMessage;
+use Symfony\Base\Video\Studio\Domain\Comments;
+use Symfony\Base\Video\Studio\Domain\Video;
+use Symfony\Base\Video\Studio\Domain\VideoRepository;
+use Symfony\Base\Video\Studio\Domain\Videos;
 
 class MySQLVideoRepository implements VideoRepository
 {

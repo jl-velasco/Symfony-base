@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Studio\Application;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\UserDeletedDomainEvent;
-use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Studio\Domain\VideoRepository;
 
 class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Studio\Application;
 
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
-use Symfony\Base\Video\Domain\VideoFinder;
-use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\Video\Studio\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\Video\Studio\Domain\VideoFinder;
+use Symfony\Base\Video\Studio\Domain\VideoRepository;
 
 class DeleteVideoUseCase
 {

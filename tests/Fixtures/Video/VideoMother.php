@@ -9,8 +9,8 @@ use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\Mother;
-use Symfony\Base\Video\Domain\Comments;
-use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Studio\Domain\Comments;
+use Symfony\Base\Video\Studio\Domain\Video;
 
 class VideoMother extends Mother
 {

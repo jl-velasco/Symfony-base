@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Studio\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 

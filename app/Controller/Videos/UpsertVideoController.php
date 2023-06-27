@@ -2,8 +2,8 @@
 
 namespace Symfony\Base\App\Controller\Videos;
 
+use Symfony\Base\Video\Studio\Application\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpsertVideoController

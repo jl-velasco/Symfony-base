@@ -13,7 +13,7 @@ use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Tests\Fixtures\DB\VideoTableConnector;
 use Symfony\Base\Tests\Fixtures\Video\VideoMother;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;
-use Symfony\Base\Video\Domain\Video;
+use Symfony\Base\Video\Studio\Domain\Video;
 
 class UpsertVideoTest extends FunctionalTestCase
 {

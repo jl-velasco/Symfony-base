@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Studio\Application;
 
 final class VideoResponse
 {

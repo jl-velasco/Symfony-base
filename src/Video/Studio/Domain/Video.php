@@ -1,8 +1,7 @@
 <?php
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\Video\Studio\Domain;
 
-use Exception;
 use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;

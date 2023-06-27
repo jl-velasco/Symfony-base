@@ -6,7 +6,7 @@ namespace Symfony\Base\App\Listener;
 use InvalidArgumentException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\Video\Studio\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use function Lambdish\Phunctional\get;
 

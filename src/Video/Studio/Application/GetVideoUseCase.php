@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Aplication;
+namespace Symfony\Base\Video\Studio\Application;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
-use Symfony\Base\Video\Domain\VideoFinder;
+use Symfony\Base\Video\Studio\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\Video\Studio\Domain\VideoFinder;
 
 final class GetVideoUseCase
 {
