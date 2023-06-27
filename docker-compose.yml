@@ -31,6 +31,19 @@ services:
       retries: 10
     command: [ "--default-authentication-plugin=mysql_native_password" ]
 
+  db_mongo:
+    container_name: symfony_base_db_mongo
+    image: mongo:5.0
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=symfony_base
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - data_base_local_mongo:/data/db
+    ports:
+      - "27018:27017"
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: symfony_base_rabbitmq
@@ -47,4 +60,5 @@ services:
 
 volumes:
   data_base_local:
+  data_base_local_mongo:
   queue_system_local:

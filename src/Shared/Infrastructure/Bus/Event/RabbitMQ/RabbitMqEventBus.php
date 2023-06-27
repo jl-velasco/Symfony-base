@@ -8,7 +8,7 @@ use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventJsonSerializer;
 
-final class RabbitMqEventBus implements EventBus
+final class RabbitMqEventBus //implements EventBus
 {
     public function __construct(private readonly RabbitMqConnection $connection)
     {

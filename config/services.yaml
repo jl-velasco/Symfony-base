@@ -1,3 +1,10 @@
+parameters:
+    mongodb.server: '%env(resolve:MONGODB_URL)%'
+    mongodb.database: '%env(resolve:MONGODB_DB)%'
+    mongodb.tlscafile: '%env(MONGO_TLS_CA_FILE)%'
+    env(MONGODB_URL): ''
+    env(MONGODB_DB): ''
+
 services:
     _defaults:
         autowire: true
@@ -63,10 +70,17 @@ services:
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer: ~
     Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus: ~
-    Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus'
+#    Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus'
 
     Symfony\Base\App\Command\LaunchRabbitMqConsumerCommand:
         arguments:
             $consumerList: !tagged symfony.base.domain_event_subscriber
         tags:
             - { name: rabbit.command }
+
+    MongoDB\Client: '@doctrine_mongodb.odm.default_connection'
+
+    Symfony\Base\Shared\Infrastructure\Mongo\MongoDBClient:
+        arguments:
+            $client: '@MongoDB\Client'
+            $databaseName: '%mongodb.database%'

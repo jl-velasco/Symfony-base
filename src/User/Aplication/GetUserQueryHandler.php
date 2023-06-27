@@ -5,7 +5,6 @@ namespace Symfony\Base\User\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Query\QueryHandler;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\User\Domain\UserFinder;
 
 class GetUserQueryHandler implements QueryHandler
@@ -25,7 +24,6 @@ class GetUserQueryHandler implements QueryHandler
 
         return new UserResponse(
             $user->id()->value(),
-            $user->email()->value(),
             $user->name()->value(),
             $user->videoCounter()->value(),
         );

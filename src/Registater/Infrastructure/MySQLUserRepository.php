@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Infrastructure;
+namespace Symfony\Base\Registater\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -10,8 +10,8 @@ use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
-use Symfony\Base\User\Domain\User;
-use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\Registater\Domain\User;
+use Symfony\Base\Registater\Domain\UserRepository;
 
 class MySQLUserRepository implements UserRepository
 {

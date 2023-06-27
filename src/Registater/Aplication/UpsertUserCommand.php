@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Aplication;
+namespace Symfony\Base\Registater\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Command\Command;
 
