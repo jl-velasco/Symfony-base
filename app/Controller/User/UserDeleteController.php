@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\App\Controller\User;
 
 use Symfony\Base\App\Controller\ApiController;
-use Symfony\Base\Registater\Aplication\DeleteUserCommand;
+use Symfony\Base\Registation\Aplication\DeleteUserCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Symfony\Base\Registater\Domain;
+namespace Symfony\Base\Registation\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Registater\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Registation\Domain\Exceptions\UserNotExistException;
 
 class UserFinder
 {

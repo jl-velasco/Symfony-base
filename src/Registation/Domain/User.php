@@ -1,16 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Registater\Domain;
+namespace Symfony\Base\Registation\Domain;
 
-use Symfony\Base\Registater\Domain\Exceptions\UserCreatedDomainEvent;
+use Symfony\Base\Registation\Domain\Exceptions\UserCreatedDomainEvent;
 use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\VideoCounter;
 
 final class User extends AggregateRoot
 {
@@ -19,7 +18,6 @@ final class User extends AggregateRoot
         private readonly Email $email,
         private readonly Name $name,
         private readonly Password $password,
-        private ?VideoCounter $videoCounter = new VideoCounter(0),
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null
     ) {
@@ -79,21 +77,6 @@ final class User extends AggregateRoot
         return $this->updatedAt;
     }
 
-    public function videoCounter(): VideoCounter
-    {
-        return $this->videoCounter;
-    }
-
-    public function increaseVideoCounter(): void
-    {
-        $this->videoCounter = $this->videoCounter->increase();
-    }
-
-    public function decreaseVideoCounter(): void
-    {
-        $this->videoCounter = $this->videoCounter->decrease();
-    }
-
     /**
      * @param array<string, mixed> $user
      * @throws InvalidValueException
@@ -105,7 +88,6 @@ final class User extends AggregateRoot
             new Email($user['email']),
             new Name($user['name']),
             new Password($user['password']),
-            new VideoCounter($user['count_video'] ?? 0),
             new Date($user['created_at']),
             $user['updated_at'] ? new Date($user['updated_at']) : null,
         );
@@ -119,7 +101,6 @@ final class User extends AggregateRoot
             'email' => $this->email()->value(),
             'name' => $this->name()->value(),
             'password' => $this->password()->value(),
-            'video_counter' => $this->videoCounter()->value(),
             'created_at' => $this->createdAt()->stringDateTime(),
             'updated_at' => $this->updatedAt()?->stringDateTime(),
         ];
