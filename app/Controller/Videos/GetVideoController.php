@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Symfony\Base\App\Controller\Videos;
 
-use Symfony\Base\Video\Aplication\GetVideoUseCase;
+use Symfony\Base\App\Controller\ApiController;
+use Symfony\Base\Video\Aplication\GetVideoQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetVideoController
+class GetVideoController extends ApiController
 {
 
-    public function __construct(private readonly GetVideoUseCase $useCase)
+    */
+    public function __invoke(string $id, Request $request): Response
     {
-    }
+        $reponse = $this->ask(
+            new GetVideoQuery($id)
+        );
 
-    public function __invoke(string $id): JsonResponse
-    {
         return new JsonResponse(
-            $this->useCase->__invoke($id)->toArray(),
+            $reponse->toArray(),
             Response::HTTP_OK
         );
     }

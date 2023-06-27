@@ -14,12 +14,12 @@ final class UserGetController extends ApiController
     /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
-        $reponse = $this->ask(
+        $response = $this->ask(
             new GetUserQuery($id)
         );
 
         return new JsonResponse(
-            $reponse->toArray(),
+            $response->toArray(),
             Response::HTTP_OK
         );
     }
