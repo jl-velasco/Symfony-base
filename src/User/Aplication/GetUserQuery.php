@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Aplication;
 
-
 use Symfony\Base\Shared\Domain\Bus\Query\Query;
 
 class GetUserQuery implements Query

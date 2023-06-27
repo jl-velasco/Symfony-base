@@ -5,9 +5,9 @@ namespace Symfony\Base\Tests\Unit\User\Application;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Aplication\UpsertUserCommandHandler;
-use Symfony\Base\User\Domain\User;
-use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\Registater\Aplication\UpsertUserCommandHandler;
+use Symfony\Base\Registater\Domain\User;
+use Symfony\Base\Registater\Domain\UserRepository;
 
 
 class UpsertUserUseCaseTest extends TestCase

@@ -13,9 +13,9 @@ namespace Symfony\Base\Tests\Unit\User\Domain;
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
-use Symfony\Base\User\Domain\UserFinder;
-use Symfony\Base\User\Domain\UserRepository;
+use Symfony\Base\Registater\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Registater\Domain\UserFinder;
+use Symfony\Base\Registater\Domain\UserRepository;
 
 class UserFinderTest extends TestCase
 {

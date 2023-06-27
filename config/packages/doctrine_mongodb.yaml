@@ -1,0 +1,13 @@
+doctrine_mongodb:
+  connections:
+    default:
+      server: "%mongodb.server%"
+      options:
+        authSource: admin
+        ssl: true
+        tlsAllowInvalidCertificates: true
+        tlsCAFile: '%mongodb.tlscafile%'
+  default_database: "%mongodb.database%"
+  document_managers:
+    default:
+      auto_mapping: true

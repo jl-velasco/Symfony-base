@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\User\Domain;
+namespace Symfony\Base\Registater\Domain;
 
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 

@@ -12,17 +12,17 @@ use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Tests\DbalTestCase;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Infrastructure\MySQLUserRepository;
+use Symfony\Base\Registater\Infrastructure\MongoDBUserRepository;
 use Doctrine\DBAL\Exception;
 
 class MySQLUserRepositoryTest extends DbalTestCase
 {
-    private MySQLUserRepository $repository;
+    private MongoDBUserRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new MySQLUserRepository($this->connection);
+        $this->repository = new MongoDBUserRepository($this->connection);
     }
 
     protected function createTables(Schema $schema): void
@@ -106,7 +106,7 @@ class MySQLUserRepositoryTest extends DbalTestCase
     public function shouldFailWhenTheConnectionFails(): void
     {
         $connectionMock = $this->createMock(Connection::class);
-        $repository = new MySQLUserRepository($connectionMock);
+        $repository = new MongoDBUserRepository($connectionMock);
 
         $connectionMock->expects(self::once())
             ->method('createQueryBuilder')
@@ -126,7 +126,7 @@ class MySQLUserRepositoryTest extends DbalTestCase
         $queryBuilderMock = $this->createMock(QueryBuilder::class);
         $resultMock = $this->createMock(Result::class);
 
-        $repository = new MySQLUserRepository($connectionMock);
+        $repository = new MongoDBUserRepository($connectionMock);
 
         $connectionMock->expects($this->once())
             ->method('createQueryBuilder')
