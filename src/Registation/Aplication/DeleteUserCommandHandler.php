@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Registater\Aplication;
+namespace Symfony\Base\Registation\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Registater\Domain\Exceptions\UserNotExistException;
-use Symfony\Base\Registater\Domain\UserFinder;
-use Symfony\Base\Registater\Domain\UserRepository;
+use Symfony\Base\Registation\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Registation\Domain\UserFinder;
+use Symfony\Base\Registation\Domain\UserRepository;
 
 class DeleteUserCommandHandler implements CommandHandler
 {

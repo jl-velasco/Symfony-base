@@ -1,14 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Registater\Aplication;
+namespace Symfony\Base\User\Aplication;
 
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Registater\Domain\Exceptions\UserNotExistException;
-use Symfony\Base\Registater\Domain\UserFinder;
-use Symfony\Base\Registater\Domain\UserRepository;
+use Symfony\Base\User\Domain\UserFinder;
+use Symfony\Base\User\Domain\UserRepository;
 use Symfony\Base\Video\Domain\VideoCreatedDomainEvent;
 
 class IncrementVideoCounterOnVideoCreated implements DomainEventSubscriber

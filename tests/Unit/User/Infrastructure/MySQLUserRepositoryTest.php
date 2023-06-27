@@ -12,7 +12,7 @@ use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Tests\DbalTestCase;
 use Symfony\Base\Tests\Fixtures\DB\UserTableConnector;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\Registater\Infrastructure\MongoDBUserRepository;
+use Symfony\Base\Registation\Infrastructure\MongoDBUserRepository;
 use Doctrine\DBAL\Exception;
 
 class MySQLUserRepositoryTest extends DbalTestCase

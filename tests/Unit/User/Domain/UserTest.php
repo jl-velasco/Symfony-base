@@ -5,7 +5,7 @@ namespace Symfony\Base\Tests\Unit\User\Domain;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Base\Registater\Domain\UserDeletedDomainEvent;
+use Symfony\Base\Registation\Domain\UserDeletedDomainEvent;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
 use Symfony\Base\User\Domain\VideoCounter;
