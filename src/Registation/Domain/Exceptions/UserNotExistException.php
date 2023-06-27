@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Symfony\Base\Registater\Domain\Exceptions;
+namespace Symfony\Base\Registation\Domain\Exceptions;
 
 class UserNotExistException extends \Exception
 {
