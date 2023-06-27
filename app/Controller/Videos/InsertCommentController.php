@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace Symfony\Base\App\Controller\Videos;
 
 use JsonException;
+use Symfony\Base\App\Controller\ApiController;
+use Symfony\Base\Shared\Domain\Bus\Command\CommandBus;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
-use Symfony\Base\Video\Aplication\InsertCommentUseCase;
+use Symfony\Base\Video\Aplication\InsertCommentCommand;
+use Symfony\Base\Video\Aplication\InsertCommentCommandHandler;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class InsertCommentController
+final class InsertCommentController extends ApiController
 {
     private const REQUIRED_FIELDS = [
         'video_id',
         'message',
     ];
-
-    public function __construct(private readonly InsertCommentUseCase $useCase)
-    {
-    }
 
     /**
      * @throws JsonException|InvalidValueException|VideoNotFoundException
@@ -29,11 +28,14 @@ final class InsertCommentController
     public function __invoke(string $id, Request $request): JsonResponse
     {
         $body = $this->getBody($request);
-        $this->useCase->__invoke(
-            $id,
-            $body['video_id'],
-            $body['message']
+        $this->dispatch(
+            new InsertCommentCommand(
+                $id,
+                $body['video_id'],
+                $body['message']
+            )
         );
+
         return new JsonResponse([], Response::HTTP_CREATED);
     }
 

@@ -3,6 +3,7 @@
 namespace Symfony\Base\Tests\Fixtures\Video;
 
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Tests\Fixtures\Mother;
 use Symfony\Base\Video\Domain\Comment;
@@ -13,6 +14,7 @@ class CommentMother extends Mother
     private Uuid $id;
     private Uuid $videoId;
     private CommentMessage $message;
+    private Date $created_at;
 
     public static function create(): self
     {
@@ -24,6 +26,7 @@ class CommentMother extends Mother
         $this->id = Uuid::random();
         $this->videoId = Uuid::random();
         $this->message = new CommentMessage($this->faker->text());
+        $this->created_at = new Date();
         return $this;
     }
 
@@ -32,7 +35,8 @@ class CommentMother extends Mother
         return new Comment(
             $this->id,
             $this->videoId,
-            $this->message
+            $this->message,
+            $this->created_at
         );
     }
 

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
-final class VideoResponse
+use Symfony\Base\Shared\Domain\Bus\Query\Response;
+
+final class VideoResponse implements Response
 {
     public function __construct(
         private readonly string  $uuid,

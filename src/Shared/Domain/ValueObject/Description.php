@@ -18,6 +18,11 @@ class Description extends StringValueObject
         parent::__construct($value);
     }
 
+    public function changeDescription(string $value)
+    {
+        return new self($value);
+    }
+
     /**
      * @throws InvalidValueException
      */
