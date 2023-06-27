@@ -5,7 +5,7 @@ namespace Symfony\Base\Tests\Unit\User\Application;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Tests\Fixtures\User\UserMother;
-use Symfony\Base\User\Aplication\UpsertUserCommandHandler;
+use Symfony\Base\User\Aplication\UpsertVideoCommandHandler;
 use Symfony\Base\User\Domain\User;
 use Symfony\Base\User\Domain\UserRepository;
 
@@ -13,12 +13,12 @@ use Symfony\Base\User\Domain\UserRepository;
 class UpsertUserUseCaseTest extends TestCase
 {
     private UserRepository $repository;
-    private UpsertUserCommandHandler $useCase;
+    private UpsertVideoCommandHandler $useCase;
 
     public function setUp(): void
     {
         $this->repository = $this->createMock(UserRepository::class);
-        $this->useCase = new UpsertUserCommandHandler($this->repository);
+        $this->useCase = new UpsertVideoCommandHandler($this->repository);
     }
 
     /**

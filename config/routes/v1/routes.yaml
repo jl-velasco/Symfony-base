@@ -20,7 +20,7 @@ get_video:
 
 upsert_video:
   path: /video/{uuid}
-  controller: Symfony\Base\App\Controller\Videos\UpsertVideoController
+  controller: Symfony\Base\App\Controller\Videos\VideoPutController
   methods: PUT
 
 insert_comment:

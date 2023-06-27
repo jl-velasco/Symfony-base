@@ -5,6 +5,7 @@ namespace Symfony\Base\App\Controller\User;
 
 use Symfony\Base\App\Controller\ApiController;
 use Symfony\Base\User\Aplication\UpsertUserCommand;
+use Symfony\Base\User\Aplication\UpsertVideoCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use RuntimeException;
