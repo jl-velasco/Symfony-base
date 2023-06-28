@@ -15,9 +15,9 @@ final class User extends AggregateRoot
 {
     public function __construct(
         private readonly Uuid $id,
-        private readonly Email $email,
-        private readonly Name $name,
-        private readonly Password $password,
+        private Email $email,
+        private Name $name,
+        private Password $password,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null
     ) {
@@ -57,14 +57,29 @@ final class User extends AggregateRoot
         return $this->email;
     }
 
+    public function updateEmail(Email $email)
+    {
+        $this->email = $email;
+    }
+
     public function name(): Name
     {
         return $this->name;
     }
 
+    public function updateName(Name $name)
+    {
+        $this->name = $name;
+    }
+
     public function password(): Password
     {
         return $this->password;
+    }
+
+    public function updatePassword(Password $password)
+    {
+        $this->password = $password;
     }
 
     public function createdAt(): Date

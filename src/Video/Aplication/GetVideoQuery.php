@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
@@ -8,13 +7,13 @@ use Symfony\Base\Shared\Domain\Bus\Query\Query;
 class GetVideoQuery implements Query
 {
     public function __construct(
-        private readonly string $uuid
+        private readonly string $id
     )
     {
     }
 
-    public function uuid(): string
+    public function id(): string
     {
-        return $this->uuid;
+        return $this->id;
     }
 }

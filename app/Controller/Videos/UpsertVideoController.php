@@ -3,14 +3,15 @@
 namespace Symfony\Base\App\Controller\Videos;
 
 use Symfony\Base\App\Controller\ApiController;
-use Symfony\Base\VideoProyection\Aplication\UpsertVideoCommand;
+use Symfony\Base\Shared\Domain\Bus\Command\CommandBus;
+use Symfony\Base\Video\Aplication\UpsertVideoCommand;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Base\Video\Aplication\UpsertVideoUseCase;
+use Symfony\Base\Video\Aplication\UpsertVideoCommandHandler;
 use Symfony\Component\HttpFoundation\Response;
 
 final class UpsertVideoController extends ApiController
 {
-    public function __invoke(string $uuid, Request $request): Response
+    public function __invoke(Request $request, string $uuid): Response
     {
         $content = $request->getContent();
 
@@ -20,9 +21,12 @@ final class UpsertVideoController extends ApiController
             new UpsertVideoCommand(
                 $uuid,
                 $data['user_uuid'],
-                $data['name']
+                $data['name'],
+                $data['description'],
+                $data['url']
             )
         );
+
         return new Response(Response::HTTP_CREATED);
     }
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Registation\Aplication;
 
+use Symfony\Base\Registation\Domain\Exceptions\UserNotExistException;
+use Symfony\Base\Registation\Domain\UserFinder;
 use Symfony\Base\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\ValueObject\Email;
@@ -16,19 +18,27 @@ class UpsertUserCommandHandler implements CommandHandler
 {
     public function __construct(
         private readonly UserRepository $repository,
+        private readonly UserFinder $finder,
         private readonly EventBus $bus
     )
     {
     }
 
-    public function __invoke(UpsertVideoCommand $command): void
+    public function __invoke(UpsertUserCommand $command): void
     {
-        $user = User::create(
-            new Uuid($command->id()),
-            new Email($command->email()),
-            new Name($command->name()),
-            new Password($command->password()),
-        );
+        try {
+            $user = $this->finder->__invoke(new Uuid($command->id()));
+            $user->updateEmail(new Email($command->email()));
+            $user->updateName(new Name($command->name()));
+            $user->updatePassword(new Password($command->password()));
+        } catch (UserNotExistException) {
+            $user = User::create(
+                new Uuid($command->id()),
+                new Email($command->email()),
+                new Name($command->name()),
+                new Password($command->password()),
+            );
+        }
 
         $this->repository->save($user);
         $this->bus->publish(...$user->pullDomainEvents());
