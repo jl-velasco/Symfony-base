@@ -20,6 +20,7 @@ final class InsertCommentController extends ApiController
     private const REQUIRED_FIELDS = [
         'video_id',
         'message',
+        'user_id',
     ];
 
     /**
@@ -32,7 +33,8 @@ final class InsertCommentController extends ApiController
             new InsertCommentCommand(
                 $id,
                 $body['video_id'],
-                $body['message']
+                $body['message'],
+                $body['user_id'],
             )
         );
 

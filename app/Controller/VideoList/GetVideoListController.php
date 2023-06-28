@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\VideoList;
 
 use Symfony\Base\App\Controller\ApiController;
-use Symfony\Base\Video\Aplication\GetVideoQuery;
+use Symfony\Base\VideoList\Aplication\GetVideoQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetVideoController extends ApiController
+class GetVideoListController extends ApiController
 {
 
     public function __invoke(string $id): JsonResponse

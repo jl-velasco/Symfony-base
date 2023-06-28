@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Video\Aplication;
 
+use Symfony\Base\Registation\Domain\UserDeletedDomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEvent;
 use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\User\Domain\UserDeletedDomainEvent;
 use Symfony\Base\Video\Domain\VideoRepository;
 
 class DeleteVideosOnUserDeleted implements DomainEventSubscriber
@@ -22,6 +22,7 @@ class DeleteVideosOnUserDeleted implements DomainEventSubscriber
 
         $videos = $this->repository->findByUserId(new Uuid($data['user_id']));
         foreach ($videos as $video) {
+            $video->delete();
             $this->repository->delete($video->uuid());
         }
     }

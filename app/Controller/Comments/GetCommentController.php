@@ -1,21 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Symfony\Base\App\Controller\Videos;
+namespace Symfony\Base\App\Controller\Comments;
 
 use Symfony\Base\App\Controller\ApiController;
-use Symfony\Base\Video\Aplication\GetVideoQuery;
+use Symfony\Base\Comment\Aplication\GetCommentQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetVideoController extends ApiController
+class GetCommentController extends ApiController
 {
 
     public function __invoke(string $id): JsonResponse
     {
         $response = $this->ask(
-            new GetVideoQuery($id)
+            new GetCommentQuery($id)
         );
 
         return new JsonResponse(

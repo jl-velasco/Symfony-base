@@ -69,10 +69,19 @@ final class Video extends AggregateRoot
         return $this->comments;
     }
 
-    public function addComment(Uuid $id, CommentMessage $message): void
+    public function addComment(Uuid $id, CommentMessage $message, Uuid $userId): void
     {
         $this->comments->add(
             new Comment($id, $this->uuid(), $message)
+        );
+
+        $this->record(
+            new CommentCreatedDomainEvent(
+                $this->uuid,
+                $id,
+                $message,
+                $userId
+            )
         );
     }
 
@@ -102,6 +111,9 @@ final class Video extends AggregateRoot
             new VideoCreatedDomainEvent(
                 $uuid->value(),
                 $userUuid,
+                $name,
+                $description,
+                $url
             )
         );
 

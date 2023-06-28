@@ -5,6 +5,7 @@ namespace Symfony\Base\VideoList\Infrastructure;
 use Doctrine\DBAL\Exception;
 use MongoDB\Collection;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Domain\Repository\Mongo;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Shared\Infrastructure\Mongo\MongoDBDocumentConverter;
@@ -63,7 +64,21 @@ class MongoDBVideoRepository implements VideoRepository
 
     public function findByUserId(Uuid $userId): Videos
     {
-        //TODO
+        $findedVideos = $this->collection->find([
+            'user_id' => $userId->value()
+        ]);
+        $videos = new Videos();
+        foreach($findedVideos as $video) {
+            $videos->add(new Video(
+                $video['id'],
+                $video['user_id'],
+                $video['name'],
+                $video['description'],
+                $video['url'],
+            ));
+        }
+
+        return $videos;
     }
 
     /**

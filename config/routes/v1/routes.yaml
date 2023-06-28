@@ -32,3 +32,13 @@ insert_comment:
   path: /comment/{id}
   controller: Symfony\Base\App\Controller\Videos\InsertCommentController
   methods: POST
+
+get_videolist:
+  path: /videolist/{id}
+  controller: Symfony\Base\App\Controller\VideoList\GetVideoListController
+  methods: GET
+
+get_comment:
+  path: /comment/{id}
+  controller: Symfony\Base\App\Controller\Comment\GetCommentController
+  methods: GET

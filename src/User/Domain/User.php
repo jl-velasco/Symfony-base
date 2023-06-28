@@ -51,7 +51,7 @@ final class User extends AggregateRoot
         return new self(
             new Uuid($user['id']),
             new Name($user['name']),
-            new VideoCounter($user['count_video'] ?? 0),
+            new VideoCounter($user['video_counter'] ?? 0),
         );
     }
 
