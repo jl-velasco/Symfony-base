@@ -2,6 +2,7 @@
 
 namespace Symfony\Base\Video\Aplication;
 
+use Symfony\Base\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Base\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
