@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Symfony\Base\User\Domain;
 
 use Symfony\Base\Shared\Domain\AggregateRoot;
-use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
@@ -44,7 +43,6 @@ final class User extends AggregateRoot
 
     /**
      * @param array<string, mixed> $user
-     * @throws InvalidValueException
      */
     public static function fromArray(array $user): self
     {

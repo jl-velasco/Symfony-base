@@ -3,13 +3,10 @@ declare(strict_types=1);
 
 namespace Symfony\Base\User\Infrastructure;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use MongoDB\Collection;
-use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\Repository\Mongo;
-use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Shared\Infrastructure\Mongo\MongoDBDocumentConverter;
