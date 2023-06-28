@@ -21,7 +21,7 @@ class UpsertUserCommandHandler implements CommandHandler
     {
     }
 
-    public function __invoke(UpsertUserCommand $command): void
+    public function __invoke(UpsertVideoCommand $command): void
     {
         $user = User::create(
             new Uuid($command->id()),

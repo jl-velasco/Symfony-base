@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Symfony\Base\App\Controller\User;
 
 use Symfony\Base\App\Controller\ApiController;
-use Symfony\Base\Registation\Aplication\DeleteUserCommand;
+use Symfony\Base\Registation\Aplication\DeleteVideoCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +13,7 @@ final class UserDeleteController extends ApiController
     /** @throws \JsonException */
     public function __invoke(string $id, Request $request): Response
     {
-        $this->dispatch(new DeleteUserCommand($id));
+        $this->dispatch(new DeleteVideoCommand($id));
 
         return new Response(status: Response::HTTP_NO_CONTENT);
     }

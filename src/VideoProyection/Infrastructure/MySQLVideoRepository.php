@@ -1,9 +1,10 @@
 <?php
 
-namespace Symfony\Base\Video\Infrastructure;
+namespace Symfony\Base\VideoProyection\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Base\Registation\Domain\User;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
@@ -219,4 +220,27 @@ class MySQLVideoRepository implements VideoRepository
             throw new PersistenceLayerException('Insert error: ' .  $e->getMessage());
         }
     }
+
+    public function search(Uuid $id): Video|null
+    {
+        try {
+            $video = $this->connection
+                ->createQueryBuilder()
+                ->select('*')
+                ->from(self::TABLE_VIDEO)
+                ->where('id = :id')
+                ->setParameter('id', $id->value())
+                ->executeQuery()
+                ->fetchAssociative();
+
+            if ($video) {
+                return Video::fromArray($video);
+            }
+
+            return null;
+        } catch (Exception $e) {
+            throw new PersistenceLayerException($e->getMessage());
+        }
+    }
+
 }

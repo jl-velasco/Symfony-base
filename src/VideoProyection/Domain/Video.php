@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\VideoProyection\Domain;
 
 use Exception;
 use Symfony\Base\Shared\Domain\AggregateRoot;

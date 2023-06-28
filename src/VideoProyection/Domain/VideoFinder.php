@@ -7,7 +7,7 @@ namespace Symfony\Base\Video\Domain;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 
-final class VideoFinder
+class VideoFinder
 {
     public function __construct(private readonly VideoRepository $repository)
     {
