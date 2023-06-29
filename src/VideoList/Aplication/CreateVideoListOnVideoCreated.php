@@ -11,11 +11,13 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\VideoCreatedDomainEvent;
 use Symfony\Base\VideoList\Domain\Video;
 use Symfony\Base\VideoList\Domain\VideoRepository;
+use Symfony\Base\Shared\Domain\Short;
 
 class CreateVideoListOnVideoCreated implements DomainEventSubscriber
 {
     public function __construct(
-        private readonly VideoRepository $repository
+        private readonly VideoRepository $repository,
+        private readonly Short $short
     ) {
     }
 
@@ -28,7 +30,7 @@ class CreateVideoListOnVideoCreated implements DomainEventSubscriber
             new Uuid($data['user_id']),
             new Name($data['name']),
             new Description($data['description']),
-            new Url($data['url'])
+            new Url($this->short->short($data['url']))
         );
 
         $this->repository->save($video);
