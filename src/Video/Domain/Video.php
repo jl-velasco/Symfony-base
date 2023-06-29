@@ -130,27 +130,4 @@ final class Video extends AggregateRoot
             )
         );
     }
-
-    public static function fromArray(array $video): self
-    {
-        return new self(
-            new Uuid($video['uuid']),
-            new Uuid($video['userUuid']),
-            new Name($video['name']),
-            new Description($video['description']),
-            new Url($video['url'])
-        );
-    }
-
-    /** @return array<string, mixed> */
-    public function toArray(): array
-    {
-        return [
-            'uuid' => $this->uuid()->value(),
-            'userUuid' => $this->userUuid()->value(),
-            'name' => $this->name()->value(),
-            'description' => $this->description()->value(),
-            'url' => $this->url()->value(),
-        ];
-    }
 }
