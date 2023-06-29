@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\VideoProyection\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;

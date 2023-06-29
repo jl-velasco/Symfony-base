@@ -1,21 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\Base\Video\Infrastructure;
+namespace Symfony\Base\VideoProyection\Infrastructure;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use MongoDB\Collection;
-use Symfony\Base\Shared\Domain\Exception\InternalErrorException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\Repository\Mongo;
-use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\Shared\Infrastructure\Exceptions\PersistenceLayerException;
 use Symfony\Base\Shared\Infrastructure\Mongo\MongoDBDocumentConverter;
-use Symfony\Base\User\Domain\User;
-use Symfony\Base\Video\Domain\Video;
-use Symfony\Base\Video\Domain\VideoRepository;
+use Symfony\Base\VideoProyection\Domain\Video;
+use Symfony\Base\VideoProyection\Domain\VideoRepository;
 
 class MongoDBVideoRepository implements VideoRepository
 {
@@ -56,7 +52,7 @@ class MongoDBVideoRepository implements VideoRepository
     {
         try {
             $this->collection->updateOne(
-                ['id' => $video->uiid()->value()],
+                ['id' => $video->uuid()->value()],
                 ['$set' => $video->toArray()],
                 ['upsert' => true]
             );

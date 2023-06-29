@@ -1,10 +1,9 @@
 <?php
 
-namespace Symfony\Base\VideoProyection\Infrastructure;
+namespace Symfony\Base\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Symfony\Base\Registation\Domain\User;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
 use Symfony\Base\Shared\Domain\ValueObject\Date;
 use Symfony\Base\Shared\Domain\ValueObject\Description;
