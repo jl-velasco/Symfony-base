@@ -1,86 +1,90 @@
 parameters:
-    mongodb.server: '%env(resolve:MONGODB_URL)%'
-    mongodb.database: '%env(resolve:MONGODB_DB)%'
-    mongodb.tlscafile: '%env(MONGO_TLS_CA_FILE)%'
-    env(MONGODB_URL): ''
-    env(MONGODB_DB): ''
+  mongodb.server: '%env(resolve:MONGODB_URL)%'
+  mongodb.database: '%env(resolve:MONGODB_DB)%'
+  mongodb.tlscafile: '%env(MONGO_TLS_CA_FILE)%'
+  env(MONGODB_URL): ''
+  env(MONGODB_DB): ''
 
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
+  _defaults:
+    autowire: true
+    autoconfigure: true
 
-    _instanceof:
-        Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber:
-            tags: ['symfony.base.domain_event_subscriber']
+  _instanceof:
+    Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber:
+      tags: [ 'symfony.base.domain_event_subscriber' ]
 
-        Symfony\Base\Shared\Domain\Bus\Query\QueryHandler:
-            tags: ['symfony.base.query_handler']
+    Symfony\Base\Shared\Domain\Bus\Query\QueryHandler:
+      tags: [ 'symfony.base.query_handler' ]
 
-        Symfony\Base\Shared\Domain\Bus\Command\CommandHandler:
-            tags: ['symfony.base.command_handler']
+    Symfony\Base\Shared\Domain\Bus\Command\CommandHandler:
+      tags: [ 'symfony.base.command_handler' ]
 
-    Symfony\Base\App\Controller\:
-        resource: '../app/Controller'
-        tags: [ 'controller.service_arguments' ]
+  Symfony\Base\App\Controller\:
+    resource: '../app/Controller'
+    tags: [ 'controller.service_arguments' ]
 
-    Symfony\Base\App\Listener\:
-        resource: '../app/Listener'
+  Symfony\Base\App\Listener\:
+    resource: '../app/Listener'
 
-    Symfony\Base\:
-        resource: '../src/'
+  Symfony\Base\:
+    resource: '../src/'
 
-    Symfony\Base\App\Listener\ApiExceptionListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onException }
+  Symfony\Base\App\Listener\ApiExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, method: onException }
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
-        arguments: [ !tagged symfony.base.domain_event_subscriber ]
-        lazy: true
+  Symfony\Base\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
+    arguments: [ !tagged symfony.base.domain_event_subscriber ]
+    lazy: true
 
-    Symfony\Base\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
-        arguments: [ !tagged symfony.base.query_handler ]
-        lazy: true
+  Symfony\Base\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+    arguments: [ !tagged symfony.base.query_handler ]
+    lazy: true
 
-    Symfony\Base\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
-        arguments: [ !tagged symfony.base.command_handler ]
-        lazy: true
+  Symfony\Base\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+    arguments: [ !tagged symfony.base.command_handler ]
+    lazy: true
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:
-        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+  Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+    arguments: [ !tagged symfony.base.domain_event_subscriber ]
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
-        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+  Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+    arguments: [ !tagged symfony.base.domain_event_subscriber ]
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMqDomainEventsConsumer:
-        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+  Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMqDomainEventsConsumer:
+    arguments: [ !tagged symfony.base.domain_event_subscriber ]
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqConnection:
-        arguments:
-            $exchangeName: '%env(RABBITMQ_EXCHANGE)%'
+  Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqConnection:
+    arguments:
+      $exchangeName: '%env(RABBITMQ_EXCHANGE)%'
 
-    PhpAmqpLib\Connection\AMQPStreamConnection:
-        arguments:
-            $host: '%env(RABBITMQ_HOST)%'
-            $port: '%env(RABBITMQ_PORT)%'
-            $user: '%env(RABBITMQ_USER)%'
-            $password: '%env(RABBITMQ_PASSWORD)%'
-            $vhost: '%env(RABBITMQ_VHOST)%'
-    PhpAmqpLib\Connection\AbstractConnection: '@PhpAmqpLib\Connection\AMQPStreamConnection'
+  PhpAmqpLib\Connection\AMQPStreamConnection:
+    arguments:
+      $host: '%env(RABBITMQ_HOST)%'
+      $port: '%env(RABBITMQ_PORT)%'
+      $user: '%env(RABBITMQ_USER)%'
+      $password: '%env(RABBITMQ_PASSWORD)%'
+      $vhost: '%env(RABBITMQ_VHOST)%'
+  PhpAmqpLib\Connection\AbstractConnection: '@PhpAmqpLib\Connection\AMQPStreamConnection'
 
-    Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer: ~
-    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus: ~
-#    Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus'
+  Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer: ~
+  Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus: ~
+  #    Symfony\Base\Shared\Domain\Bus\Event\EventBus: '@Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqEventBus'
 
-    Symfony\Base\App\Command\LaunchRabbitMqConsumerCommand:
-        arguments:
-            $consumerList: !tagged symfony.base.domain_event_subscriber
-        tags:
-            - { name: rabbit.command }
+  Symfony\Base\App\Command\LaunchRabbitMqConsumerCommand:
+    arguments:
+      $consumerList: !tagged symfony.base.domain_event_subscriber
+    tags:
+      - { name: rabbit.command }
 
-    MongoDB\Client: '@doctrine_mongodb.odm.default_connection'
+  MongoDB\Client: '@doctrine_mongodb.odm.default_connection'
 
-    Symfony\Base\Shared\Infrastructure\Mongo\MongoDBClient:
-        arguments:
-            $client: '@MongoDB\Client'
-            $databaseName: '%mongodb.database%'
+  Symfony\Base\Shared\Infrastructure\Mongo\MongoDBClient:
+    arguments:
+      $client: '@MongoDB\Client'
+      $databaseName: '%mongodb.database%'
+            
+  Symfony\Base\Video\Infrastructure\TinyServiceRepository:
+    arguments:
+      $config: '%env(SHORTENER_URL)%'
