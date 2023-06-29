@@ -9,6 +9,7 @@ use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 use Symfony\Base\User\Domain\VideoCounter;
+use Symfony\Base\Video\Domain\UpsertVideoConsumer;
 use Symfony\Base\Video\Domain\Video;
 use Symfony\Base\Video\Domain\VideoCreatedDomainEvent;
 use Symfony\Base\VideoProyection\Domain\VideoProyectionRepository;
@@ -34,7 +35,7 @@ class CreateVideoProyectionOnRegisterCreated implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
-        return [VideoCreatedDomainEvent::class];
+        return [UpsertVideoConsumer::class];
     }
 
     //TODO: remove coupling
