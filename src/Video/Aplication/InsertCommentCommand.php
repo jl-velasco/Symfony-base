@@ -34,5 +34,4 @@ class InsertCommentCommand implements Command
     {
         return $this->userId;
     }
-
 }
