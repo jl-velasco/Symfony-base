@@ -24,8 +24,8 @@ class ShorterTinyUrl implements ShorterUrlRepository
 
         try {
             return $this->httpClient->send(new Url($apiUrl), new HttpRequestType('GET'));
-        } catch (HttpException $e) {
-            throw new \Exception('Error al acortar la URL: ' . $e->getMessage());
+        } catch (HttpException $exception) {
+            return $url;
         };
     }
 }
