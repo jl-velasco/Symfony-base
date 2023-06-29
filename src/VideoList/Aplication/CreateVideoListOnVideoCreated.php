@@ -15,20 +15,22 @@ use Symfony\Base\VideoList\Domain\VideoRepository;
 class CreateVideoListOnVideoCreated implements DomainEventSubscriber
 {
     public function __construct(
-        private readonly VideoRepository $repository
+        private readonly VideoRepository $repository,
+        private readonly ShortenerUrl $shortenerUrl
     ) {
     }
 
     public function __invoke(DomainEvent $event): void
     {
         $data = $event->toPrimitives();
+        $shortUrl = $this->shortenerUrl->__invoke($data['url']);
 
         $video = new Video(
             new Uuid($event->aggregateId()),
             new Uuid($data['user_id']),
             new Name($data['name']),
             new Description($data['description']),
-            new Url($data['url'])
+            new Url($shortUrl)
         );
 
         $this->repository->save($video);
