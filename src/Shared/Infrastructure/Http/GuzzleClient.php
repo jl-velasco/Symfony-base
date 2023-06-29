@@ -14,10 +14,10 @@ class GuzzleClient implements HttpRepository
     {
         $client = new Client();
         $result = $client->request('GET', $url->value());
-        if ($result->getStatusCode() === 200) {
-            return $result->getBody()->getContents();
+        if ($result->getStatusCode() >= 400) {
+            throw new HttpException($result->getStatusCode(), "HTTP error");
         }
-        throw new HttpException($result->getStatusCode(), "HTTP error");
+        return $result->getBody()->getContents();
     }
 
 }
