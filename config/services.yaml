@@ -87,4 +87,4 @@ services:
             
   Symfony\Base\Video\Infrastructure\TinyServiceRepository:
     arguments:
-      $config: '%env(SHORTENER_URL)%'
+      $config: '%env(SHORTENER_TOKEN)%'
