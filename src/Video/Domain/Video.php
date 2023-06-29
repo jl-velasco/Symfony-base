@@ -13,15 +13,16 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 final class Video extends AggregateRoot
 {
     public function __construct(
-        private readonly Uuid $uuid,
-        private readonly Uuid $userUuid,
-        private readonly Name $name,
-        private Description $description,
-        private readonly Url $url,
-        private readonly ?Date $createdAt = new Date(),
-        private readonly ?Date $updatedAt = null,
+        private readonly Uuid      $uuid,
+        private readonly Uuid      $userUuid,
+        private readonly Name      $name,
+        private Description        $description,
+        private readonly Url       $url,
+        private readonly ?Date     $createdAt = new Date(),
+        private readonly ?Date     $updatedAt = null,
         private readonly ?Comments $comments = new Comments([])
-    ) {
+    )
+    {
     }
 
     public function uuid(): Uuid
@@ -91,11 +92,11 @@ final class Video extends AggregateRoot
     }
 
     public static function create(
-        Uuid $uuid,
-        Uuid $userUuid,
-        Name $name,
+        Uuid        $uuid,
+        Uuid        $userUuid,
+        Name        $name,
         Description $description,
-        Url $url,
+        Url         $url,
     ): self
     {
 
@@ -128,5 +129,28 @@ final class Video extends AggregateRoot
                 $this->userUuid(),
             )
         );
+    }
+
+    public static function fromArray(array $video): self
+    {
+        return new self(
+            new Uuid($video['uuid']),
+            new Uuid($video['userUuid']),
+            new Name($video['name']),
+            new Description($video['description']),
+            new Url($video['url'])
+        );
+    }
+
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return [
+            'uuid' => $this->uuid()->value(),
+            'userUuid' => $this->userUuid()->value(),
+            'name' => $this->name()->value(),
+            'description' => $this->description()->value(),
+            'url' => $this->url()->value(),
+        ];
     }
 }
