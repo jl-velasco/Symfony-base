@@ -23,7 +23,7 @@ class ShorterTinyUrl implements ShorterUrlRepository
         $apiUrl = new Url(self::URL_SERVICE . urlencode($url));
 
         try {
-            return $this->httpClient->send(new Url($apiUrl), new HttpRequestType('GET'));
+            return $this->httpClient->send($apiUrl, new HttpRequestType('GET'));
         } catch (HttpException $exception) {
             return $url;
         };
