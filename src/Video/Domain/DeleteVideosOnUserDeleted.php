@@ -29,4 +29,9 @@ class DeleteVideosOnUserDeleted implements DomainEventSubscriber
     {
         return [UserDeletedDomainEvent::class];
     }
+
+    public static function queue(): string
+    {
+        // TODO: Implement queue() method.
+    }
 }
