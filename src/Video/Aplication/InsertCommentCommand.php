@@ -9,7 +9,8 @@ class InsertCommentCommand implements Command
     public function __construct(
         private readonly string $id,
         private readonly string $videoId,
-        private readonly string $message
+        private readonly string $message,
+        private readonly string $userId
     )
     {
     }
@@ -29,5 +30,8 @@ class InsertCommentCommand implements Command
         return $this->message;
     }
 
-
+    public function userId(): string
+    {
+        return $this->userId;
+    }
 }

@@ -16,7 +16,7 @@ final class Video extends AggregateRoot
         private readonly Uuid $uuid,
         private readonly Uuid $userUuid,
         private readonly Name $name,
-        private readonly Description $description,
+        private Description $description,
         private readonly Url $url,
         private readonly ?Date $createdAt = new Date(),
         private readonly ?Date $updatedAt = null,
@@ -44,6 +44,11 @@ final class Video extends AggregateRoot
         return $this->description;
     }
 
+    public function changeDescription(string $description): void
+    {
+        $this->description = $this->description->changeDescription($description);
+    }
+
     public function url(): Url
     {
         return $this->url;
@@ -64,10 +69,19 @@ final class Video extends AggregateRoot
         return $this->comments;
     }
 
-    public function addComment(Uuid $id, CommentMessage $message): void
+    public function addComment(Uuid $id, CommentMessage $message, Uuid $userId): void
     {
         $this->comments->add(
             new Comment($id, $this->uuid(), $message)
+        );
+
+        $this->record(
+            new CommentCreatedDomainEvent(
+                $this->uuid,
+                $id,
+                $message,
+                $userId
+            )
         );
     }
 
@@ -97,6 +111,9 @@ final class Video extends AggregateRoot
             new VideoCreatedDomainEvent(
                 $uuid->value(),
                 $userUuid,
+                $name,
+                $description,
+                $url
             )
         );
 

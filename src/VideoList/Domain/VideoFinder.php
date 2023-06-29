@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Symfony\Base\Video\Domain;
+namespace Symfony\Base\VideoList\Domain;
 
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
+use Symfony\Base\VideoList\Domain\Exceptions\VideoNotFoundException;
 
 class VideoFinder
 {
