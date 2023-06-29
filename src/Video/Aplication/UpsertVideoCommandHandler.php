@@ -31,7 +31,7 @@ class UpsertVideoCommandHandler implements CommandHandler
     {
         try {
             $this->videoFinder->__invoke(new Uuid($command->uuid()));
-            $video = new Video(
+            $video = Video::create(
                 new Uuid($command->uuid()),
                 new Uuid($command->userUuid()),
                 new Name($command->name()),
