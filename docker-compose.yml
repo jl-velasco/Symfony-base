@@ -2,6 +2,8 @@ version: '3'
 
 services:
   base:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     container_name: symfony_base
     build:
       context: .

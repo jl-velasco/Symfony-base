@@ -8,11 +8,11 @@ use Symfony\Base\Shared\Domain\ValueObject\Description;
 use Symfony\Base\Shared\Domain\ValueObject\Name;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
 use Symfony\Base\Shared\Domain\ValueObject\Uuid;
-use Symfony\Base\Video\Domain\VideoCreatedDomainEvent;
+use Symfony\Base\UrlShortener\Domain\UrlShortenedDomainEvent;
 use Symfony\Base\VideoList\Domain\Video;
 use Symfony\Base\VideoList\Domain\VideoRepository;
 
-class CreateVideoListOnVideoCreated implements DomainEventSubscriber
+class CreateVideoListOnUrlShortened implements DomainEventSubscriber
 {
     public function __construct(
         private readonly VideoRepository $repository
@@ -36,12 +36,7 @@ class CreateVideoListOnVideoCreated implements DomainEventSubscriber
 
     public static function subscribedTo(): array
     {
-        return [VideoCreatedDomainEvent::class];
+        return [UrlShortenedDomainEvent::class];
     }
 
-    //TODO: remove coupling
-    public static function queue(): string
-    {
-        return '';
-    }
 }

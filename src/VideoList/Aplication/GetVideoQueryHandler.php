@@ -19,7 +19,7 @@ final class GetVideoQueryHandler implements QueryHandler
     /**
      * @throws VideoNotFoundException
      */
-    public function __invoke(GetCommentQuery $query): VideoResponse
+    public function __invoke(GetVideoQuery $query): VideoResponse
     {
         $video = $this->finder->__invoke(new Uuid($query->id()));
 
