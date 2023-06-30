@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ### Upsert video
-PUT {{host}}/{{version}}/video/dba649b4-70d4-4603-b506-0cfdb1bb1cdb
+PUT {{host}}/{{version}}/video/9851AF4B-E49B-40AE-A405-FA3CC76142F5
 Content-Type: application/json
 
 {

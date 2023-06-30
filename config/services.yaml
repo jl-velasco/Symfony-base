@@ -4,6 +4,8 @@ parameters:
     mongodb.tlscafile: '%env(MONGO_TLS_CA_FILE)%'
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
+    tinyUrlApi: '%env(resolve:TINY_URL_API)%'
+    tinyUrlToken: '%env(resolve:TINY_URL_TOKEN)%'
 
 services:
     _defaults:
@@ -84,3 +86,9 @@ services:
         arguments:
             $client: '@MongoDB\Client'
             $databaseName: '%mongodb.database%'
+
+    Symfony\Base\VideoList\Infrastructure\TinyUrlShortener:
+        arguments:
+            $http: '@Symfony\Base\Shared\Domain\Repository\Http'
+            $tinyUrlApi: '%tinyUrlApi%'
+            $tinyUrlToken: '%tinyUrlToken%'
