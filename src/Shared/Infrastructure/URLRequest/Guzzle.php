@@ -1,21 +1,25 @@
 <?php
+declare(strict_types=1);
 
 namespace Symfony\Base\Shared\Infrastructure\URLRequest;
 
+use Symfony\Base\Shared\Domain\URLRequest;
 use Symfony\Base\Shared\Domain\ValueObject\Url;
+use Symfony\Base\Shared\Infrastructure\Exceptions\HttpErrorException;
 
-class Guzzle
+final class Guzzle implements URLRequest
 {
-
-    function request(string $type, Url $url): string
+    public function request(string $type, Url $url): string
     {
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', "https://tinyurl.com/api-create.php?url=" . urlencode($url->value()));
+        $response = $client->request($type, $url->value());
 
-        if( $response->getStatusCode()!= 200) {
-            //thorw algo
+        if ($response->getStatusCode() != 200) {
+            //thorw algo, comentar si es correcto
+            // cambiar el nombre de la clase a HttpErrorExcepcion
+            throw new HttpErrorException($url);
         };
-        $responseType = $response->getHeaderLine('content-type'); // 'application/json; charset=utf8'
+
         return $response->getBody()->getContents();
     }
 }

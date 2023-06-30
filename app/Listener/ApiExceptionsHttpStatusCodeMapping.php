@@ -5,6 +5,7 @@ namespace Symfony\Base\App\Listener;
 
 use InvalidArgumentException;
 use Symfony\Base\Shared\Domain\Exception\InvalidValueException;
+use Symfony\Base\Shared\Infrastructure\Exceptions\HttpErrorException;
 use Symfony\Base\User\Domain\Exceptions\UserNotExistException;
 use Symfony\Base\Video\Domain\Exceptions\VideoNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ final class ApiExceptionsHttpStatusCodeMapping
         InvalidValueException::class => Response::HTTP_BAD_REQUEST,
         UserNotExistException::class => Response::HTTP_NOT_FOUND,
         VideoNotFoundException::class => Response::HTTP_NOT_FOUND,
+        HttpErrorException::class => Response::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE
     ];
 
     public function register(string $exceptionClass, int $statusCode): void
