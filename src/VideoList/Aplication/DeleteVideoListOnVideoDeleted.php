@@ -14,6 +14,7 @@ use Symfony\Base\VideoList\Domain\VideoRepository;
 
 class DeleteVideoListOnVideoDeleted implements DomainEventSubscriber
 {
+    private const QUEUE_NAME = 'video.videos_deleted.delete_videos';
     public function __construct(
         private readonly VideoRepository $repository
     ) {
@@ -21,6 +22,7 @@ class DeleteVideoListOnVideoDeleted implements DomainEventSubscriber
 
     public function __invoke(DomainEvent $event): void
     {
+        $data = $event->toPrimitives();
         $this->repository->delete(new Uuid($event->aggregateId()));
     }
 
@@ -32,6 +34,6 @@ class DeleteVideoListOnVideoDeleted implements DomainEventSubscriber
     //TODO: remove coupling
     public static function queue(): string
     {
-        return '';
+        return self::QUEUE_NAME;
     }
 }

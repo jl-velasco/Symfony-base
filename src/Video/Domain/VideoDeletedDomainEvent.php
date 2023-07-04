@@ -8,6 +8,8 @@ use Symfony\Base\Shared\Domain\ValueObject\Uuid;
 
 class VideoDeletedDomainEvent extends DomainEvent
 {
+    private const ROUTING_KEY = 'hiberus.video.event.video_deleted';
+
     public function __construct(
         string $aggregateId,
         private readonly Uuid $userId,
@@ -25,7 +27,7 @@ class VideoDeletedDomainEvent extends DomainEvent
 
     public static function eventName(): string
     {
-        return 'hiberus.video.event.video_deleted';
+        return self::ROUTING_KEY;
     }
 
     public function toPrimitives(): array

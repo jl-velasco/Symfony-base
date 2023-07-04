@@ -26,7 +26,7 @@ class DeleteVideoCommandHandler implements CommandHandler
         $video = $this->finder->__invoke(new Uuid($command->uuid()));
         $video->delete();
 
-        $this->videoRepository->delete($video->uuid());
+        //$this->videoRepository->delete($video->uuid());
         $this->bus->publish(...$video->pullDomainEvents());
     }
 }
