@@ -23,6 +23,8 @@ class DeleteVideoListOnVideoDeleted implements DomainEventSubscriber
     public function __invoke(DomainEvent $event): void
     {
         $data = $event->toPrimitives();
+        // esto provoca un error de retry en el RabbitHQ cuando se ejecuta por consola
+        // $this->repository->delete($event->aggregateId());
         $this->repository->delete(new Uuid($event->aggregateId()));
     }
 
