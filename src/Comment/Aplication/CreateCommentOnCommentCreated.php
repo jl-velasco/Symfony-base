@@ -12,6 +12,8 @@ use Symfony\Base\Video\Domain\CommentCreatedDomainEvent;
 
 class CreateCommentOnCommentCreated implements DomainEventSubscriber
 {
+    private const QUEUE_NAME = 'comment.comments_created.create_comments';
+
     public function __construct(
         private readonly CommentRepository $repository
     )
@@ -35,5 +37,10 @@ class CreateCommentOnCommentCreated implements DomainEventSubscriber
     public static function subscribedTo(): array
     {
         return [CommentCreatedDomainEvent::class];
+    }
+
+    public static function queue(): string
+    {
+        return self::QUEUE_NAME;
     }
 }

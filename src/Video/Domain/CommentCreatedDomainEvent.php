@@ -36,7 +36,7 @@ class CommentCreatedDomainEvent extends DomainEvent
 
     public static function eventName(): string
     {
-        return 'hiberus.video.event.comment_created';
+        return 'hiberus.comment.event.comment_created';
     }
 
     public function toPrimitives(): array

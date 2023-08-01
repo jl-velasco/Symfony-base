@@ -21,6 +21,7 @@ class CommentInsertFunctionalTest extends FunctionalTestCase
             'POST',
             "/v1/comment/{$comment->id()->value()}",
             [
+                'user_id' => $video->userUuid()->value(),
                 'video_id' => $video->uuid()->value(),
                 'message' => $comment->message()->value(),
             ]
@@ -65,6 +66,7 @@ class CommentInsertFunctionalTest extends FunctionalTestCase
             'POST',
             "/v1/comment/{$comment->id()->value()}",
             [
+                'user_id' => '',
                 'video_id' => '',
                 'message' => $comment->message()->value(),
             ]
