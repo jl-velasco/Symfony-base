@@ -15,10 +15,15 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-mongodb": "^1.16",
         "ext-sockets": "*",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/mongodb-odm": "^2.5",
+        "doctrine/mongodb-odm-bundle": "^4.5",
+        "guzzlehttp/guzzle": "^7.7",
         "lambdish/phunctional": "^2.1",
-        "php-amqplib/php-amqplib": "^3.2",
+        "mongodb/mongodb": "^1.16",
+        "php-amqplib/php-amqplib": "^3.1",
         "ramsey/uuid": "^4.2",
         "symfony/console": "6.0.*",
         "symfony/dotenv": "6.0.*",
@@ -48,7 +53,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {
