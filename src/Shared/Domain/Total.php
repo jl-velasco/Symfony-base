@@ -1,13 +1,17 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Shared\Domain;
 
-use CGE\Member\Shared\Domain\FloatValueObject;
 
 class Total extends FloatValueObject
 {
     public function sum(float $total): self
     {
         return new self($this->value() + $total);
+    }
+
+    public function sub(float $value): self
+    {
+        return new self($this->value() - $value);
     }
 }

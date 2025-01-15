@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace CGE\Member\Shared\Domain\ValueObject;
+namespace Symfony\Base\Shared\Domain;
 
-use CGE\Member\Shared\Domain\Exception\InvalidValueException;
 use DateTimeImmutable;
 use DateTimeZone;
 

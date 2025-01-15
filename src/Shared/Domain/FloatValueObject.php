@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CGE\Member\Shared\Domain;
-
-use Symfony\Base\Shared\Domain\ValueObject;
+namespace Symfony\Base\Shared\Domain;
 
 abstract class FloatValueObject extends ValueObject
 {
