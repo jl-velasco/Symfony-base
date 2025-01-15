@@ -1,0 +1,35 @@
+<?php
+
+namespace Symfony\Base\Order;
+
+class OrderItem
+{
+    public function __construct(
+        private readonly OrderItemId    $id,
+        private readonly OrderItemPrice $price,
+    )
+    {
+    }
+
+    public function id(): OrderItemId
+    {
+        return $this->id;
+    }
+
+    public function price(): OrderItemPrice
+    {
+        return $this->price;
+    }
+
+    public function total(): OrderItemTotal
+    {
+        return new OrderItemTotal($this->price->value());
+    }
+
+    public function equals(OrderItem $other): bool
+    {
+        return $this->id->equals($other->id);
+    }
+
+
+}
