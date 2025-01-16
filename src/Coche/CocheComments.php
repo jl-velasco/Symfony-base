@@ -13,6 +13,11 @@ class CocheComments extends Collection
         return array_map(fn(OrderItem $item) => $item->toPrimitives(), $this->items());
     }
 
+    public function toArray()
+    {
+        return array_map(fn(OrderItem $item) => $item->toArray(), $this->items());
+    }
+
     protected function type(): string
     {
         return CocheComment::class;

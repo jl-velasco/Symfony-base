@@ -4,7 +4,10 @@ namespace Symfony\Base\Order;
 
 class CreateOrderService
 {
-    public function __construct(private readonly OrderRepository $repository)
+    public function __construct(
+        private readonly OrderRepository $repository,
+        private readonly OrderImageValidator $validator
+    )
     {
     }
 
@@ -12,6 +15,7 @@ class CreateOrderService
     {
         $order = new Order(
             new OrderId($request->id()),
+            new OrderImage($request->image()),
             new OrderItems(),
             new OrderTotal(0)
         );

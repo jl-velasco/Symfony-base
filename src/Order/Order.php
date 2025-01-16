@@ -6,6 +6,7 @@ class Order
 {
     public function __construct(
         private readonly OrderId $id,
+        private OrderImage       $image,
         private OrderItems       $items,
         private OrderTotal       $total,
     )
@@ -20,6 +21,11 @@ class Order
     public function items(): array
     {
         return $this->items;
+    }
+
+    public function image(): OrderImage
+    {
+        return $this->image;
     }
 
     public function total(): OrderTotal
