@@ -1,21 +1,13 @@
 <?php
 
-namespace Symfony\Base\Coche;
-
-
-$coche = new Coche(
-    new CocheId('123'),
-    new CocheMatricula('1234ABC'),
-    new CocheDistance(100, DistanceUnits::KILOMETERS)
-);
-
-$coche->sumDistance(100);
+namespace Symfony\Base\Coche;;
 
 class Coche
 {
     public function __construct(
         protected CocheId $id,
         protected CocheMatricula $matricula,
+        protected CocheComments  $comments,
         protected CocheDistance $distance,
     )
     {
@@ -30,7 +22,5 @@ class Coche
     public function sumDistance(float $distance): void
     {
         $this->distance = $this->distance->sum($distance);
-//        $newDistance = $this->distance->distance + $distance;
-//        $this->distance = new CocheDistance($this->distance->distance, $this->distance->unit);
     }
 }

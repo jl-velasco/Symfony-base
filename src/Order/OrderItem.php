@@ -21,11 +21,6 @@ class OrderItem
         return $this->price;
     }
 
-    public function total(): OrderItemTotal
-    {
-        return new OrderItemTotal($this->price->value());
-    }
-
     public function equals(OrderItem $other): bool
     {
         return $this->id->equals($other->id);

@@ -5,13 +5,13 @@ namespace Symfony\Base\Shared\Domain;
 
 class Total extends FloatValueObject
 {
-    public function sum(float $total): self
+    public function sum(float $total): static
     {
-        return new self($this->value() + $total);
+        return new static($this->value() + $total);
     }
 
-    public function sub(float $value): self
+    public function sub(float $value): static
     {
-        return new self($this->value() - $value);
+        return new static($this->value() - $value);
     }
 }

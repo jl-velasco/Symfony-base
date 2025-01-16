@@ -2,8 +2,9 @@
 
 namespace Symfony\Base\Order;
 
-use CGE\Member\Shared\Domain\FloatValueObject;
+use Symfony\Base\Shared\Domain\Total;
 
 class OrderTotal extends Total
 {
+
 }
