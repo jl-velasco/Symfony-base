@@ -1,6 +1,11 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Order\Application;
+
+use Symfony\Base\Order\Domain\OrderId;
+use Symfony\Base\Order\Domain\OrderRepository;
+use Symfony\Base\Order\OrderNotFound;
+use Symfony\Base\Order\UpdateOrderRequest;
 
 class UpdateOrderService
 {

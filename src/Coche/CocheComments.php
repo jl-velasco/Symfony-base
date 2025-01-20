@@ -2,8 +2,8 @@
 
 namespace Symfony\Base\Coche;
 
-use Symfony\Base\Order\OrderItem;
-use Symfony\Base\Order\OrderTotal;
+use Symfony\Base\Order\Domain\OrderItem;
+use Symfony\Base\Order\Domain\OrderTotal;
 use Symfony\Base\Shared\Domain\Collection;
 
 class CocheComments extends Collection

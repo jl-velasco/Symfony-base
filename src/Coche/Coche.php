@@ -6,6 +6,7 @@ class Coche
 {
     public function __construct(
         protected CocheId $id,
+        protected CocheImage $image,
         protected CocheMatricula $matricula,
         protected CocheComments  $comments,
         protected CocheDistance $distance,

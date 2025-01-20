@@ -1,14 +1,19 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Shared\Domain\Image;
 
-class OrderImage
+use Symfony\Base\Order\ImageContent;
+use Symfony\Base\Order\ImageName;
+use Symfony\Base\Order\ImageSize;
+use Symfony\Base\Order\ImageType;
+
+class Image
 {
     public function __construct(
-        private OrderImageName $name,
-        private OrderImageType $type,
-        private OrderImageSize $size,
-        private OrderImageContent $content
+        private ImageName $name,
+        private ImageType $type,
+        private ImageSize $size,
+        private ImageContent $content
     )
     {
     }

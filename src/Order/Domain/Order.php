@@ -1,6 +1,10 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Order\Domain;
+
+use Symfony\Base\Order\Domain\Exceptions\ItemAlreadyExists;
+use Symfony\Base\Order\Domain\Exceptions\TotalNotMatch;
+use Symfony\Base\Order\Domain\Exceptions\TotalNotValid;
 
 class Order
 {

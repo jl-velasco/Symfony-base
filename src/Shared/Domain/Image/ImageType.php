@@ -2,7 +2,7 @@
 
 namespace Symfony\Base\Order;
 
-enum OrderImageType
+enum ImageType
 {
 
     case PNG;

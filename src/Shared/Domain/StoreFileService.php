@@ -1,6 +1,8 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Shared\Domain;
+
+use Symfony\Base\Order\ImageContent;
 
 interface StoreFileService
 {

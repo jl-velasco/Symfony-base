@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Order\Domain;
 
 interface OrderRepository
 {
