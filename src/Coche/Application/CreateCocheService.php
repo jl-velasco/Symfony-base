@@ -1,6 +1,15 @@
 <?php
 
-namespace Symfony\Base\Coche;
+namespace Symfony\Base\Coche\Application;
+
+use Symfony\Base\Coche\CocheAlreadyExistsException;
+use Symfony\Base\Coche\Domain\Coche;
+use Symfony\Base\Coche\Domain\CocheComments;
+use Symfony\Base\Coche\Domain\CocheDistance;
+use Symfony\Base\Coche\Domain\CocheId;
+use Symfony\Base\Coche\Domain\CocheMatricula;
+use Symfony\Base\Coche\Domain\CocheRepository;
+use Symfony\Base\Coche\Domain\DistanceUnits;
 
 class CreateCocheService
 {

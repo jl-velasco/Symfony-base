@@ -1,6 +1,8 @@
 <?php
 
-namespace Symfony\Base\Coche;;
+namespace Symfony\Base\Coche\Domain;
+
+;
 
 class Coche
 {

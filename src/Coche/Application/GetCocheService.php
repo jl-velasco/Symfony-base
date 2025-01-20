@@ -1,6 +1,10 @@
 <?php
 
-namespace Symfony\Base\Coche;
+namespace Symfony\Base\Coche\Application;
+
+use Symfony\Base\Coche\Domain\CocheId;
+use Symfony\Base\Coche\Domain\CocheNotFoundException;
+use Symfony\Base\Coche\Domain\CocheRepository;
 
 class GetCocheService
 {

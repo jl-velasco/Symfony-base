@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Coche;
+namespace Symfony\Base\Coche\Domain;
 
 use Symfony\Base\Order\Domain\OrderItem;
 use Symfony\Base\Order\Domain\OrderTotal;
