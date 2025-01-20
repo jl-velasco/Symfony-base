@@ -88,6 +88,15 @@
     "doctrine/migrations": {
         "version": "3.3.2"
     },
+    "doctrine/mongodb-odm-bundle": {
+        "version": "4.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "429a3584f443e38fbf9ea5eaa5b34e5456194bef"
+        }
+    },
     "doctrine/orm": {
         "version": "2.11.3"
     },

@@ -17,6 +17,7 @@
         "ext-json": "*",
         "ext-mongodb": "^1.16",
         "ext-sockets": "*",
+        "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/mongodb-odm": "^2.5",
         "doctrine/mongodb-odm-bundle": "^4.5",
