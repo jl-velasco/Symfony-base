@@ -18,7 +18,7 @@ abstract class StringValueObject extends ValueObject
         return $this->value;
     }
 
-    public function equals(self $other): bool
+    public function equals($other): bool
     {
         return $this->value() === $other->value();
     }

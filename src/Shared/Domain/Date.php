@@ -9,13 +9,15 @@ use DateTimeZone;
 
 class Date
 {
-    private const string TIMEZONE = 'UTC';
+    private const TIMEZONE = 'UTC';
 
-    private const string DATABASE_TIMESTAMP_FORMAT = 'Y-m-d H:i:s.u';
+    private const DATABASE_TIMESTAMP_FORMAT = 'Y-m-d H:i:s.u';
 
     protected DateTimeImmutable $date;
 
-    /** @throws InvalidValueException */
+    /**
+     * @throws InvalidValueException
+     */
     public function __construct(?string $date = null)
     {
         try {
@@ -24,8 +26,6 @@ class Date
                 new DateTimeImmutable('now', $this->getTimezone());
         } catch (\Throwable $e) {
             throw new InvalidValueException(
-                self::class,
-                $date,
                 'The value is not a valid date'
             );
         }
