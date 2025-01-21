@@ -13,6 +13,7 @@ class Video
         private readonly VideoName $name,
         private readonly VideoDescription $description,
         private readonly VideoUrl $url,
+        private readonly VideoLikes $likes,
         private readonly CreatedAt $createdAt,
         private readonly ?UpdatedAt $updateAt,
     )
@@ -31,6 +32,7 @@ class Video
             new VideoName($name),
             new VideoDescription($description),
             new VideoUrl($url),
+            VideoLikes::create(),
             new CreatedAt(),
             null
         );
@@ -88,5 +90,15 @@ class Video
     public function updateAt(): UpdatedAt
     {
         return $this->updateAt;
+    }
+
+    public function addLike()
+    {
+        $this->likes->addLike();
+    }
+
+    public function save(VideoRepository $repository): void
+    {
+        $repository->save($this);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Symfony\Base\Video\Like\Application;
 
+use Symfony\Base\Shared\Domain\EventBus;
+use Symfony\Base\Shared\Domain\InvalidValueException;
 use Symfony\Base\Video\Like\Domain\Like;
 use Symfony\Base\Video\Like\Domain\LikeAlreadyExistsException;
 use Symfony\Base\Video\Like\Domain\LikeId;
@@ -11,11 +13,15 @@ class CreateLikeUseCase
 {
 
     public function __construct(
-        private readonly LikeRepository $repository
+        private readonly LikeRepository $repository,
+        private readonly EventBus $eventBus
     )
     {
     }
 
+    /**
+     * @throws InvalidValueException
+     */
     public function __invoke(
         DTOLike $likeDTO
     ): void
@@ -32,6 +38,6 @@ class CreateLikeUseCase
             $likeDTO->userId
         );
 
-        $this->repository->save($like);
+        $like->save($this->repository, $this->eventBus);
     }
 }

@@ -2,13 +2,16 @@
 
 namespace Symfony\Base\Video\Like\Domain;
 
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\CreatedAt;
+use Symfony\Base\Shared\Domain\EventBus;
+use Symfony\Base\Video\Shared\Domain\LikeCreated;
 use Symfony\Base\Video\Shared\Domain\VideoId;
 
-class Like
+class Like extends AggregateRoot
 {
     public function __construct(
-        private readonly LikeId    $id,
+        private readonly LikeId     $id,
         private readonly VideoId    $videoId,
         private readonly LikeUserId $userId,
         private readonly CreatedAt  $createdAt
@@ -22,17 +25,32 @@ class Like
         string $userId
     ): Like
     {
-        return new self(
+        $like = new self(
             new LikeId($likeId),
             new VideoId($videoId),
             new LikeUserId($userId),
             new CreatedAt()
         );
+
+        $like->record(
+            new LikeCreated(
+                $like->id()->value(),
+                $like->videoId()->value(),
+                $like->userId()->value()
+            )
+        );
+
+        return $like;
     }
 
-    public function id(): VideoId
+    public function id(): LikeId
     {
         return $this->id;
+    }
+
+    public function videoId(): VideoId
+    {
+        return $this->videoId;
     }
 
     public function userId(): LikeUserId
@@ -43,5 +61,11 @@ class Like
     public function createdAt(): CreatedAt
     {
         return $this->createdAt;
+    }
+
+    public function save(LikeRepository $repository, EventBus $eventBus):void
+    {
+        $repository->save($this);
+        $eventBus->publish(...$this->pullDomainEvents());
     }
 }

@@ -16,7 +16,12 @@ class DbalLikeRepository implements LikeRepository
 
     public function find(LikeId $id): ?Like
     {
-        // TODO: Implement find() method.
+        return new Like(
+            new LikeId('1'),
+            new VideoId('1'),
+            new LikeUserId('1'),
+            new CreatedAt()
+        );
     }
 
     public function delete(LikeId $id): void
