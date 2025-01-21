@@ -2,11 +2,11 @@
 
 namespace Symfony\Base\Video\Video\Application;
 
+use Symfony\Base\Video\Shared\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\Exceptions\VideoAlreadyExistsException;
 use Symfony\Base\Video\Video\Domain\Exceptions\VideoNotFound;
 use Symfony\Base\Video\Video\Domain\Video;
 use Symfony\Base\Video\Video\Domain\VideoFinder;
-use Symfony\Base\Video\Video\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\VideoRepository;
 
 class CreateVideoUseCase

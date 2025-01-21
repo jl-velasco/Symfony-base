@@ -4,6 +4,7 @@ namespace Symfony\Base\Video\Video\Domain;
 
 use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Shared\Domain\UpdatedAt;
+use Symfony\Base\Video\Shared\Domain\VideoId;
 
 class Video
 {

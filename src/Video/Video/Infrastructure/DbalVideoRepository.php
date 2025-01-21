@@ -3,8 +3,8 @@
 namespace Symfony\Base\Video\Video\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Base\Video\Shared\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\Video;
-use Symfony\Base\Video\Video\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\VideoRepository;
 
 class DbalVideoRepository implements VideoRepository

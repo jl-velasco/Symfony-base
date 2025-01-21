@@ -2,6 +2,7 @@
 
 namespace Symfony\Base\Video\Video\Domain;
 
+use Symfony\Base\Video\Shared\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\Exceptions\VideoNotFound;
 
 class VideoFinder
