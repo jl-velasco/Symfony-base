@@ -1,33 +1,36 @@
 <?php
 
-namespace Symfony\Base\Video\Shared\Domain;
+namespace Symfony\Base\Tweet\Like\Domain;
 
 use Symfony\Base\Shared\Domain\DomainEvent;
 
 class LikeCreated extends DomainEvent
 {
     public function __construct(
-        private readonly string $aggregateId,
-        private readonly string $videoId,
+        string                  $aggregateId,
+        private readonly string $tweetId,
         private readonly string $userId,
-        ?string                  $eventId = null,
-        ?string                  $occurredOn = null
+        ?string                 $eventId = null,
+        ?string                 $occurredOn = null
     )
     {
-        parent::__construct($aggregateId, $eventId, $occurredOn);
+        parent::__construct(
+            $aggregateId,
+            $eventId,
+            $occurredOn
+        );
     }
 
     public static function eventName(): string
     {
-        return 'like.created';
+        return 'tweet.like_created';
     }
 
     public function toPrimitives(): array
     {
         return [
-            'id' => $this->aggregateId,
-            'video_id' => $this->videoId,
-            'user_id' => $this->userId,
+            'tweet_id' => $this->tweetId,
+            'user_id' => $this->userId
         ];
     }
 
@@ -35,7 +38,7 @@ class LikeCreated extends DomainEvent
     {
         return new self(
             $aggregateId,
-            $body['video_id'],
+            $body['tweet_id'],
             $body['user_id'],
             $eventId,
             $occurredOn

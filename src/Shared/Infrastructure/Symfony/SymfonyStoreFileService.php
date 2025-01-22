@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Shared\Infrastructure;
+namespace Symfony\Base\Shared\Infrastructure\Symfony;
 
 use Symfony\Base\Order\ImageContent;
 use Symfony\Base\Shared\Domain\StoreFileService;

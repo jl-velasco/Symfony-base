@@ -1,0 +1,4 @@
+like-post:
+  path: /like/{id}
+  controller: Symfony\Base\App\Controller\Video\Like\PostLikeController
+  methods: POST

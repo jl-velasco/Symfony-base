@@ -13,6 +13,7 @@ class Tweet
     public function __construct(
         private readonly TweetId $id,
         private readonly UserId $userId,
+        private TweetLikes $likes,
         private readonly Content $content,
         private readonly CreatedAt $createdAt,
         private readonly ?UpdatedAt $updatedAt,
@@ -46,7 +47,14 @@ class Tweet
         string $content
     ): Tweet
     {
-        return new self(new TweetId($id), new UserId($userId), new Content($content), new CreatedAt(), null);
+        return new self(
+            new TweetId($id),
+            new UserId($userId),
+            TweetLikes::create(),
+            new Content($content),
+            new CreatedAt(),
+            null
+        );
     }
 
     public function updatedAt(): UpdatedAt
@@ -62,5 +70,10 @@ class Tweet
     public function delete(TweetRepository $repository): void
     {
         $repository->delete($this->id());
+    }
+
+    public function addLike(): void
+    {
+        $this->likes = $this->likes->addLike();
     }
 }

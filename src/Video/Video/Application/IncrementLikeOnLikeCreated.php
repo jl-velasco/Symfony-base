@@ -23,7 +23,7 @@ class IncrementLikeOnLikeCreated implements DomainEventSubscriber
         return [LikeCreated::class];
     }
 
-    public function __invoke(DomainEvent $event)
+    public function __invoke(DomainEvent $event):void
     {
         if (!$event instanceof LikeCreated) {
             throw new \InvalidArgumentException('Event must be an instance of LikeCreated');

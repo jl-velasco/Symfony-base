@@ -13,11 +13,11 @@ class DbalTweetRepository implements TweetRepository
         private readonly Connection $connection
     )
     {
-
     }
 
     public function save (Tweet $tweet): void
     {
+        //if exists update else insert
         $this->connection->insert('tweets', [
             'id' => $tweet->id()->value(),
             'user_id' => $tweet->userId()->value(),

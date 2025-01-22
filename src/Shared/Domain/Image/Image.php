@@ -2,8 +2,6 @@
 
 namespace Symfony\Base\Shared\Domain\Image;
 
-use Symfony\Base\Order\ImageContent;
-use Symfony\Base\Order\ImageName;
 use Symfony\Base\Order\ImageSize;
 use Symfony\Base\Order\ImageType;
 

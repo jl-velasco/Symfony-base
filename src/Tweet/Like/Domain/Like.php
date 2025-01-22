@@ -2,10 +2,11 @@
 
 namespace Symfony\Base\Tweet\Like\Domain;
 
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Tweet\Shared\Domain\TweetId;
 
-class Like
+class Like extends AggregateRoot
 {
     public function __construct(
         private readonly LikeId    $id,
@@ -22,12 +23,22 @@ class Like
         string $userId
     ): Like
     {
-        return new self(
+        $like = new self(
             new LikeId($likeId),
             new TweetId($tweetId),
             new LikeUserId($userId),
             new CreatedAt()
         );
+        $like->record(
+            new LikeCreated(
+                $like->id()->value(),
+                $like->tweetId()->value(),
+                $like->userId()->value(),
+                $like->createdAt()->stringDateTime()
+            )
+        );
+
+        return $like;
     }
 
     public function id(): LikeId

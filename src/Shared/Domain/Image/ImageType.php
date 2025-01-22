@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Order;
+namespace Symfony\Base\Shared\Domain\Image;
 
 enum ImageType
 {

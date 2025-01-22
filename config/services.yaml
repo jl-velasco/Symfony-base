@@ -3,9 +3,31 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Symfony\Base\Shared\Domain\DomainEventSubscriber:
+            tags: [ 'symfony.base.domain_event_subscriber' ]
+
     Symfony\Base\App\Controller\:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
 
     Symfony\Base\:
         resource: '../src/'
+
+    Symfony\Base\Shared\Infrastructure\Symfony\InMemorySymfonyEventBus:
+        arguments: [ !tagged symfony.base.domain_event_subscriber ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Bus\Event\RabbitMQ\RabbitMqConnection:
+        arguments:
+            $exchangeName: '%env(RABBITMQ_EXCHANGE)%'
+
+    PhpAmqpLib\Connection\AMQPStreamConnection:
+        arguments:
+            $host: '%env(RABBITMQ_HOST)%'
+            $port: '%env(RABBITMQ_PORT)%'
+            $user: '%env(RABBITMQ_USER)%'
+            $password: '%env(RABBITMQ_PASSWORD)%'
+            $vhost: '%env(RABBITMQ_VHOST)%'
+    PhpAmqpLib\Connection\AbstractConnection: '@PhpAmqpLib\Connection\AMQPStreamConnection'
+

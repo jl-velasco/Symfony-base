@@ -4,7 +4,6 @@ namespace Symfony\Base\App\Controller\Video\Like;
 
 use Symfony\Base\Video\Like\Application\CreateLikeUseCase;
 use Symfony\Base\Video\Like\Application\DTOLike;
-use Symfony\Base\Video\Video\Application\DTOVideo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,14 +19,15 @@ class PostLikeController
      * @throws \JsonException
      */
     public function __invoke(
-        Request $request
+        Request $request,
+        string $id
     ): Response
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->useCase->__invoke(
             new DTOLike(
-                $data['id'],
+                $id,
                 $data['user_id'],
                 $data['video_id'],
             )

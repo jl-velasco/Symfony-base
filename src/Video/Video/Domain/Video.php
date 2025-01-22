@@ -13,11 +13,16 @@ class Video
         private readonly VideoName $name,
         private readonly VideoDescription $description,
         private readonly VideoUrl $url,
-        private readonly VideoLikes $likes,
+        private VideoLikes $likes,
         private readonly CreatedAt $createdAt,
         private readonly ?UpdatedAt $updateAt,
     )
     {
+    }
+
+    public function likes(): VideoLikes
+    {
+        return $this->likes;
     }
 
     public static function create(
@@ -92,9 +97,9 @@ class Video
         return $this->updateAt;
     }
 
-    public function addLike()
+    public function addLike(): void
     {
-        $this->likes->addLike();
+        $this->likes = $this->likes->addLike();
     }
 
     public function save(VideoRepository $repository): void
