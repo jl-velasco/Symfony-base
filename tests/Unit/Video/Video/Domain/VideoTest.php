@@ -2,8 +2,8 @@
 
 namespace Symfony\Base\Tests\Unit\Video\Video\Domain;
 
-use Mother\Domain\VideoMother;
 use PHPUnit\Framework\TestCase;
+use Symfony\Base\Tests\Unit\Mother\Domain\VideoMother;
 
 class VideoTest extends TestCase
 {
@@ -16,6 +16,6 @@ class VideoTest extends TestCase
         $video->addLike();
         $video->addLike();
 
-        $this->assertEquals($video->likes(), 4);
+        $this->assertEquals($video->likes()->value(), 4);
     }
 }

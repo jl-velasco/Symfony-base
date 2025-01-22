@@ -1,11 +1,11 @@
 <?php
 
-namespace Mother\Domain;
+namespace Symfony\Base\Tests\Unit\Mother\Domain;
 
-use Mother\Mother;
 use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Shared\Domain\InvalidValueException;
 use Symfony\Base\Shared\Domain\UpdatedAt;
+use Symfony\Base\Tests\Unit\Mother\Mother;
 use Symfony\Base\Video\Shared\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\Video;
 use Symfony\Base\Video\Video\Domain\VideoDescription;
