@@ -13,7 +13,7 @@ class VideoDescription extends StringValueObject
         $this->validate();
     }
 
-    public function validate()
+    public function validate(): void
     {
         if (strlen($this->value) > 500) {
             throw new \InvalidArgumentException('The description is too long');

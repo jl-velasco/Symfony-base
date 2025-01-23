@@ -4,6 +4,8 @@ namespace Symfony\Base\Tests\Unit\Video\Video\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Base\Tests\Unit\Mother\Domain\VideoMother;
+use Symfony\Base\Video\Video\Domain\Video;
+use Symfony\Base\Video\Video\Domain\VideoCreatedDomainEvent;
 use Symfony\Base\Video\Video\Domain\VideoLikes;
 
 class VideoTest extends TestCase
@@ -30,5 +32,22 @@ class VideoTest extends TestCase
         $video->addLike();
 
         $this->assertEquals($video->likes()->value(), 14);
+    }
+
+    /** @test */
+    public function create_video_publish_event(): void
+    {
+        $videoMother = VideoMother::create()->build();
+        $video = Video::create(
+            $videoMother->id()->value(),
+            $videoMother->name()->value(),
+            $videoMother->description()->value(),
+            $videoMother->url()->value()
+        );
+
+        $this->assertEquals($video->likes()->value(), 0);
+        $events = $video->pullDomainEvents();
+        $this->assertCount(1, $events);
+        $this->assertEquals(VideoCreatedDomainEvent::class, $events[0]::class);
     }
 }

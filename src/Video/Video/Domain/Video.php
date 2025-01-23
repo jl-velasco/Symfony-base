@@ -2,20 +2,21 @@
 
 namespace Symfony\Base\Video\Video\Domain;
 
+use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Shared\Domain\UpdatedAt;
 use Symfony\Base\Video\Shared\Domain\VideoId;
 
-class Video
+class Video extends AggregateRoot
 {
     public function __construct(
-        private readonly VideoId $id,
-        private readonly VideoName $name,
+        private readonly VideoId          $id,
+        private readonly VideoName        $name,
         private readonly VideoDescription $description,
-        private readonly VideoUrl $url,
-        private VideoLikes $likes,
-        private readonly CreatedAt $createdAt,
-        private readonly ?UpdatedAt $updateAt,
+        private readonly VideoUrl         $url,
+        private VideoLikes                $likes,
+        private readonly CreatedAt        $createdAt,
+        private readonly ?UpdatedAt       $updateAt,
     )
     {
     }
@@ -32,7 +33,7 @@ class Video
         string $url,
     ): Video
     {
-        return new self(
+        $video = new self(
             new VideoId($id),
             new VideoName($name),
             new VideoDescription($description),
@@ -41,6 +42,12 @@ class Video
             new CreatedAt(),
             null
         );
+
+        $video->record(
+            new VideoCreatedDomainEvent($video->id()->value())
+        );
+
+        return $video;
     }
 
     public static function fromPrimitives(array $data): self

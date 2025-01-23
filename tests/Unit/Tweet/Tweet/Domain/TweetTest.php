@@ -7,7 +7,6 @@ use Symfony\Base\Tests\Unit\Mother\Domain\TweetMother;
 
 class TweetTest extends TestCase
 {
-
     /** @test */
     public function addLikeOnTweet(): void
     {
