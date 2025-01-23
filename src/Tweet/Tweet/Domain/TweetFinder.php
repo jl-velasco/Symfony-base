@@ -2,9 +2,11 @@
 
 namespace Symfony\Base\Tweet\Tweet\Domain;
 
+use Symfony\Base\Tweet\Shared\Domain\TweetId;
+
 class TweetFinder
 {
-    private $repository;
+    private TweetRepository $repository;
 
     public function __construct(TweetRepository $repository)
     {

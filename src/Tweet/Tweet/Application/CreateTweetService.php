@@ -18,7 +18,7 @@ class CreateTweetService
     {
     }
 
-    public function __invoke(TweetDTO $tweet)
+    public function __invoke(TweetDTO $tweet): void
     {
         try {
             $this->ensureIfTweetExists($tweet->id);
