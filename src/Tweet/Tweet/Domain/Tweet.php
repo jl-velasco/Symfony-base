@@ -41,6 +41,11 @@ class Tweet
         return $this->createdAt;
     }
 
+    public function likes(): TweetLikes
+    {
+        return $this->likes;
+    }
+
     public static function create(
         string $id,
         string $userId,
