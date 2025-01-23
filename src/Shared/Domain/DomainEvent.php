@@ -4,12 +4,12 @@ namespace Symfony\Base\Shared\Domain;
 
 abstract class DomainEvent
 {
+    /** @throws InvalidValueException */
     public function __construct(
         private readonly string $aggregateId,
-        private string $eventId,
-        private string $occurredOn
-    )
-    {
+        private ?string $eventId = null,
+        private ?string $occurredOn = null,
+    ) {
         $this->eventId = $eventId ?: Uuid::random()->value();
         $this->occurredOn = $occurredOn ?: (new Date())->stringDateTime();
     }

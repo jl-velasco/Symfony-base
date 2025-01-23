@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Shared\Infrastructure\Bus\Event;
 
-use Symfony\Base\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
+use Symfony\Base\Shared\Infrastructure\CallableFirstParameterExtractor;
 use Traversable;
 
 final class DomainEventSubscriberLocator

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Base\Shared\Infrastructure\Bus\Event;
 
-use Symfony\Base\Shared\Domain\Bus\Event\DomainEventSubscriber;
+use Symfony\Base\Shared\Domain\DomainEventSubscriber;
 use function Lambdish\Phunctional\reduce;
 use function Lambdish\Phunctional\reindex;
 use RuntimeException;
