@@ -73,12 +73,14 @@ class DbalVideoRepository implements VideoRepository
             ->values([
                 'id' => ':id',
                 'name' => ':name',
+                'user_id' => ':user_id',
                 'description' => ':description',
                 'url' => ':url',
             ])
             ->setParameters([
                 'id' => $video->id()->value(),
                 'name' => $video->name()->value(),
+                'user_id' => $video->userId()->value(),
                 'description' => $video->description()->value(),
                 'url' => $video->url()->value(),
             ])
