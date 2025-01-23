@@ -1,4 +1,9 @@
 like-post:
-  path: /like/{id}
+  path: /video/{id}/like
   controller: Symfony\Base\App\Controller\Video\Like\PostLikeController
+  methods: POST
+
+video-post:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\Like\PostVideoController
   methods: POST

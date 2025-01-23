@@ -6,6 +6,7 @@ use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Shared\Domain\InvalidValueException;
 use Symfony\Base\Shared\Domain\UpdatedAt;
 use Symfony\Base\Tests\Unit\Mother\Mother;
+use Symfony\Base\Tweet\Shared\Domain\UserId;
 use Symfony\Base\Video\Shared\Domain\VideoId;
 use Symfony\Base\Video\Video\Domain\Video;
 use Symfony\Base\Video\Video\Domain\VideoDescription;
@@ -25,6 +26,7 @@ class VideoMother extends Mother
      */
     public function build(
         ?VideoId          $id = null,
+        ?UserId          $userId = null,
         ?VideoName        $name = null,
         ?VideoDescription $description = null,
         ?VideoUrl         $url = null,
@@ -35,6 +37,7 @@ class VideoMother extends Mother
     {
         return new Video(
             $id ?? VideoId::random(),
+            $userId ?? new UserId($this->faker->uuid()),
             $name ?? new VideoName($this->faker->name()),
             $description ?? new VideoDescription($this->faker->name()),
             $url ?? new VideoUrl($this->faker->url()),

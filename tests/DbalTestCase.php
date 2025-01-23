@@ -1,62 +1,75 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Symfony\Base\Tests;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\Schema\Schema;
-use PHPUnit\Framework\TestCase;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
-abstract class DbalTestCase extends TestCase
+/**
+ * @internal
+ */
+class DbalTestCase extends KernelTestCase
 {
-    protected Connection $connection;
+    protected static ?EntityManagerInterface $entityManager = null;
+    protected static ?Connection $connection = null;
 
-    /** @throws Exception */
+    /**
+     * @throws \Exception
+     */
     protected function setUp(): void
     {
-        $this->setConnection();
+        self::bootKernel();
 
-        $schema = new Schema();
-        $this->createTables($schema);
+        self::$entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        self::$connection = self::$entityManager->getConnection();
 
-        $platform = $this->connection->getDatabasePlatform();
-        $queries = $schema->toSql($platform);
+        $schemaTool = new SchemaTool(self::$entityManager);
+        $schemaTool->dropDatabase();
 
-        foreach ($queries as $query) {
-            $this->connection->fetchAllAssociative($query);
-        }
+        $application = new Application(self::$kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:migrations:migrate',
+            '--no-interaction' => true,
+        ]);
+
+        $application->run($input, new NullOutput());
+    }
+
+    public function connection(): Connection
+    {
+        return self::$connection;
     }
 
     protected function tearDown(): void
     {
-        gc_collect_cycles();
         parent::tearDown();
+        if (self::$entityManager) {
+            $schemaTool = new SchemaTool(self::$entityManager);
+            $schemaTool->dropDatabase();
+            self::$entityManager->close();
+            self::$entityManager = null;
+        }
     }
-
-    /** @throws Exception */
-    protected function setConnection(): void
-    {
-        $connectionParams = [
-            'dbname' => 'TEST',
-            'driver' => 'pdo_sqlite',
-            'memory' => true,
-        ];
-
-        $this->connection = DriverManager::getConnection($connectionParams);
-    }
-
-    abstract protected function createTables(Schema $schema): void;
 
     /**
      * @throws Exception
      *
      * @return array<mixed>
      */
-    protected function fetchAll(string $tableName): array
+    protected static function fetchAll(string $tableName): array
     {
-        return $this->connection->executeQuery("SELECT * from {$tableName}")->fetchAllAssociative();
+        return self::$connection
+            ->executeQuery("SELECT * FROM {$tableName}")
+            ->fetchAllAssociative();
     }
 }

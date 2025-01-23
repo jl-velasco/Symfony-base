@@ -5,12 +5,14 @@ namespace Symfony\Base\Video\Video\Domain;
 use Symfony\Base\Shared\Domain\AggregateRoot;
 use Symfony\Base\Shared\Domain\CreatedAt;
 use Symfony\Base\Shared\Domain\UpdatedAt;
+use Symfony\Base\Tweet\Shared\Domain\UserId;
 use Symfony\Base\Video\Shared\Domain\VideoId;
 
 class Video extends AggregateRoot
 {
     public function __construct(
         private readonly VideoId          $id,
+        private readonly UserId          $userId,
         private readonly VideoName        $name,
         private readonly VideoDescription $description,
         private readonly VideoUrl         $url,
@@ -28,6 +30,7 @@ class Video extends AggregateRoot
 
     public static function create(
         string $id,
+        string $userId,
         string $name,
         string $description,
         string $url,
@@ -35,6 +38,7 @@ class Video extends AggregateRoot
     {
         $video = new self(
             new VideoId($id),
+            new UserId($userId),
             new VideoName($name),
             new VideoDescription($description),
             new VideoUrl($url),
@@ -54,6 +58,7 @@ class Video extends AggregateRoot
     {
         return new self(
             new VideoId($data['id']),
+            new UserId($data['user_id']),
             new VideoName($data['name']),
             new VideoDescription($data['description']),
             new VideoUrl($data['url']),
@@ -67,6 +72,7 @@ class Video extends AggregateRoot
         return [
             'id' => $this->id->value(),
             'name' => $this->name->value(),
+            'user_id' => $this->userId->value(),
             'description' => $this->description->value(),
             'url' => $this->url->value(),
             'created_at' => $this->createdAt->stringDateTime(),
@@ -94,12 +100,17 @@ class Video extends AggregateRoot
         return $this->url;
     }
 
+    public function userId(): UserId
+    {
+        return $this->userId;
+    }
+
     public function createdAt(): CreatedAt
     {
         return $this->createdAt;
     }
 
-    public function updateAt(): UpdatedAt
+    public function updateAt(): ?UpdatedAt
     {
         return $this->updateAt;
     }

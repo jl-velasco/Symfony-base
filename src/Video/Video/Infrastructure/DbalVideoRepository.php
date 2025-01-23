@@ -32,7 +32,7 @@ class DbalVideoRepository implements VideoRepository
             ->from('video')
             ->where('id = :id')
             ->setParameter('id', $id->value())
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         return $data > 0;
@@ -45,7 +45,7 @@ class DbalVideoRepository implements VideoRepository
             ->from('video')
             ->where('id = :id')
             ->setParameter('id', $id->value())
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         if ($data === false) {
@@ -63,7 +63,7 @@ class DbalVideoRepository implements VideoRepository
             ->delete('video')
             ->where('id = :id')
             ->setParameter('id', $id->value())
-            ->execute();
+            ->executeQuery();
     }
 
     private function insert(Video $video)
@@ -82,7 +82,7 @@ class DbalVideoRepository implements VideoRepository
                 'description' => $video->description()->value(),
                 'url' => $video->url()->value(),
             ])
-            ->execute();
+            ->executeQuery();
     }
 
     private function update(Video $video)
@@ -99,6 +99,6 @@ class DbalVideoRepository implements VideoRepository
                 'description' => $video->description()->value(),
                 'url' => $video->url()->value(),
             ])
-            ->execute();
+            ->executeQuery();
     }
 }

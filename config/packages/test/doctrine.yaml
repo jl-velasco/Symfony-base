@@ -2,3 +2,7 @@ doctrine:
     dbal:
         # "TEST_TOKEN" is typically set by ParaTest
         dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+        connections:
+            default_test:
+                driver: pdo_sqlite
+                url: 'sqlite:///:memory:'
