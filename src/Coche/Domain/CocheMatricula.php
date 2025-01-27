@@ -1,4 +1,4 @@
-<?php
+x<?php
 
 namespace Symfony\Base\Coche\Domain;
 

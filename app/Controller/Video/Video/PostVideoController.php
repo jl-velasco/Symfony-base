@@ -27,12 +27,16 @@ class PostVideoController
         $this->useCase->__invoke(
             new DTOVideo(
                 $data['id'],
+                $data['user_id'],
                 $data['name'],
                 $data['description'],
                 $data['url']
             )
         );
 
-        return new Response();
+        return new Response(status: Response::HTTP_ACCEPTED);
     }
+
+    //TODO: comprobar los datos del body
+
 }

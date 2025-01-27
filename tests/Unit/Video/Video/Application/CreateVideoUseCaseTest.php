@@ -38,12 +38,13 @@ class CreateVideoUseCaseTest extends TestCase
             ->willThrowException(new VideoNotFound());
 
         $this->repository
-            ->expects(self::exactly(1))
+            ->expects(self::once())
             ->method('save');
 
         $this->useCase->__invoke(
             new DTOVideo(
                 $videoMother->id()->value(),
+                $videoMother->userId()->value(),
                 $videoMother->name()->value(),
                 $videoMother->description()->value(),
                 $videoMother->url()->value()
@@ -61,13 +62,14 @@ class CreateVideoUseCaseTest extends TestCase
             ->willReturn($videoMother);
 
         $this->repository
-            ->expects(self::exactly(0))
+            ->expects(self::never())
             ->method('save');
 
         $this->expectException(VideoAlreadyExistsException::class);
         $this->useCase->__invoke(
             new DTOVideo(
                 $videoMother->id()->value(),
+                $videoMother->userId()->value(),
                 $videoMother->name()->value(),
                 $videoMother->description()->value(),
                 $videoMother->url()->value()

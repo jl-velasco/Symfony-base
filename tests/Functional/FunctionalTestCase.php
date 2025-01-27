@@ -7,48 +7,68 @@ namespace Symfony\Base\Tests\Functional;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class FunctionalTestCase extends WebTestCase
 {
-    protected KernelBrowser $client;
-    protected Connection $connection;
+    public const POST = 'POST';
+    public const GET = 'GET';
+    public const PUT = 'PUT';
+    public const DELETE = 'DELETE';
+    public const PATCH = 'PATCH';
 
-    /** @throws ContainerExceptionInterface|NotFoundExceptionInterface|Exception */
+    protected KernelBrowser $client;
+    protected static ?EntityManagerInterface $entityManager = null;
+    protected static ?Connection $connection = null;
+
+    /**
+     * @throws \Exception
+     */
     protected function setUp(): void
     {
         $this->client = self::createClient();
-        $this->connection = $this->getDiContainer()->get('doctrine.dbal.default_connection');
+        self::$entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        self::$connection = self::$entityManager->getConnection();
 
-        $schema = new Schema();
-        $this->createTables($schema);
+        $schemaTool = new SchemaTool(self::$entityManager);
+        $schemaTool->dropDatabase();
 
-        $platform = $this->connection->getDatabasePlatform();
-        $queries = $schema->toSql($platform);
+        $application = new Application(self::$kernel);
+        $application->setAutoExit(false);
 
-        foreach ($queries as $query) {
-            $this->connection->fetchAllAssociative($query);
-        }
-        parent::setUp();
+        $input = new ArrayInput([
+            'command' => 'doctrine:migrations:migrate',
+            '--no-interaction' => true,
+        ]);
+
+        $application->run($input, new NullOutput());
     }
 
     protected function tearDown(): void
     {
-        gc_collect_cycles();
         parent::tearDown();
+        if (self::$entityManager) {
+            $schemaTool = new SchemaTool(self::$entityManager);
+            $schemaTool->dropDatabase();
+            self::$entityManager->close();
+            self::$entityManager = null;
+        }
     }
 
     protected function getDiContainer(): ContainerInterface
     {
         return self::getContainer();
     }
-
-    abstract protected function createTables(Schema $schema): void;
 
     /**
      * @param array<string, mixed> $jsonParams
@@ -57,26 +77,42 @@ abstract class FunctionalTestCase extends WebTestCase
     protected function doJsonRequest(
         string $method,
         string $uri,
-        array $jsonParams,
+        array $jsonParams = [],
         ?string $token = null,
         array $headerParams = []
     ): Response {
-        $defaultHeaders = ['HTTP_CONTENT_TYPE' => 'application/json'];
-
-        if ($token) {
-            $defaultHeaders = ['HTTP_AUTHORIZATION' => sprintf('Bearer %s', $token)];
+        $validHttpMethods = [
+            self::GET,
+            self::POST,
+            self::PUT,
+            self::DELETE,
+            self::PATCH,
+        ];
+        if (!\in_array($method, $validHttpMethods, true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid HTTP method: %s', $method));
         }
 
+        $defaultHeaders = ['HTTP_CONTENT_TYPE' => 'application/json'];
+        if ($token) {
+            $defaultHeaders['HTTP_AUTHORIZATION'] = sprintf('Bearer %s', $token);
+        } else {
+            $defaultHeaders['HTTP_AUTHORIZATION'] = sprintf('Bearer %s', $_ENV['API_AUTH_TOKEN']);
+        }
         $headers = array_merge($defaultHeaders, $headerParams);
 
-        $jsonEncode = json_encode($jsonParams);
+        try {
+            $jsonEncode = json_encode($jsonParams, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new \RuntimeException('Failed to encode JSON parameters', 0, $e);
+        }
+
         $this->client->request(
             $method,
             $uri,
             [],
             [],
             $headers,
-            false !== $jsonEncode ? $jsonEncode : null
+            $jsonEncode
         );
 
         return $this->client->getResponse();
@@ -95,10 +131,10 @@ abstract class FunctionalTestCase extends WebTestCase
     /**
      * @throws Exception
      *
-     * @return array<mixed>
+     * @return array<int, array<string, mixed>>
      */
     protected function getAllFromRepository(string $tableName): array
     {
-        return $this->connection->fetchAllAssociative("SELECT * FROM {$tableName}");
+        return self::$connection->fetchAllAssociative("SELECT * FROM {$tableName}");
     }
 }

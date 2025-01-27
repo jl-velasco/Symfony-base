@@ -27,6 +27,7 @@ class CreateVideoUseCase
         } catch (VideoNotFound) {
             $video = Video::create(
                 $dto->id,
+                $dto->userId,
                 $dto->name,
                 $dto->description,
                 $dto->url,

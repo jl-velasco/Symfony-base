@@ -6,6 +6,7 @@ class DTOVideo
 {
     public function __construct(
         public readonly string $id,
+        public readonly string $userId,
         public readonly string $name,
         public readonly string $description,
         public readonly string $url,

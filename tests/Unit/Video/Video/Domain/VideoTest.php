@@ -40,6 +40,7 @@ class VideoTest extends TestCase
         $videoMother = VideoMother::create()->build();
         $video = Video::create(
             $videoMother->id()->value(),
+            $videoMother->userId()->value(),
             $videoMother->name()->value(),
             $videoMother->description()->value(),
             $videoMother->url()->value()

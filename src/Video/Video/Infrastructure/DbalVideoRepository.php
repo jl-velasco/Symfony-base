@@ -76,6 +76,7 @@ class DbalVideoRepository implements VideoRepository
                 'user_id' => ':user_id',
                 'description' => ':description',
                 'url' => ':url',
+                'created_at' => ':created_at',
             ])
             ->setParameters([
                 'id' => $video->id()->value(),
@@ -83,6 +84,7 @@ class DbalVideoRepository implements VideoRepository
                 'user_id' => $video->userId()->value(),
                 'description' => $video->description()->value(),
                 'url' => $video->url()->value(),
+                'created_at' => $video->createdAt()->stringDateTime(),
             ])
             ->executeQuery();
     }

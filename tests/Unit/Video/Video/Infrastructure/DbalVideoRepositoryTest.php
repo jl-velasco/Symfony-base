@@ -25,22 +25,26 @@ class DbalVideoRepositoryTest extends DbalTestCase
 
         $this->assertCount(1, $video);
         $this->assertEquals($videoMother->id()->value(), $video[0]['id']);
+        $this->assertEquals($videoMother->userId()->value(), $video[0]['user_id']);
         $this->assertEquals($videoMother->url()->value(), $video[0]['url']);
         $this->assertEquals($videoMother->name()->value(), $video[0]['name']);
         $this->assertEquals($videoMother->description()->value(), $video[0]['description']);
+
     }
 
     public function testUpdateVideo(): void
     {
         $videoMother = VideoMother::create()->build();
-        $this->repository->save($videoMother);
+        VideoTableConnector::insert($this->connection(), $videoMother);
         $video = $this->fetchAll('video');
         $videoMother->increaseLikes();
+        $videoMother->updateName('new name');
 
         $this->repository->save($videoMother);
 
         $videoUpdated = $this->fetchAll('video');
         $this->assertEquals($video[0]['likes'] + 1, $videoUpdated[0]['likes']);
+        $this->assertEquals($videoMother->name()->value(), $videoUpdated[0]['name']);
     }
 
     public function testSearchVideo(): void

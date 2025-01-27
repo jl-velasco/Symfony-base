@@ -13,12 +13,12 @@ class Video extends AggregateRoot
     public function __construct(
         private readonly VideoId          $id,
         private readonly UserId          $userId,
-        private readonly VideoName        $name,
+        private VideoName        $name,
         private readonly VideoDescription $description,
         private readonly VideoUrl         $url,
         private VideoLikes                $likes,
         private readonly CreatedAt        $createdAt,
-        private readonly ?UpdatedAt       $updateAt,
+        private ?UpdatedAt       $updateAt,
     )
     {
     }
@@ -52,6 +52,12 @@ class Video extends AggregateRoot
         );
 
         return $video;
+    }
+
+    public function updateName(string $name): void
+    {
+        $this->name = $this->name->update($name);
+        $this->updateAt = new UpdatedAt();
     }
 
     public static function fromPrimitives(array $data): self

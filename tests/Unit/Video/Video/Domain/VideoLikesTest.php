@@ -18,4 +18,16 @@ class VideoLikesTest extends TestCase
 
         $this->assertEquals($videoLikes->value(), 4);
     }
+
+    /** @test */
+    public function add_likes_with_likes_initialized(): void
+    {
+        $videoLikes = new VideoLikes(10);
+        $videoLikes = $videoLikes->addLike();
+        $videoLikes = $videoLikes->addLike();
+        $videoLikes = $videoLikes->addLike();
+        $videoLikes = $videoLikes->addLike();
+
+        $this->assertEquals($videoLikes->value(), 14);
+    }
 }
