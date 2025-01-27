@@ -1,6 +1,6 @@
 <?php
 
-namespace Functional\Video\Video;
+namespace Symfony\Base\Tests\Functional\Video\Video;
 
 use Fixtures\BD\VideoTableConnector;
 use Symfony\Base\Tests\Functional\FunctionalTestCase;

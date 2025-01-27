@@ -95,8 +95,6 @@ abstract class FunctionalTestCase extends WebTestCase
         $defaultHeaders = ['HTTP_CONTENT_TYPE' => 'application/json'];
         if ($token) {
             $defaultHeaders['HTTP_AUTHORIZATION'] = sprintf('Bearer %s', $token);
-        } else {
-            $defaultHeaders['HTTP_AUTHORIZATION'] = sprintf('Bearer %s', $_ENV['API_AUTH_TOKEN']);
         }
         $headers = array_merge($defaultHeaders, $headerParams);
 
