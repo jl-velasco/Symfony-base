@@ -5,5 +5,11 @@ like-post:
 
 video-post:
   path: /video/{id}
-  controller: Symfony\Base\App\Controller\Video\Like\PostVideoController
+  controller: Symfony\Base\App\Controller\Video\Video\PostVideoController
   methods: POST
+
+video-get:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\Video\GetVideoController
+  methods: GET
+

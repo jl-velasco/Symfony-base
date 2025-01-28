@@ -14,6 +14,9 @@ services:
         Symfony\Base\Shared\Domain\DomainEventSubscriber:
             tags: ['symfony.base.domain_event_subscriber']
 
+        Symfony\Base\Shared\Domain\QueryHandler:
+            tags: ['symfony.base.query_handler']
+
     Symfony\Base\App\Controller\:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
@@ -30,6 +33,10 @@ services:
 
     Symfony\Base\Shared\Infrastructure\Symfony\InMemorySymfonyEventBus:
         arguments: [ !tagged symfony.base.domain_event_subscriber ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Symfony\InMemorySymfonyQueryBus:
+        arguments: [ !tagged symfony.base.query_handler ]
         lazy: true
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:

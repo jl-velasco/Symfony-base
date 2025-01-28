@@ -21,10 +21,9 @@ class PostVideoControllerTest extends FunctionalTestCase
 
         $response = $this->doJsonRequest(
             self::VERB,
-            self::ENDPOINT,
+            self::ENDPOINT . '/' . $videoMother->id()->value(),
             [
-                'id' => $videoMother->id()->value(),
-                'userId' => $videoMother->userId()->value(),
+                'user_id' => $videoMother->userId()->value(),
                 'name' => $videoMother->name()->value(),
                 'description' => $videoMother->description()->value(),
                 'url' => $videoMother->url()->value(),
