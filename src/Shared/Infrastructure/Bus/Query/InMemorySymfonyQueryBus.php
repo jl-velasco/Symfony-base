@@ -6,23 +6,23 @@ use Symfony\Base\Shared\Domain\Bus\Response;
 use Symfony\Base\Shared\Domain\Bus\Query;
 use Symfony\Base\Shared\Domain\Bus\QueryBus;
 use Symfony\Base\Shared\Infrastructure\CallableFirstParameterExtractor;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-class InMemorySymfonyEventBus implements QueryBus
+class InMemorySymfonyQueryBus implements QueryBus
 {
     private MessageBus $bus;
 
-    /** @param iterable<mixed> $queryHandler */
-    public function __construct(
-        iterable $queryHandler
-    )
+    /** @param iterable<mixed> $queryHandlers */
+    public function __construct(iterable $queryHandlers)
     {
         $this->bus = new MessageBus(
             [
                 new HandleMessageMiddleware(
-                    new HandlersLocator(CallableFirstParameterExtractor::forPipedCallables($queryHandler))
+                    new HandlersLocator(CallableFirstParameterExtractor::forCallables($queryHandlers))
                 ),
             ]
         );
@@ -30,6 +30,12 @@ class InMemorySymfonyEventBus implements QueryBus
 
     public function ask(Query $query): Response
     {
-        $this->bus->dispatch($query);
+        try {
+            $stamp = $this->bus->dispatch($query)->last(HandledStamp::class);
+
+            return $stamp->getResult();
+        } catch (NoHandlerForMessageException) {
+//            throw new QueryNotRegisteredError($query);
+        }
     }
 }
