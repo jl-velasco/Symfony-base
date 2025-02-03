@@ -11,14 +11,14 @@ use Symfony\Base\Video\Shared\Domain\VideoId;
 class Video extends AggregateRoot
 {
     public function __construct(
-        private readonly VideoId          $id,
-        private readonly UserId          $userId,
-        private VideoName        $name,
-        private readonly VideoDescription $description,
-        private readonly VideoUrl         $url,
-        private VideoLikes                $likes,
-        private readonly CreatedAt        $createdAt,
-        private ?UpdatedAt       $updateAt,
+        private readonly VideoId   $id,
+        private UserId             $userId,
+        private VideoName          $name,
+        private VideoDescription   $description,
+        private VideoUrl           $url,
+        private VideoLikes         $likes,
+        private readonly CreatedAt $createdAt,
+        private ?UpdatedAt         $updateAt,
     )
     {
     }
@@ -60,6 +60,24 @@ class Video extends AggregateRoot
         $this->updateAt = new UpdatedAt();
     }
 
+    public function updateDescription(string $description): void
+    {
+        $this->description = $this->description->update($description);
+        $this->updateAt = new UpdatedAt();
+    }
+
+    public function updateUrl(string $url): void
+    {
+        $this->url = $this->url->update($url);
+        $this->updateAt = new UpdatedAt();
+    }
+
+    public function updateUserId(UserId $userId): void
+    {
+        $this->userId = $this->userId->update($userId);
+        $this->updateAt = new UpdatedAt();
+    }
+
     public static function fromPrimitives(array $data): self
     {
         return new self(
@@ -68,8 +86,9 @@ class Video extends AggregateRoot
             new VideoName($data['name']),
             new VideoDescription($data['description']),
             new VideoUrl($data['url']),
+            new VideoLikes($data['likes']),
             new CreatedAt($data['created_at']),
-            new UpdatedAt($data['updated_at'])
+            isset($data['updated_at']) ? new UpdatedAt($data['updated_at']) : null
         );
     }
 

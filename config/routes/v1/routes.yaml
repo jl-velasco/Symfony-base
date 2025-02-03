@@ -13,3 +13,8 @@ video-get:
   controller: Symfony\Base\App\Controller\Video\Video\GetVideoController
   methods: GET
 
+video-put:
+  path: /video/{id}
+  controller: Symfony\Base\App\Controller\Video\Video\PutVideoController
+  methods: PUT
+

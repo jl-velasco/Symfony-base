@@ -7,4 +7,8 @@ use Symfony\Base\Shared\Domain\StringValueObject;
 class VideoUrl extends StringValueObject
 {
 
+    public function update(string $url)
+    {
+        return new self($url);
+    }
 }

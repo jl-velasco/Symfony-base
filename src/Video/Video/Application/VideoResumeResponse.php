@@ -2,7 +2,7 @@
 
 namespace Symfony\Base\Video\Video\Application;
 
-use Symfony\Base\Shared\Domain\Bus\Response;
+use Symfony\Base\Shared\Domain\Bus\Query\Response;
 
 class VideoResumeResponse implements Response
 {

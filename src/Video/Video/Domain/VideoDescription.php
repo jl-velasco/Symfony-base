@@ -20,4 +20,9 @@ class VideoDescription extends StringValueObject
         }
     }
 
+    public function update(string $description)
+    {
+        return new self($description);
+    }
+
 }

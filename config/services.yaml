@@ -17,6 +17,9 @@ services:
         Symfony\Base\Shared\Domain\Bus\QueryHandler:
             tags: ['symfony.base.query_handler']
 
+        Symfony\Base\Shared\Domain\Bus\CommandHandler:
+            tags: ['symfony.base.command_handler']
+
     Symfony\Base\App\Controller\:
         resource: '../app/Controller'
         tags: [ 'controller.service_arguments' ]
@@ -37,6 +40,10 @@ services:
 
     Symfony\Base\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
         arguments: [ !tagged symfony.base.query_handler ]
+        lazy: true
+
+    Symfony\Base\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: [ !tagged symfony.base.command_handler ]
         lazy: true
 
     Symfony\Base\Shared\Infrastructure\Bus\Event\DomainEventMapping:

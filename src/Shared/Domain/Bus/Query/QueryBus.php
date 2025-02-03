@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Base\Shared\Domain\Bus;
+namespace Symfony\Base\Shared\Domain\Bus\Query;
 
 interface QueryBus
 {

@@ -2,9 +2,9 @@
 
 namespace Symfony\Base\Shared\Infrastructure\Bus\Query;
 
-use Symfony\Base\Shared\Domain\Bus\Response;
-use Symfony\Base\Shared\Domain\Bus\Query;
-use Symfony\Base\Shared\Domain\Bus\QueryBus;
+use Symfony\Base\Shared\Domain\Bus\Query\Response;
+use Symfony\Base\Shared\Domain\Bus\Query\Query;
+use Symfony\Base\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Base\Shared\Infrastructure\CallableFirstParameterExtractor;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;

@@ -2,7 +2,7 @@
 
 namespace Symfony\Base\App\Controller\Video\Video;
 
-use Symfony\Base\Shared\Domain\Bus\QueryBus;
+use Symfony\Base\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Base\Video\Video\Application\GetVideoQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
